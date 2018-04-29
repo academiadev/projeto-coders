@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="dashboardModulo">
+  <head>
+    <meta charset="utf-8">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Dashboard Admin - Material Design Bootstrap</title>
+
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
+    <!-- Your custom styles (optional) -->
+    <link href="css/dashboard.css" rel="stylesheet">
+    <!-- AngularJS -->
+	  <script type="text/javascript" src="js/angular.min.js"></script>
+  </head>
+
+  <body ng-controller="dashboardController">
+
+    <header>
+      <div class="navbar-fixed">
+        <nav>
+          <div class="nav-wrapper">
+            <a class="brand-logo">Reembolso</a>
+            <a href="#reembolso" class="sidenav-trigger" data-target="slide-out" ng-click="showSideNav()"><img src="images/menu.svg"></a>
+            <ul class="right hide-on-med-and-down">
+              <li>
+                <button class="btn copiar-button" type="submit" ng-click="copiarCodigoEmpresa()" id="codigoEmpresa">
+                  <img src="images/group-7.svg" class="copy-button">
+                  Cod: 54321
+                </button>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+
+        <div class="admin-group-buttons">
+          <button class="btn aprovar-button" type="submit">APROVAR</button>
+          <button class="btn recusar-button" type="submit">RECUSAR</button>
+        </div>
+
+        <div class="div-admin-table col-md-4 offset-md-4">
+          <!--Table-->
+          <table class="table centered highlight">
+            <thead>
+              <tr>
+                <th scope="col">
+                  <label>
+                    <input type="checkbox" class="filled-in" />
+                    <span></span>
+                  </label>
+                </th>
+                <th>Reembolso</th>
+                <th>Status</th>
+                <th>Valor</th>
+                <th>Categoria</th>
+                <th>Usuário</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="gastosUsuarioTabela in gastosUsuario">
+                <td>
+                  <label>
+                    <input type="checkbox" class="filled-in" />
+                    <span></span>
+                  </label>
+                </td>
+                <td>{{gastosUsuarioTabela.descricao}}</td>
+                <td><img src="images/{{gastosUsuarioTabela.status}}.svg" class="{{gastosUsuarioTabela.status}}"></td>
+                <td>{{gastosUsuarioTabela.valor}}</td>
+                <td>{{gastosUsuarioTabela.categoria}}</td>
+                <td>{{gastosUsuarioTabela.usuario}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <!--Table-->
+        </div>
+      </div>
+  
+      <!-- Float button -->
+      <a href="#reembolso" ng-click="showModal()" class="modal-trigger">
+        <div id="floatbutton">
+          <img src="images/fab.svg" class="fab">
+        </div>
+      </a>
+  
+      <!-- Modal Structure -->
+      <div class="modal fade" id="reembolso">
+        <div class="modal-content">
+          <div class="row">
+            <h3 class="col s12">Cadastro Reembolso</h3>
+            <p class="col s12">Preencha as informações abaixo para solicitar reembolso:</p>  
+
+            <div class="input-field col s12">
+              <input id="nome" type="text" class="validate" required>
+              <label for="nome">Nome do reembolso</label>
+            </div>
+
+            <div class="input-field col s6">
+              <select>
+                <option value="1" selected >Hospedagem</option>
+                <option value="2">Transporte</option>
+                <option value="3">Refeição</option>
+              </select>
+              <label>Categoria</label>
+            </div>
+
+            <div class="input-field col s6">
+              <input type="date" name="data" id="data" required>
+              <label for="data">Data</label>
+            </div>
+
+            <div class="input-field col s3">
+              <input id="valor" type="text" required>
+              <label for="valor">Valor</label>
+            </div>
+
+            <div class="file-field input-field col s12">
+              <div class="btn button-upload">
+                <span>ADICIONAR ARQUIVO</span>
+                <input name="foo" type="file" accept="image/jpeg,image/gif,image/png,application/pdf,image" />
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+            <div class="row modal-action-buttons">
+                <div class="col l3 offset-l3">
+                  <p><a href="" id="esqueci" class="cancelar-button" ng-click="fechaModal()">CANCELAR</a></p>
+                </div>
+                <div class="col l3 offset-l3">
+                  <p><a href="#" id="cadastrar" class="solicitar-button" ng-click="fechaModal()">SOLICITAR</a></p>
+                </div>
+              </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Sidenav Structure -->
+    <ul id="slide-out" class="sidenav">
+      <li><div class="user-view">
+        <a class="reembolso-perfil">Reembolso</a>
+        <a class="nome-perfil name">Felipe Fuerback</a>
+        <a class="email-perfil email">fuerback@gmail.com</a>
+      </div></li>
+      <li><a href="#"><img src="images/historico-solicitacoes.svg" class="sidenav-icons">Histórico e Solicitações</a></li>
+      <li><a href="#"><img src="images/dashboard.svg" class="sidenav-icons">Dashboard de Gastos</a></li>
+      <li><a href="#"><img src="images/perfil.svg" class="sidenav-icons">Perfil</a></li>
+      <li><a href="#"><img src="images/sair.svg" class="sidenav-icons">Sair</a></li>
+    </ul>
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <!-- JQuery Mask Money -->
+    <script type="text/javascript" src="js/jquery.maskMoney.min.js" charset="utf-8"></script>
+    <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+    <!-- AngularJS -->
+    <script type="text/javascript" src="controller/dashboard.js"></script>
+  </body>
+</html>

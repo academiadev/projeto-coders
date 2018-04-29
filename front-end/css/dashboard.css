@@ -1,0 +1,300 @@
+html,
+body {
+  height: 100%;
+  background-color: #f5f5f5;
+}
+main {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-bottom: 40px;
+  padding-top: 70px;
+}
+.table {
+  table-layout : fixed;
+}
+.form-signin {
+  width: 100%;
+  max-width: 550px;
+  padding: 0px;
+  margin: auto;
+  box-shadow: 0px 0px 10px 1px grey;
+  border-radius: 5px;
+  background: white;
+}
+.grafico-area {
+  width: 100%;
+  max-width: 900px;
+  min-width: 500px;
+  padding: 15px;
+  margin: auto;
+  box-shadow: 0px 0px 10px 1px grey;
+  border-radius: 5px;
+  background: white;
+}
+.gastos-area {
+  width: 100%;
+  max-width: 900px;
+  min-width: 500px;
+  padding: 15px;
+  margin: auto;
+  box-shadow: 0px 0px 10px 1px grey;
+  border-radius: 5px;
+  background: white;
+  margin-top: 20px;
+}
+.titulo-gastos {
+  font-size: 25px;
+  color: #000000;
+  font-weight: 500;
+  opacity: 0.54;
+  margin-top: 5px;
+}
+.form-redefinir {
+  padding-top: 20px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 25px;
+}
+.button-redefinir {
+  padding-top: 15px;
+  width: 163px;
+}
+#atualizar {
+  color: #2687e9;
+  font-weight: 500;
+}
+.div-atualizar {
+  margin-right: 30px;
+  right: 0px;
+  padding: 10px;
+  text-align: right;
+}
+.div-user-table {
+  width: 100%;
+  max-width: 60%;
+  padding: 0px;
+  margin: auto;
+  box-shadow: 0px 0px 10px 1px grey;
+  border-radius: 5px;
+  background: white;
+}
+.div-admin-table {
+  width: 100%;
+  max-width: 75%;
+  padding: 0px;
+  margin: auto;
+  box-shadow: 0px 0px 10px 1px grey;
+  border-radius: 5px;
+  background: white;
+}
+.admin-group-buttons {
+  width: 100%;
+  max-width: 75%;
+  padding-left: 0px;
+  padding-bottom: 15px;
+  margin: auto;
+}
+.approved {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+.waiting {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+.canceled {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+.fab {
+  width: 65px;
+  height: 65px;
+  object-fit: contain;
+}
+#floatbutton {
+  position: fixed;
+  right: 3%;
+  bottom: 4%;
+}
+.btn-floating {
+  position: fixed;
+  right: 3%;
+  bottom: 4%;
+}
+.brand-logo {
+  margin-left: 100px;
+}
+.user-view {
+  background-color: #2687e9;
+}
+.sidenav-icons {
+  padding-right: 10px;
+}
+.reembolso-perfil {
+  width: 245px;
+  height: 32px;
+  font-size: 20px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-align: left;
+  color: white;
+}
+.nome-perfil {
+  color: white;
+  font-size: 15px;
+}
+.email-perfil {
+  color: white;
+  font-size: 15px;
+}
+.upload-icon {
+  padding-right: 10px;
+  object-fit: contain;
+}
+.button-upload {
+  object-fit: contain;
+  width: 223px;
+  height: 36px;
+  background: #2687e9 url(../images/upload.svg)  7%  no-repeat ;
+}
+.modal-action-buttons {
+  width: 90%;
+  text-align: right;
+}
+.cancelar-button {
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.5px;
+  color: #000000;
+}
+.solicitar-button {
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.5px;
+  color: #2687e9;
+}
+.aprovar-button {
+  background-color: #00d9b8;
+  margin-right: 20px;
+}
+.aprovar-button:focus {
+  background-color: #00d9b8; 
+}
+.aprovar-button:hover {
+  background-color: #00d9b8; 
+}
+.recusar-button {
+  background-color: #f03f61;
+}
+.recusar-button:focus {
+  background-color: #f03f61; 
+}
+.recusar-button:hover {
+  background-color: #f03f61; 
+}
+.copiar-button {
+  background-color: #fff;
+  margin-right: 20px;
+  color: black;
+  font-weight: bold;
+  font-size: 14px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
+}
+.copiar-button:focus {
+  background-color: #fff; 
+}
+.copiar-button:hover {
+  background-color: #fff; 
+}
+.right-align {
+  text-align: right;
+}
+.copy-button {
+  display:inline-block;
+  text-rendering:auto;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  vertical-align:middle;
+  padding-right: 10px;
+}
+
+/*!
+ * Date input customized
+ */
+[type="date"] {
+  background:#fff url(../images/calendar.svg)  97% 50% no-repeat ;
+}
+[type="date"]::-webkit-inner-spin-button {
+  display: none;
+}
+[type="date"]::-webkit-clear-button {
+  display: none;
+}
+[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+
+/*!
+ * Checkbox customized
+ */
+.styled-checkbox {
+  position: absolute;
+  opacity: 0;
+}
+.styled-checkbox + label {
+  position: relative;
+  cursor: pointer;
+  padding: 0;
+}
+.styled-checkbox + label:before {
+  content: '';
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: text-top;
+  width: 20px;
+  height: 20px;
+  background: white;
+}
+.styled-checkbox:hover + label:before {
+  background: #2687e9;
+}
+.styled-checkbox:focus + label:before {
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+}
+.styled-checkbox:checked + label:before {
+  background: #2687e9;
+}
+.styled-checkbox:disabled + label {
+  color: #b8b8b8;
+  cursor: auto;
+}
+.styled-checkbox:disabled + label:before {
+  box-shadow: none;
+  background: #ddd;
+}
+.styled-checkbox:checked + label:after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 9px;
+  background: white;
+  width: 2px;
+  height: 2px;
+  box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
