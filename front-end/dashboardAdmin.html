@@ -57,7 +57,7 @@
                 </th>
                 <th>Reembolso</th>
                 <th>Status</th>
-                <th>Valor</th>
+                <th>Valor R$</th>
                 <th>Categoria</th>
                 <th>Usuário</th>
               </tr>
@@ -71,7 +71,7 @@
                   </label>
                 </td>
                 <td>{{gastosUsuarioTabela.descricao}}</td>
-                <td><img src="images/{{gastosUsuarioTabela.status}}.svg" class="{{gastosUsuarioTabela.status}}"></td>
+                <td><img ng-src="images/{{gastosUsuarioTabela.status}}.svg" class="{{gastosUsuarioTabela.status}}"></td>
                 <td>{{gastosUsuarioTabela.valor}}</td>
                 <td>{{gastosUsuarioTabela.categoria}}</td>
                 <td>{{gastosUsuarioTabela.usuario}}</td>
@@ -97,26 +97,24 @@
             <p class="col s12">Preencha as informações abaixo para solicitar reembolso:</p>  
 
             <div class="input-field col s12">
-              <input id="nome" type="text" class="validate" required>
+              <input id="nome" type="text" ng-model="reembolso.nome" class="validate" required>
               <label for="nome">Nome do reembolso</label>
             </div>
 
             <div class="input-field col s6">
-              <select>
-                <option value="1" selected >Hospedagem</option>
-                <option value="2">Transporte</option>
-                <option value="3">Refeição</option>
+              <select ng-model="reembolso.categoria" ng-options="categoria.nome for categoria in gastosCategoria">
+                <option value="">Selecione uma categoria</option>
               </select>
               <label>Categoria</label>
             </div>
 
             <div class="input-field col s6">
-              <input type="date" name="data" id="data" required>
+              <input type="date" ng-model="reembolso.data" name="data" id="data" required>
               <label for="data">Data</label>
             </div>
 
             <div class="input-field col s3">
-              <input id="valor" type="text" required>
+              <input id="valor" ng-model="reembolso.valor" type="text" required>
               <label for="valor">Valor</label>
             </div>
 
@@ -132,14 +130,15 @@
           </div>
         </div>
         <div class="modal-footer">
-            <div class="row modal-action-buttons">
-                <div class="col l3 offset-l3">
-                  <p><a href="" id="esqueci" class="cancelar-button" ng-click="fechaModal()">CANCELAR</a></p>
-                </div>
-                <div class="col l3 offset-l3">
-                  <p><a href="#" id="cadastrar" class="solicitar-button" ng-click="fechaModal()">SOLICITAR</a></p>
-                </div>
-              </div>
+          <div class="row modal-action-buttons">
+            <div class="col l3 offset-l3">
+                <button id="esqueci" class="cancelar-button modal-action modal-close">CANCELAR</button>
+            </div>
+            <div class="col l3 offset-l3">
+                <button id="cadastrar" class="solicitar-button modal-action modal-close" 
+                    ng-disabled="!reembolso.nome || !reembolso.categoria || !reembolso.data" ng-click="salvaReembolso(reembolso)">SOLICITAR</button>
+            </div>
+          </div>
         </div>
       </div>
     </main>

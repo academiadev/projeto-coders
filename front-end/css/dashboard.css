@@ -177,6 +177,8 @@ main {
   line-height: normal;
   letter-spacing: 0.5px;
   color: #000000;
+  background-color: white;
+  border: none;
 }
 .solicitar-button {
   font-size: 16px;
@@ -186,6 +188,14 @@ main {
   line-height: normal;
   letter-spacing: 0.5px;
   color: #2687e9;
+  background-color: white;
+  border: none;
+}
+.cancelar-button:focus {
+  background-color: white; 
+}
+.solicitar-button:focus {
+  background-color: white; 
 }
 .aprovar-button {
   background-color: #00d9b8;
