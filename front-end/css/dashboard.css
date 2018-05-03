@@ -191,6 +191,10 @@ main {
   background-color: white;
   border: none;
 }
+.selecionado {
+  background-color: #fff9c4;
+  font-weight: bold;
+}
 .cancelar-button:focus {
   background-color: white; 
 }

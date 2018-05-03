@@ -42,11 +42,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="gastosUsuarioTabela in gastosUsuario">
-                <td>{{gastosUsuarioTabela.descricao}}</td>
-                <td><img ng-src="images/{{gastosUsuarioTabela.status}}.svg" class="{{gastosUsuarioTabela.status}}"></td>
-                <td>{{gastosUsuarioTabela.valor}}</td>
-                <td>{{gastosUsuarioTabela.categoria}}</td>
+              <tr ng-repeat="reembolso in reembolsos">
+                <td>{{reembolso.descricao}}</td>
+                <td><img ng-src="images/{{reembolso.status}}.svg" class="{{reembolso.status}}"></td>
+                <td>{{reembolso.valor}}</td>
+                <td>{{reembolso.categoria}}</td>
               </tr>
             </tbody>
           </table>
@@ -55,14 +55,14 @@
       </div>
   
       <!-- Float button -->
-      <a href="#reembolso" ng-click="showModal()" class="modal-trigger">
+      <a href="#reembolsoModal" class="modal-trigger">
         <div id="floatbutton">
           <img src="images/fab.svg" class="fab">
         </div>
       </a>
   
       <!-- Modal Structure -->
-      <div class="modal fade" id="reembolso">
+      <div class="modal fade" id="reembolsoModal">
         <div class="modal-content">
           <div class="row">
             <h3 class="col s12">Cadastro Reembolso</h3>
@@ -76,7 +76,7 @@
 
             <div class="input-field col s6">
               <select ng-model="reembolso.categoria" ng-options="categoria.nome for categoria in gastosCategoria">
-                <option value="">Selecione uma categoria</option>
+                <option value="" disabled selected>Selecione uma categoria</option>
               </select>
               <label>Categoria</label>
             </div>

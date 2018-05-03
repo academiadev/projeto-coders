@@ -1,11 +1,11 @@
 var dashboardModulo = angular.module('dashboardModulo', []);
 
 dashboardModulo.controller('dashboardController', function ($scope){
-  $scope.gastosUsuario = [
-    {descricao:'Visita', status:'waiting', valor:'312,00', categoria:'Outros', usuario:'Felipe', data:''},
-    {descricao:'Almoço', status:'approved', valor:'215,00', categoria:'Alimentação', usuario:'Willian', data:''},
-    {descricao:'Hotel', status:'canceled', valor:'312,00', categoria:'Hospedagem', usuario:'Kauan', data:''},
-    {descricao:'Uber', status:'canceled', valor:'40,00', categoria:'Transporte', usuario:'Bruno', data:''}
+  $scope.reembolsos = [
+    {descricao:'Visita', status:'waiting', valor:'312,00', categoria:'Outros', usuario:'Felipe', data:'', selecionado: false},
+    {descricao:'Almoço', status:'approved', valor:'215,00', categoria:'Alimentação', usuario:'Willian', data:'', selecionado: false},
+    {descricao:'Hotel', status:'canceled', valor:'312,00', categoria:'Hospedagem', usuario:'Kauan', data:'', selecionado: false},
+    {descricao:'Uber', status:'canceled', valor:'40,00', categoria:'Transporte', usuario:'Bruno', data:'', selecionado: false}
   ];
   $scope.gastosTotalUsuario = [
     {valor:'312,00', email:'fuerback@gmail.com', usuario:'Felipe'},
@@ -21,8 +21,19 @@ dashboardModulo.controller('dashboardController', function ($scope){
     {nome:'Outros', codigo: 4}
   ];
 
-  $scope.showModal = function() {
-    $('.modal').modal();
+  $scope.setStatusReembolso = function(reembolsos, status) {
+    var selecionados = reembolsos.filter(reembolso => reembolso.selecionado == true);
+    selecionados.forEach(elemento => {
+      for(var i = 0; i < $scope.reembolsos.length; i++){
+        if($scope.reembolsos[i].id === elemento.id){
+          $scope.reembolsos[i].status = status;
+        }
+      }
+    });
+  }
+
+  $scope.isReembolsoSelecionado = function(reembolsos){
+    return !reembolsos.some(reembolso => reembolso.selecionado);
   }
 
   $scope.showSideNav = function() {
@@ -30,7 +41,10 @@ dashboardModulo.controller('dashboardController', function ($scope){
   }
 
   $scope.salvaReembolso = function(reembolso) {
-    $scope.gastosUsuario.push({descricao: reembolso.nome, status: 'waiting', valor: input.val().replace('R$', ''), categoria: reembolso.categoria.nome, usuario: 'Felipe', data: reembolso.data});
+    $scope.reembolsos.push(
+      angular.copy({descricao: reembolso.nome, status: 'waiting', valor: input.val().replace('R$', ''), categoria: reembolso.categoria.nome, usuario: 'Felipe', data: reembolso.data}
+    ));
+    delete $scope.reembolso;
   }
 
   $scope.copiarCodigoEmpresa = function() {
@@ -43,7 +57,17 @@ dashboardModulo.controller('dashboardController', function ($scope){
     prefix: "R$ ",
     decimal: ",",
     thousands: "."
-	});
+  });
+  
+  $("#checkAll").click(function () {
+    console.log('1');
+    for(var i = 0; i < $scope.reembolsos.length; i++){
+      console.log(this.checked);
+      $scope.reembolsos[i].selecionado = this.checked;
+    }
+    console.log('3');
+    $('input:checkbox').not(this).prop('checked', this.checked);
+  });
 })
 
 $(document).ready(function(){
@@ -51,5 +75,6 @@ $(document).ready(function(){
   $('.datepicker').datepicker({
     dateFormat: 'dd/mm/yy'
   });
+  $('.modal').modal();
 });
 

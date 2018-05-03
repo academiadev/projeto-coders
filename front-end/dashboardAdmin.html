@@ -40,18 +40,18 @@
       <div class="container">
 
         <div class="admin-group-buttons">
-          <button class="btn aprovar-button" type="submit">APROVAR</button>
-          <button class="btn recusar-button" type="submit">RECUSAR</button>
+          <button class="btn aprovar-button" ng-click="setStatusReembolso(reembolsos, 'approved')" ng-disabled="isReembolsoSelecionado(reembolsos)">APROVAR</button>
+          <button class="btn recusar-button" ng-click="setStatusReembolso(reembolsos, 'canceled')" ng-disabled="isReembolsoSelecionado(reembolsos)">RECUSAR</button>
         </div>
 
         <div class="div-admin-table col-md-4 offset-md-4">
           <!--Table-->
-          <table class="table centered highlight">
+          <table class="table centered">
             <thead>
               <tr>
                 <th scope="col">
                   <label>
-                    <input type="checkbox" class="filled-in" />
+                    <input type="checkbox" class="filled-in" id="checkAll" />
                     <span></span>
                   </label>
                 </th>
@@ -63,18 +63,18 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="gastosUsuarioTabela in gastosUsuario">
+              <tr ng-class="{selecionado: reembolso.selecionado}" ng-repeat="reembolso in reembolsos">
                 <td>
                   <label>
-                    <input type="checkbox" class="filled-in" />
+                    <input type="checkbox" class="filled-in" ng-model="reembolso.selecionado" />
                     <span></span>
                   </label>
                 </td>
-                <td>{{gastosUsuarioTabela.descricao}}</td>
-                <td><img ng-src="images/{{gastosUsuarioTabela.status}}.svg" class="{{gastosUsuarioTabela.status}}"></td>
-                <td>{{gastosUsuarioTabela.valor}}</td>
-                <td>{{gastosUsuarioTabela.categoria}}</td>
-                <td>{{gastosUsuarioTabela.usuario}}</td>
+                <td>{{reembolso.descricao}}</td>
+                <td><img ng-src="images/{{reembolso.status}}.svg" class="{{reembolso.status}}"></td>
+                <td>{{reembolso.valor}}</td>
+                <td>{{reembolso.categoria}}</td>
+                <td>{{reembolso.usuario}}</td>
               </tr>
             </tbody>
           </table>
@@ -83,50 +83,51 @@
       </div>
   
       <!-- Float button -->
-      <a href="#reembolso" ng-click="showModal()" class="modal-trigger">
+      <a href="#reembolsoModal" class="modal-trigger">
         <div id="floatbutton">
           <img src="images/fab.svg" class="fab">
         </div>
       </a>
   
       <!-- Modal Structure -->
-      <div class="modal fade" id="reembolso">
+      <div class="modal fade" id="reembolsoModal">
         <div class="modal-content">
           <div class="row">
             <h3 class="col s12">Cadastro Reembolso</h3>
             <p class="col s12">Preencha as informações abaixo para solicitar reembolso:</p>  
-
-            <div class="input-field col s12">
-              <input id="nome" type="text" ng-model="reembolso.nome" class="validate" required>
-              <label for="nome">Nome do reembolso</label>
-            </div>
-
-            <div class="input-field col s6">
-              <select ng-model="reembolso.categoria" ng-options="categoria.nome for categoria in gastosCategoria">
-                <option value="">Selecione uma categoria</option>
-              </select>
-              <label>Categoria</label>
-            </div>
-
-            <div class="input-field col s6">
-              <input type="date" ng-model="reembolso.data" name="data" id="data" required>
-              <label for="data">Data</label>
-            </div>
-
-            <div class="input-field col s3">
-              <input id="valor" ng-model="reembolso.valor" type="text" required>
-              <label for="valor">Valor</label>
-            </div>
-
-            <div class="file-field input-field col s12">
-              <div class="btn button-upload">
-                <span>ADICIONAR ARQUIVO</span>
-                <input name="foo" type="file" accept="image/jpeg,image/gif,image/png,application/pdf,image" />
+            <form name="criaReembolsoForm">
+              <div class="input-field col s12">
+                <input id="nome" type="text" ng-model="reembolso.nome" class="validate" ng-required="true">
+                <label for="nome">Nome do reembolso</label>
               </div>
-              <div class="file-path-wrapper">
-                <input class="file-path validate" type="text">
+
+              <div class="input-field col s6">
+                <select ng-model="reembolso.categoria" ng-required="true" ng-options="categoria.nome for categoria in gastosCategoria">
+                  <option value="" disabled selected>Selecione uma categoria</option>
+                </select>
+                <label>Categoria</label>
               </div>
-            </div>
+
+              <div class="input-field col s6">
+                <input type="date" ng-model="reembolso.data" name="data" id="data" ng-required="true">
+                <label for="data">Data</label>
+              </div>
+
+              <div class="input-field col s3">
+                <input id="valor" ng-model="reembolso.valor" type="text">
+                <label for="valor">Valor</label>
+              </div>
+
+              <div class="file-field input-field col s12">
+                <div class="btn button-upload">
+                  <span>ADICIONAR ARQUIVO</span>
+                  <input name="foo" type="file" accept="image/jpeg,image/gif,image/png,application/pdf,image" />
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text">
+                </div>
+              </div>
+            </form>
           </div>
         </div>
         <div class="modal-footer">
@@ -135,8 +136,8 @@
                 <button id="esqueci" class="cancelar-button modal-action modal-close">CANCELAR</button>
             </div>
             <div class="col l3 offset-l3">
-                <button id="cadastrar" class="solicitar-button modal-action modal-close" 
-                    ng-disabled="!reembolso.nome || !reembolso.categoria || !reembolso.data" ng-click="salvaReembolso(reembolso)">SOLICITAR</button>
+              <button id="cadastrar" class="solicitar-button modal-action modal-close" 
+                  ng-disabled="criaReembolsoForm.$invalid" ng-click="salvaReembolso(reembolso)">SOLICITAR</button>
             </div>
           </div>
         </div>
