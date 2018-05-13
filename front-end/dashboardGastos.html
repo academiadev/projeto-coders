@@ -45,10 +45,10 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="gastosTotalUsuarioTabela in gastosTotalUsuario">
-                  <td>{{gastosTotalUsuarioTabela.usuario}}</td>
-                  <td>{{gastosTotalUsuarioTabela.valor}}</td>
-                  <td>{{gastosTotalUsuarioTabela.email}}</td>
+                <tr ng-repeat="gastos in gastosTotalUsuario">
+                  <td>{{gastos.usuario}}</td>
+                  <td>{{gastos.valor}}</td>
+                  <td>{{gastos.email}}</td>
                 </tr>
               </tbody>
             </table>
@@ -72,6 +72,8 @@
 
     <!-- JQuery -->
     <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <!-- JQuery Mask Money -->
+    <script type="text/javascript" src="js/jquery.maskMoney.min.js" charset="utf-8"></script>
     <!--JavaScript at end of body for optimized loading-->
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <!-- MDB core JavaScript -->
@@ -79,81 +81,81 @@
     <!-- Chart -->
     <script type="text/javascript" src="js/Chart.js"></script>
     <script>
-        var ctx = document.getElementById("myChart").getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ["Mai/18", "Jun/18", "Jul/18", "Ago/18", "Set/18", "Out/18", "Nov/18", "Dez/18", "Jan/19"],
-                datasets: [{
-                    label: 'Hospedagem',
-                    data: [126, 191, 152, 260, 390],
-                    backgroundColor: [
-                        'rgba(38, 135, 233, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(38, 135, 233,1)'
-                    ],
-                    borderWidth: 3,
-                    fill: false,
-                    lineTension: 0
-                },
-                {
-                    label: 'Transporte',
-                    data: [156, 185, 120, 160, 157],
-                    backgroundColor: [
-                        'rgba(255, 0, 255, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 0, 255,1)'
-                    ],
-                    borderWidth: 3,
-                    fill: false,
-                    lineTension: 0
-                },
-                {
-                    label: 'Alimentação',
-                    data: [132, 122.36, 269, 410, 201],
-                    backgroundColor: [
-                        'rgba(255, 125, 0, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 125, 0, 1)'
-                    ],
-                    borderWidth: 3,
-                    fill: false,
-                    lineTension: 0
-                },
-                {
-                    label: 'Outros',
-                    data: [169, 258, 360, 198, 340],
-                    backgroundColor: [
-                        'rgba(0, 255, 0, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(0, 255, 0, 1)'
-                    ],
-                    borderWidth: 3,
-                    fill: false,
-                    lineTension: 0
-                }]
+      var ctx = document.getElementById("myChart").getContext('2d');
+      var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: ["Mai/18", "Jun/18", "Jul/18", "Ago/18", "Set/18", "Out/18", "Nov/18", "Dez/18", "Jan/19"],
+              datasets: [{
+                  label: 'Hospedagem',
+                  data: [126, 191, 152, 260, 390],
+                  backgroundColor: [
+                      'rgba(38, 135, 233, 0.2)'
+                  ],
+                  borderColor: [
+                      'rgba(38, 135, 233,1)'
+                  ],
+                  borderWidth: 3,
+                  fill: false,
+                  lineTension: 0
+              },
+              {
+                  label: 'Transporte',
+                  data: [156, 185, 120, 160, 157],
+                  backgroundColor: [
+                      'rgba(255, 0, 255, 0.2)'
+                  ],
+                  borderColor: [
+                      'rgba(255, 0, 255,1)'
+                  ],
+                  borderWidth: 3,
+                  fill: false,
+                  lineTension: 0
+              },
+              {
+                  label: 'Alimentação',
+                  data: [132, 122.36, 269, 410, 201],
+                  backgroundColor: [
+                      'rgba(255, 125, 0, 0.2)'
+                  ],
+                  borderColor: [
+                      'rgba(255, 125, 0, 1)'
+                  ],
+                  borderWidth: 3,
+                  fill: false,
+                  lineTension: 0
+              },
+              {
+                  label: 'Outros',
+                  data: [169, 258, 360, 198, 340],
+                  backgroundColor: [
+                      'rgba(0, 255, 0, 0.2)'
+                  ],
+                  borderColor: [
+                      'rgba(0, 255, 0, 1)'
+                  ],
+                  borderWidth: 3,
+                  fill: false,
+                  lineTension: 0
+              }]
 
-            },
-            options: {
-              responsive: true,
-              scales: {
-                yAxes: [{
-                  display: true,
-                  ticks: {
-                      beginAtZero:true,
-                      callback: function(value, index, values) {
-                        return 'R$ ' + value;
-                      }
-                  }
-                }]
-              }
+          },
+          options: {
+            responsive: true,
+            scales: {
+              yAxes: [{
+                display: true,
+                ticks: {
+                    beginAtZero:true,
+                    callback: function(value, index, values) {
+                      return 'R$ ' + value;
+                    }
+                }
+              }]
             }
-        });
-        </script>
+          }
+      });
+    </script>
     <!-- AngularJS -->
     <script type="text/javascript" src="controller/dashboard.js"></script>
   </body>
