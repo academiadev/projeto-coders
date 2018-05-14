@@ -93,7 +93,7 @@
       <div class="modal fade" id="reembolsoModal">
         <div class="modal-content">
           <div class="row">
-            <h3 class="col s12">Cadastro Reembolso</h3>
+            <h4 class="col s12">Solicitar Reembolso</h4>
             <p class="col s12">Preencha as informações abaixo para solicitar reembolso:</p>  
             <form name="criaReembolsoForm">
               <div class="input-field col s12">
@@ -133,11 +133,11 @@
         <div class="modal-footer">
           <div class="row modal-action-buttons">
             <div class="col l3 offset-l3">
-                <button id="esqueci" class="cancelar-button modal-action modal-close">CANCELAR</button>
+                <p><a href="#" class="cancelar-button modal-action modal-close">CANCELAR</a></p>
             </div>
             <div class="col l3 offset-l3">
-              <button id="cadastrar" class="solicitar-button modal-action modal-close" 
-                  ng-disabled="criaReembolsoForm.$invalid" ng-click="salvaReembolso(reembolso)">SOLICITAR</button>
+              <p><a href="#" id="cadastrar" class="solicitar-button modal-action modal-close"
+                ng-disabled="criaReembolsoForm.$invalid" ng-click="salvaReembolso(reembolso)">SOLICITAR</a></p>
             </div>
           </div>
         </div>

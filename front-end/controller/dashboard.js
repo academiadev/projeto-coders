@@ -48,7 +48,8 @@ dashboardModulo.controller('dashboardController', function ($scope){
   }
 
   $scope.copiarCodigoEmpresa = function() {
-    //var codigoEmpresa = document.getElementById("codigoEmpresa");
+    var codigoEmpresa = document.getElementById("codigoEmpresa");
+    document.execCommand("copy");
     //pegar texto do botao e copiar pro clipboard
     M.toast({html: 'Código da empresa copiado!', classes: 'rounded'});
   }
