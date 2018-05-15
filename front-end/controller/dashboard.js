@@ -21,14 +21,15 @@ dashboardModulo.controller('dashboardController', function ($scope){
     {nome:'Outros', codigo: 4}
   ];
 
+  $scope.codigoEmpresa = {codigo: '10203'};
+
+  $scope.perfilLogado = {email: 'felipefuerback@hotmail.com', nome: 'Felipe C Fuerback'}
+
   $scope.setStatusReembolso = function(reembolsos, status) {
     var selecionados = reembolsos.filter(reembolso => reembolso.selecionado == true);
     selecionados.forEach(elemento => {
-      for(var i = 0; i < $scope.reembolsos.length; i++){
-        if($scope.reembolsos[i].id === elemento.id){
-          $scope.reembolsos[i].status = status;
-        }
-      }
+      elemento.status = status;
+      elemento.selecionado = false;
     });
   }
 
@@ -44,7 +45,12 @@ dashboardModulo.controller('dashboardController', function ($scope){
     $scope.reembolsos.push(
       angular.copy({descricao: reembolso.nome, status: 'waiting', valor: input.val().replace('R$', ''), categoria: reembolso.categoria.nome, usuario: 'Felipe', data: reembolso.data}
     ));
+    $scope.limparModal();
     delete $scope.reembolso;
+  }
+
+  $scope.limparModal = function(){
+    $('#formulario')[0].reset();
   }
 
   $scope.copiarCodigoEmpresa = function() {
@@ -61,13 +67,18 @@ dashboardModulo.controller('dashboardController', function ($scope){
   });
   
   $("#checkAll").click(function () {
-    console.log('1');
+    var selecionados = $scope.reembolsos.filter(reembolso => reembolso.selecionado == false);
+    selecionados.forEach(elemento => {
+      console.log('teste');
+      elemento.selecionado = true;
+    });
+    /*console.log('1');
     for(var i = 0; i < $scope.reembolsos.length; i++){
       console.log(this.checked);
       $scope.reembolsos[i].selecionado = this.checked;
     }
     console.log('3');
-    $('input:checkbox').not(this).prop('checked', this.checked);
+    $('input:checkbox').not(this).prop('checked', this.checked);*/
   });
 })
 
@@ -78,4 +89,7 @@ $(document).ready(function(){
   });
   $('.modal').modal();
 });
+
+/* Initialization to Clipboard */
+new ClipboardJS('.btn');
 
