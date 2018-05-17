@@ -10,7 +10,9 @@
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
     <!-- Your custom styles (optional) -->
-    <link href="css/dashboard.css" rel="stylesheet">
+    <link href="css/style-dashboard.css" rel="stylesheet">
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
     <!-- AngularJS -->
 	  <script type="text/javascript" src="js/angular.min.js"></script>
   </head>
@@ -22,7 +24,7 @@
         <nav>
           <div class="nav-wrapper">
             <a class="brand-logo">Reembolso</a>
-            <a href="#reembolso" class="sidenav-trigger" data-target="slide-out" ng-click="showSideNav()"><img src="images/menu.svg"></a>
+            <a href="#" data-activates="slide-out" class="menu-button"><img src="images/menu.svg"></a>
             <ul class="right hide-on-med-and-down">
               <li>
                 <button class="btn copiar-button" type="submit" ng-click="copiarCodigoEmpresa()" id="codigoEmpresa"
@@ -36,6 +38,19 @@
         </nav>
       </div>
     </header>
+
+    <!-- Sidenav Structure -->
+    <ul id="slide-out" class="side-nav">
+      <li><div class="user-view">
+        <a class="reembolso-perfil">Reembolso</a>
+        <a class="nome-perfil name">{{perfilLogado.nome}}</a>
+        <a class="email-perfil email">{{perfilLogado.email}}</a>
+      </div></li>
+      <li><a href="#"><img src="images/historico-solicitacoes.svg" class="sidenav-icons">Histórico e Solicitações</a></li>
+      <li><a href="#"><img src="images/dashboard.svg" class="sidenav-icons">Dashboard de Gastos</a></li>
+      <li><a href="#"><img src="images/perfil.svg" class="sidenav-icons">Perfil</a></li>
+      <li><a href="#"><img src="images/sair.svg" class="sidenav-icons">Sair</a></li>
+    </ul>
 
     <main>
       <div class="container">
@@ -52,8 +67,8 @@
               <tr>
                 <th scope="col">
                   <label>
-                    <input type="checkbox" class="filled-in" id="checkAll" />
-                    <span></span>
+                    <input type="checkbox" class="filled-in" id="filled-in-box"/>
+                    <label for="filled-in-box"></label>
                   </label>
                 </th>
                 <th>Reembolso</th>
@@ -67,14 +82,14 @@
               <tr ng-class="{selecionado: reembolso.selecionado}" ng-repeat="reembolso in reembolsos">
                 <td>
                   <label>
-                    <input type="checkbox" class="filled-in" ng-model="reembolso.selecionado" />
-                    <span></span>
+                    <input type="checkbox" class="filled-in" id="{{reembolso}}" ng-model="reembolso.selecionado" />
+                    <label for="{{reembolso}}"></label>
                   </label>
                 </td>
                 <td>{{reembolso.descricao}}</td>
                 <td><img ng-src="images/{{reembolso.status}}.svg" class="{{reembolso.status}}"></td>
                 <td>{{reembolso.valor}}</td>
-                <td>{{reembolso.categoria}}</td>
+                <td>{{reembolso.categoria.nome}}</td>
                 <td>{{reembolso.usuario}}</td>
               </tr>
             </tbody>
@@ -103,14 +118,14 @@
               </div>
 
               <div class="input-field col s6">
-                <select ng-model="reembolso.categoria" ng-required="true" ng-options="categoria.nome for categoria in gastosCategoria">
+                <select ng-model="reembolso.categoria" ng-required="true" ng-options="categoria.nome for categoria in categorias">
                   <option value="" disabled selected>Selecione uma categoria</option>
                 </select>
                 <label>Categoria</label>
               </div>
 
               <div class="input-field col s6">
-                <input type="date" ng-model="reembolso.data" name="data" id="data" ng-required="true">
+                <input type="text" class="datepicker" id="data" ng-required="true" ng-model="reembolso.data">
                 <label for="data">Data</label>
               </div>
 
@@ -145,29 +160,14 @@
       </div>
     </main>
 
-    <!-- Sidenav Structure -->
-    <ul id="slide-out" class="sidenav">
-      <li><div class="user-view">
-        <a class="reembolso-perfil">Reembolso</a>
-        <a class="nome-perfil name">{{perfilLogado.nome}}</a>
-        <a class="email-perfil email">{{perfilLogado.email}}</a>
-      </div></li>
-      <li><a href="#"><img src="images/historico-solicitacoes.svg" class="sidenav-icons">Histórico e Solicitações</a></li>
-      <li><a href="#"><img src="images/dashboard.svg" class="sidenav-icons">Dashboard de Gastos</a></li>
-      <li><a href="#"><img src="images/perfil.svg" class="sidenav-icons">Perfil</a></li>
-      <li><a href="#"><img src="images/sair.svg" class="sidenav-icons">Sair</a></li>
-    </ul>
-
-    <!-- JQuery -->
-    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
     <!-- JQuery Mask Money -->
     <script type="text/javascript" src="js/jquery.maskMoney.min.js" charset="utf-8"></script>
-    <!--JavaScript at end of body for optimized loading-->
+    <!-- Materialize -->
     <script type="text/javascript" src="js/materialize.min.js"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="js/mdb.min.js"></script>
     <!-- Clipboard -->
     <script type="text/javascript" src="js/clipboard.min.js"></script>
+    <!-- Initialization to Clipboard -->
+    <script>new ClipboardJS('.btn');</script>
     <!-- AngularJS -->
     <script type="text/javascript" src="controller/dashboard.js"></script>
   </body>
