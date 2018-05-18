@@ -11,6 +11,8 @@
     <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
     <!-- Your custom styles (optional) -->
     <link href="css/style-dashboard.css" rel="stylesheet">
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
     <!-- AngularJS -->
 	  <script type="text/javascript" src="js/angular.min.js"></script>
   </head>
@@ -58,21 +60,37 @@
             </div>
             <div class="md-form">
               <div class="button-redefinir col s12">
-                <a class="btn">REDEFINIR SENHA</a>
+                <a class="btn modal-trigger" href="#redefinirModal">REDEFINIR SENHA</a>
               </div>
             </div>          
           </form>
           <div class="right-align atualizar-group">
-            <p><a href="#" class="atualizar-button">ATUALIZAR</a></p>
+            <p><a href="#" class="atualizar-button" ng-click="atualizarPerfil()">ATUALIZAR</a></p>
           </div>
         </div>      
       </div>
     </main> 
 
-    
+    <!-- Modal Structure -->
+    <div class="modal fade" id="redefinirModal">
+      <div class="modal-content">
+        <div class="row">
+          <h4 class="col s12">Redefinir senha</h4>
+          <p class="col s12">Informe o email cadastrado para ser enviado o link:</p>  
+          <form name="redefinirForm" id="formulario">
+            <div class="input-field col s12">
+              <input id="email" type="email" class="validate" ng-model="redefinir.email" ng-required="true" autofocus>
+              <label for="email">E-mail</label>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn modal-action modal-close" ng-disabled="redefinirForm.$invalid">Enviar</button>
+        <button class="btn cancelar-button modal-action modal-close">Cancelar</button>
+      </div>
+    </div>
 
-    <!-- JQuery -->
-    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
     <!-- JQuery Mask Money -->
     <script type="text/javascript" src="js/jquery.maskMoney.min.js" charset="utf-8"></script>
     <!-- Materialize -->
