@@ -96,8 +96,8 @@
                 </div>
   
                 <div class="input-field col s6">
-                  <input type="date" ng-model="reembolso.data" name="data" id="data" ng-required="true">
-                  <label for="data"></label>
+                  <input type="text" class="datepicker" id="data" ng-required="true" ng-model="reembolso.data">
+                  <label for="data">Data</label>
                 </div>
   
                 <div class="input-field col s3">
@@ -120,7 +120,7 @@
           <div class="modal-footer">
             <div class="row modal-action-buttons">
               <div class="col l3 offset-l3">
-                  <p><a href="#" class="cancelar-button modal-action modal-close" ng-click="limparModal()">CANCELAR</a></p>
+                  <p><a href="#" class="solicitar-button modal-action modal-close" ng-click="limparModal()">CANCELAR</a></p>
               </div>
               <div class="col l3 offset-l3">
                 <p><a href="#" id="cadastrar" class="solicitar-button modal-action modal-close"

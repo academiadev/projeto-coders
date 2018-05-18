@@ -1,6 +1,12 @@
+@font-face {
+  font-family: 'roboto'; /*a name to be used later*/
+  src: url('../fonts/roboto/Roboto-Medium.woff') format('woff'); /*URL to font*/
+}
+
 html,
 body {
   height: 100%;
+  font-family: 'roboto';
 }
 body {
   -ms-flex-align: center;
