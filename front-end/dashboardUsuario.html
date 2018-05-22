@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="dashboardModulo">
+<html lang="en" ng-app="reembolsoModule">
   <head>
     <meta charset="utf-8">
     <!--Let browser know website is optimized for mobile-->
@@ -11,13 +11,20 @@
     <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
     <!-- Your custom styles (optional) -->
     <link href="css/style-dashboard.css" rel="stylesheet">
+
     <!-- JQuery -->
-    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/libs/jquery-3.2.1.min.js"></script>
     <!-- AngularJS -->
-	  <script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="js/libs/angular.min.js"></script>
+    <!-- JQuery Mask Money -->
+    <script type="text/javascript" src="js/libs/jquery.maskMoney.min.js" charset="utf-8"></script>
+    <!-- Materialize -->
+    <script type="text/javascript" src="js/libs/materialize.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/controllers/dashboard-usuario-controller.js"></script>
   </head>
 
-  <body ng-controller="dashboardController">
+  <body ng-controller="DashboardUsuarioController">
 
     <header>
       <div class="navbar-fixed">
@@ -34,8 +41,8 @@
     <ul id="slide-out" class="side-nav">
       <li><div class="user-view">
         <a class="reembolso-perfil">Reembolso</a>
-        <a class="nome-perfil name">{{perfilLogado.nome}}</a>
-        <a class="email-perfil email">{{perfilLogado.email}}</a>
+        <a class="nome-perfil name">{{perfil.nome}}</a>
+        <a class="email-perfil email">{{perfil.email}}</a>
       </div></li>
       <li><a href="#"><img src="images/historico-solicitacoes.svg" class="sidenav-icons">Histórico e Solicitações</a></li>
       <li><a href="#"><img src="images/dashboard.svg" class="sidenav-icons">Dashboard de Gastos</a></li>
@@ -84,26 +91,28 @@
               <p class="col s12">Preencha as informações abaixo para solicitar reembolso:</p>  
               <form name="criaReembolsoForm" id="formulario">
                 <div class="input-field col s12">
-                  <input id="nome" type="text" ng-model="reembolso.nome" ng-required="true">
+                  <input id="nome" type="text" ng-model="cadastro.nome" ng-required="true">
                   <label for="nome">Nome do reembolso</label>
                 </div>
   
                 <div class="input-field col s6">
-                  <select id="select" ng-model="reembolso.categoria" ng-required="true" ng-options="categoria.nome for categoria in categorias">
+                  <select id="select" ng-model="cadastro.categoria" ng-required="true" ng-options="categoria.nome for categoria in categorias">
                     <option value="" disabled selected>Selecione uma categoria</option>
                   </select>
                   <label for="select">Categoria</label>
                 </div>
   
                 <div class="input-field col s6">
-                  <input type="text" class="datepicker" id="data" ng-required="true" ng-model="reembolso.data">
+                  <input type="text" class="datepicker" id="data" ng-required="true" ng-model="cadastro.data">
                   <label for="data">Data</label>
                 </div>
   
                 <div class="input-field col s3">
-                  <input id="valor" ng-model="reembolso.valor" type="text">
+                  <input id="valor" ng-model="cadastro.valor" type="text">
                   <label for="valor">Valor</label>
                 </div>
+
+                {{cadastro}}
   
                 <div class="file-field input-field col s12">
                   <div class="btn button-upload">
@@ -124,18 +133,12 @@
               </div>
               <div class="col l3 offset-l3">
                 <p><a href="#" id="cadastrar" class="solicitar-button modal-action modal-close"
-                  ng-disabled="criaReembolsoForm.$invalid" ng-click="salvaReembolso(reembolso)">SOLICITAR</a></p>
+                   ng-click="salvaReembolsoUser(cadastro)">SOLICITAR</a></p>
               </div>
             </div>
           </div>
         </div>
     </main>
 
-    <!-- Materialize -->
-    <script type="text/javascript" src="js/materialize.min.js"></script>
-    <!-- JQuery Mask Money -->
-    <script type="text/javascript" src="js/jquery.maskMoney.min.js" charset="utf-8"></script>
-    <!-- AngularJS -->
-    <script type="text/javascript" src="controller/dashboard.js"></script>
   </body>
 </html>

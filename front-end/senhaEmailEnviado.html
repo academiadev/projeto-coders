@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="reembolsoModule">
   <head>
     <meta charset="utf-8">
     <!--Let browser know website is optimized for mobile-->
@@ -11,23 +11,28 @@
     <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
     <!-- Your custom styles (optional) -->
     <link href="css/style-forms.css" rel="stylesheet">
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/libs/jquery-3.2.1.min.js"></script>
+    <!-- AngularJS -->
+    <script type="text/javascript" src="js/libs/angular.min.js"></script>
+    <!-- Materizlize -->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/controllers/email-enviado-controller.js"></script>
   </head>
 
-  <body>
+  <body ng-controller="EmailEnviadoController">
     <div class="container">
       <div class="signin col-md-4 offset-md-4">
         <h3 class="title">E-mail de redefinição de senha enviado!</h3>
         <form class="form-default">
           <div>
-            <p class="redefinir-informacao">Um link para redefinir seua senha foi enviada para o e-mail gutavo.comitre@codenation.com.br</p>
+            <p class="redefinir-informacao">Um link para redefinir sua senha foi enviada para {{email.address}}</p>
           </div>           
         </form>
       </div>
     </div>
 
-    <!-- JQuery -->
-    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-    <!-- Materizlize -->
-    <script type="text/javascript" src="js/materialize.min.js"></script>
   </body>
 </html>
