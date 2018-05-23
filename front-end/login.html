@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="reembolsoModule">
   <head>
     <meta charset="utf-8">
     <!--Let browser know website is optimized for mobile-->
@@ -11,24 +11,31 @@
     <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
     <!-- Your custom styles (optional) -->
     <link href="css/style-forms.css" rel="stylesheet">
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/libs/jquery-3.2.1.min.js"></script>
     <!-- AngularJS -->
-    <script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="js/libs/angular.min.js"></script>
+    <!-- Materialize -->
+    <script type="text/javascript" src="js/libs/materialize.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/controllers/login-controller.js"></script>
   </head>
 
-  <body>
+  <body ng-controller="LoginController">
     <div class="container">
       <div class="signin col-md-4 offset-md-4">
         <h3 class="title">Reembolso</h3>
         <form class="form-default">
           <div class="md-form">
             <div class="input-field col s12">
-              <input id="email" type="email" class="validate" x-webkit-speech required autofocus>
+              <input id="email" type="email" class="validate" ng-model="login.email" x-webkit-speech required autofocus>
               <label for="email">E-mail</label>
             </div>
           </div>
           <div class="md-form">
             <div class="input-field col s12">
-              <input id="senha" type="password" class="validate" required>
+              <input id="senha" type="password" class="validate" ng-model="login.senha" required>
               <label for="senha">Senha</label>
             </div>
           </div>
@@ -41,15 +48,11 @@
             <p><a href="redefinirSenha.html" class="esqueci-button">ESQUECI MINHA SENHA</a></p>
           </div>
           <div class="col l6 right-align">
-            <p><a href="cadastrarUsuario.html" class="cadastrar-button">QUERO ME CADASTRAR</a></p>
+            <p><a href="cadastroUsuario.html" class="cadastrar-button">QUERO ME CADASTRAR</a></p>
           </div>
         </div> 
       </div>
     </div>
 
-    <!-- JQuery -->
-    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-    <!-- Materialize -->
-    <script type="text/javascript" src="js/materialize.min.js"></script>
   </body>
 </html>

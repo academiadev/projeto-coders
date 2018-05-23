@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="dashboardModulo">
+<html lang="en" ng-app="reembolsoModule">
   <head>
     <meta charset="utf-8">
     <!--Let browser know website is optimized for mobile-->
@@ -11,13 +11,22 @@
     <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
     <!-- Your custom styles (optional) -->
     <link href="css/style-dashboard.css" rel="stylesheet">
+
     <!-- JQuery -->
-    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/libs/jquery-3.2.1.min.js"></script>
     <!-- AngularJS -->
-	  <script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="js/libs/angular.min.js"></script>
+    <!-- JQuery Mask Money -->
+    <script type="text/javascript" src="js/libs/jquery.maskMoney.min.js" charset="utf-8"></script>
+    <!-- Clipboard -->
+    <script type="text/javascript" src="js/libs/clipboard.min.js"></script>
+    <!-- Materialize -->
+    <script type="text/javascript" src="js/libs/materialize.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/controllers/dashboard-admin-controller.js"></script>
   </head>
 
-  <body ng-controller="dashboardController">
+  <body ng-controller="DashboardAdminController">
 
     <header>
       <div class="navbar-fixed">
@@ -43,8 +52,8 @@
     <ul id="slide-out" class="side-nav">
       <li><div class="user-view">
         <a class="reembolso-perfil">Reembolso</a>
-        <a class="nome-perfil name">{{perfilLogado.nome}}</a>
-        <a class="email-perfil email">{{perfilLogado.email}}</a>
+        <a class="nome-perfil name">{{perfil.nome}}</a>
+        <a class="email-perfil email">{{perfil.email}}</a>
       </div></li>
       <li><a href="#"><img src="images/historico-solicitacoes.svg" class="sidenav-icons">Histórico e Solicitações</a></li>
       <li><a href="#"><img src="images/dashboard.svg" class="sidenav-icons">Dashboard de Gastos</a></li>
@@ -94,10 +103,8 @@
               </div>
 
               <div class="input-field col s6">
-                <select disabled>
-                  <option value="">{{categorias[1].nome}}</option>
-                </select>
-                <label>Categoria</label>
+                <input disabled id="categoria" type="text" placeholder="" ng-model="reembolsoAtual.categoria.nome" ng-required="true">
+                <label class="active" for="categoria">Categoria</label>
               </div>
 
               <div class="input-field col s6">
@@ -138,15 +145,5 @@
       </div>
     </main>
 
-    <!-- JQuery Mask Money -->
-    <script type="text/javascript" src="js/jquery.maskMoney.min.js" charset="utf-8"></script>
-    <!-- Materialize -->
-    <script type="text/javascript" src="js/materialize.min.js"></script>
-    <!-- Clipboard -->
-    <script type="text/javascript" src="js/clipboard.min.js"></script>
-    <!-- Initialization to Clipboard -->
-    <script>new ClipboardJS('.btn');</script>
-    <!-- AngularJS -->
-    <script type="text/javascript" src="controller/dashboard.js"></script>
   </body>
 </html>
