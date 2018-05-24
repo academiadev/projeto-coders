@@ -1,43 +1,89 @@
 package br.com.academiadev.projetocoders.backend.model;
 
-import javax.persistence.*;
+import java.util.List;
 
-@Table(name = "funcionario")
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+@Table(name = "empresa")
 @Entity
 public class Empresa {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column
+	private Long id;
 
-    @Column
-    private String nome;
+	@Column
+	@NotNull
+	private String nome;
 
-    @Column
-    private Integer cnpj;
+	@Column
+	@NotNull
+	private String email;
 
-    public Long getId() {
-        return id;
-    }
+	@Column
+	@NotNull
+	private Long codigo;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	@Column
+	@NotNull
+	private String senha;
 
-    public String getNome() {
-        return nome;
-    }
+	@ManyToOne
+	private List<Funcionario> funcionarios;
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public Long getCodigo() {
+		return codigo;
+	}
 
-    public Integer getCnpj() {
-        return cnpj;
-    }
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
+	}
 
-    public void setCnpj(Integer cnpj) {
-        this.cnpj = cnpj;
-    }
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public List<Funcionario> getFuncionarios() {
+		return funcionarios;
+	}
+
+	public void setFuncionarios(List<Funcionario> funcionarios) {
+		this.funcionarios = funcionarios;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 }
