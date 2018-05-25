@@ -1,12 +1,12 @@
 package br.com.academiadev.projetocoders.backend.model;
 
-public enum Statusreembolso {
+public enum StatusReembolso {
 	AGUARDANDO("AGUARDANDO", "aguardando"), APROVADO("APROVADO", "aprovado"), RECUSADO("RECUSADO", "recusado");
 
 	private String id;
 	private String descricao;
 
-	private Statusreembolso(String id, String descricao) {
+	private StatusReembolso(String id, String descricao) {
 		this.id = id;
 		this.descricao = descricao;
 	}

@@ -32,19 +32,15 @@ public class Funcionario {
 	@Column
 	private String email;
 
-	@Column
-	@NotNull
-	private String login;
-
-	@OneToMany(mappedBy = "funcionario")
+	@ManyToOne
 	private Empresa empresa;
 
 	@Column
 	@NotNull
 	private String senha;
 
-	@ManyToOne
-	List<Reembolso> reembolsos;
+	@OneToMany(mappedBy = "funcionario")
+	private List<Reembolso> reembolsos;
 
 	@Column
 	private LocalDate dataCadastro;
@@ -95,14 +91,6 @@ public class Funcionario {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
 	}
 
 	public String getSenha() {
