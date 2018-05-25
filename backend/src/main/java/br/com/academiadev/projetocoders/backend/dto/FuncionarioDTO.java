@@ -8,8 +8,6 @@ public class FuncionarioDTO {
 
 	private String email;
 
-	private String login;
-
 	private EmpresaDTO empresa;
 
 	private String senha;
@@ -30,14 +28,6 @@ public class FuncionarioDTO {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
 	}
 
 	public EmpresaDTO getEmpresa() {

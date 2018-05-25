@@ -17,7 +17,7 @@ public class ReembolsoController {
 
 	@PostMapping("/cadastrarReembolso")
 	public void cadastrarReembolso(@RequestBody ReembolsoDTO reembolsoDTO, @RequestParam String nomeFuncionario) {
-		reembolsoService.CadastrarReembolso(reembolsoDTO, nomeFuncionario);
+		reembolsoService.Cadastrar(reembolsoDTO, nomeFuncionario);
 	}
 
 }

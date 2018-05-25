@@ -1,5 +1,6 @@
 package br.com.academiadev.projetocoders.backend.converter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -43,6 +44,7 @@ public class ReembolsoConverter implements Converter<Reembolso, ReembolsoDTO> {
 		reembolso.setData(data);
 		
 		reembolso.setDataEnviado(LocalDate.now());
+		reembolso.setValor(new BigDecimal(dto.getValor()));
 		
 		reembolso.setDescricao(dto.getDescricao());
 		reembolso.setStatus(statusConverter.toEntity(dto.getStatus()));

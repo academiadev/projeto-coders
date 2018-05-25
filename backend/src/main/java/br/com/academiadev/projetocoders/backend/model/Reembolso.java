@@ -43,7 +43,7 @@ public class Reembolso {
 	@Column
 	private LocalDate dataRespondido;
 
-	@Column(precision = 2)
+	@Column
 	private BigDecimal valor;
 
 	@Enumerated(EnumType.ORDINAL)
