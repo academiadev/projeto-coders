@@ -1,18 +1,22 @@
 package br.com.academiadev.projetocoders.reembolsocoders.dto;
 
-import java.time.LocalDate;
-
 public class FuncionarioDTO {
 
 	private String nome;
 
 	private String email;
 
-	private EmpresaDTO empresa;
+	private Long idEmpresa;
 
 	private String senha;
+	
+	public Long getIdEmpresa() {
+		return idEmpresa;
+	}
 
-	private LocalDate dataCadastro;
+	public void setIdEmpresa(Long id_empresa) {
+		this.idEmpresa = id_empresa;
+	}
 
 	public String getNome() {
 		return nome;
@@ -30,28 +34,12 @@ public class FuncionarioDTO {
 		this.email = email;
 	}
 
-	public EmpresaDTO getEmpresa() {
-		return empresa;
-	}
-
-	public void setEmpresa(EmpresaDTO empresa) {
-		this.empresa = empresa;
-	}
-
 	public String getSenha() {
 		return senha;
 	}
 
 	public void setSenha(String senha) {
 		this.senha = senha;
-	}
-
-	public LocalDate getDataCadastro() {
-		return dataCadastro;
-	}
-
-	public void setDataCadastro(LocalDate dataCadastro) {
-		this.dataCadastro = dataCadastro;
 	}
 
 }

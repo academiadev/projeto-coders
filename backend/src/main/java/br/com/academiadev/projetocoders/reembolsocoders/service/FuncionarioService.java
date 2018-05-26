@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.academiadev.projetocoders.reembolsocoders.converter.FuncionarioConverter;
-import br.com.academiadev.projetocoders.reembolsocoders.dto.EmpresaDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.FuncionarioDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.EmpresaNaoEncontradaException;
 import br.com.academiadev.projetocoders.reembolsocoders.model.Empresa;
@@ -34,16 +33,6 @@ public class FuncionarioService {
 		funcionario.setEmpresa(empresa);
 		
 		funcionarioRepository.save(funcionario);
-	}
-	
-	public FuncionarioDTO CriarFuncionarioDTO(EmpresaDTO empresaDTO) {
-		FuncionarioDTO funcionarioDTO = new FuncionarioDTO();
-		funcionarioDTO.setEmpresa(empresaDTO);
-		funcionarioDTO.setEmail("funcionario@gmail.com");
-		funcionarioDTO.setNome("Felipe");
-		funcionarioDTO.setSenha("123");
-		
-		return funcionarioDTO;
 	}
 
 }
