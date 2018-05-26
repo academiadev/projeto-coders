@@ -21,14 +21,5 @@ public class EmpresaService {
 		Empresa empresa = empresaConverter.toEntity(empresaDTO);		
 		empresaRepository.save(empresa);
 	}
-	
-	public EmpresaDTO CriarEmpresaDTO() {
-		EmpresaDTO empresaDTO = new EmpresaDTO();
-		empresaDTO.setCodigo(1010l);
-		empresaDTO.setEmail("empresa@gmail.com");
-		empresaDTO.setNome("Empresa");
-		empresaDTO.setSenha("123");
-		
-		return empresaDTO;
-	}
+
 }

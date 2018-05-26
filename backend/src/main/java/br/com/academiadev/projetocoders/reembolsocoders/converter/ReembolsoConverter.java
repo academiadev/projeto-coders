@@ -8,13 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.com.academiadev.projetocoders.reembolsocoders.dto.ReembolsoDTO;
+import br.com.academiadev.projetocoders.reembolsocoders.model.Funcionario;
 import br.com.academiadev.projetocoders.reembolsocoders.model.Reembolso;
 
 @Component
 public class ReembolsoConverter implements Converter<Reembolso, ReembolsoDTO> {
-	
-	@Autowired
-	private FuncionarioConverter funcionarioConverter;
 	
 	@Autowired
 	private StatusConverter statusConverter;
@@ -26,7 +24,7 @@ public class ReembolsoConverter implements Converter<Reembolso, ReembolsoDTO> {
 		dto.setCategoria(entity.getCategoria());
 		dto.setData(entity.getData().toString());
 		dto.setDescricao(entity.getDescricao());
-		dto.setFuncionario(funcionarioConverter.toDTO(entity.getFuncionario()));
+		dto.setIdFuncionario(entity.getFuncionario().getId());
 		dto.setStatus(statusConverter.toDTO(entity.getStatus()));
 		dto.setValor(entity.getValor().toString());
 		return dto;
@@ -42,9 +40,12 @@ public class ReembolsoConverter implements Converter<Reembolso, ReembolsoDTO> {
 		LocalDate data = LocalDate.parse(dto.getData(), formatter);		
 		reembolso.setData(data);
 		
-		reembolso.setDataEnviado(LocalDate.now());
-		reembolso.setValor(new BigDecimal(dto.getValor()));
+		Funcionario funcionario = new Funcionario();
+		funcionario.setId(dto.getIdFuncionario());
+		reembolso.setFuncionario(funcionario);
 		
+		reembolso.setDataEnviado(LocalDate.now());
+		reembolso.setValor(new BigDecimal(dto.getValor()));		
 		reembolso.setDescricao(dto.getDescricao());
 		reembolso.setStatus(statusConverter.toEntity(dto.getStatus()));
 		

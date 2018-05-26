@@ -23,9 +23,6 @@ public class Funcionario {
 	private Long id;
 
 	@Column
-	private Integer cpf;
-
-	@Column
 	@NotNull
 	private String nome;
 
@@ -67,14 +64,6 @@ public class Funcionario {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Integer getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(Integer cpf) {
-		this.cpf = cpf;
 	}
 
 	public String getNome() {

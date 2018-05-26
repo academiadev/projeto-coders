@@ -1,16 +1,15 @@
 package br.com.academiadev.projetocoders.reembolsocoders.converter;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.time.LocalDate;
+
 import org.springframework.stereotype.Component;
 
 import br.com.academiadev.projetocoders.reembolsocoders.dto.FuncionarioDTO;
+import br.com.academiadev.projetocoders.reembolsocoders.model.Empresa;
 import br.com.academiadev.projetocoders.reembolsocoders.model.Funcionario;
 
 @Component
 public class FuncionarioConverter implements Converter<Funcionario, FuncionarioDTO> {
-	
-	@Autowired
-	private EmpresaConverter empresaConverter;
 
 	@Override
 	public FuncionarioDTO toDTO(Funcionario entity) {
@@ -18,7 +17,7 @@ public class FuncionarioConverter implements Converter<Funcionario, FuncionarioD
 		dto.setEmail(entity.getEmail());
 		dto.setNome(entity.getNome());
 		dto.setSenha(entity.getSenha());
-		dto.setEmpresa(empresaConverter.toDTO(entity.getEmpresa()));
+		dto.setIdEmpresa(entity.getEmpresa().getId());
 		return dto;
 	}
 
@@ -28,7 +27,10 @@ public class FuncionarioConverter implements Converter<Funcionario, FuncionarioD
 		funcionario.setEmail(dto.getEmail());
 		funcionario.setNome(dto.getNome());
 		funcionario.setSenha(dto.getSenha());
-		funcionario.setEmpresa(empresaConverter.toEntity(dto.getEmpresa()));
+		Empresa empresa = new Empresa();
+		empresa.setId(dto.getIdEmpresa());
+		funcionario.setEmpresa(empresa);
+		funcionario.setDataCadastro(LocalDate.now());
 		return funcionario;
 	}
 

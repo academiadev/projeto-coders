@@ -12,11 +12,19 @@ public class ReembolsoDTO {
 
 	private StatusDTO status;
 
-	private FuncionarioDTO funcionario;
+	private Long idFuncionario;
 
 	private String arquivoPath;
 
 	private String valor;
+	
+	public Long getIdFuncionario() {
+		return idFuncionario;
+	}
+
+	public void setIdFuncionario(Long id_funcionario) {
+		this.idFuncionario = id_funcionario;
+	}
 
 	public String getValor() {
 		return valor;
@@ -64,14 +72,6 @@ public class ReembolsoDTO {
 
 	public void setStatus(StatusDTO status) {
 		this.status = status;
-	}
-
-	public FuncionarioDTO getFuncionario() {
-		return funcionario;
-	}
-
-	public void setFuncionario(FuncionarioDTO funcionario) {
-		this.funcionario = funcionario;
 	}
 
 	public String getArquivoPath() {

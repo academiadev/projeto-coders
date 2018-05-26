@@ -38,6 +38,14 @@ public class Empresa {
 
 	@OneToMany(mappedBy = "empresa")
 	private List<Funcionario> funcionarios;
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public Long getCodigo() {
 		return codigo;
