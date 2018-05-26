@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import br.com.academiadev.projetocoders.backend.dto.EmpresaDTO;
 import br.com.academiadev.projetocoders.backend.dto.FuncionarioDTO;
 import br.com.academiadev.projetocoders.backend.dto.ReembolsoDTO;
+import br.com.academiadev.projetocoders.backend.exception.EmpresaNaoEncontradaException;
 import br.com.academiadev.projetocoders.backend.service.EmpresaService;
 import br.com.academiadev.projetocoders.backend.service.FuncionarioService;
 import br.com.academiadev.projetocoders.backend.service.ReembolsoService;
@@ -27,15 +28,15 @@ public class BackendApplicationTests {
 	private EmpresaService empresaService;
 
 	@Test
-	public void CadastroInicial() {
+	public void CadastroInicial() throws EmpresaNaoEncontradaException {
 		EmpresaDTO empresaDTO = empresaService.CriarEmpresaDTO();
-		empresaService.CadastrarEmpresa(empresaDTO);
+		empresaService.Cadastrar(empresaDTO);
 		
 		FuncionarioDTO funcionarioDTO = funcionarioService.CriarFuncionarioDTO(empresaDTO);
-		funcionarioService.CadastrarFuncionario(funcionarioDTO, empresaDTO.getCodigo());
+		funcionarioService.Cadastrar(funcionarioDTO, empresaDTO.getCodigo());
 		
 		ReembolsoDTO reembolsoDTO = reembolsoService.CriarReembolsoDTO(funcionarioDTO);
-		reembolsoService.CadastrarReembolso(reembolsoDTO, funcionarioDTO.getNome());
+		reembolsoService.Cadastrar(reembolsoDTO, funcionarioDTO.getNome());
 	}
 
 }

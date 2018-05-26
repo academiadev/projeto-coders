@@ -24,7 +24,7 @@ public class ReembolsoService {
 	@Autowired
 	private ReembolsoRepository reembolsoRepository;
 
-	public void CadastrarReembolso(ReembolsoDTO reembolsoDTO, String nomeFuncionario) {
+	public void Cadastrar(ReembolsoDTO reembolsoDTO, String nomeFuncionario) {
 		Reembolso reembolso = reembolsoConverter.toEntity(reembolsoDTO);
 		
 		Funcionario funcionario = funcionarioRepository.findByNome(nomeFuncionario);
@@ -40,6 +40,7 @@ public class ReembolsoService {
 		reembolsoDTO.setData("23/04/2018 15:50");
 		reembolsoDTO.setDescricao("Almoço");
 		reembolsoDTO.setFuncionario(funcionarioDTO);
+		reembolsoDTO.setValor("500.65");
 		
 		StatusDTO statusDTO = new StatusDTO();
 		statusDTO.setStatus("AGUARDANDO");

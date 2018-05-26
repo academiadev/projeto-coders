@@ -16,7 +16,7 @@ public class EmpresaController {
 	
 	@PostMapping("/cadastrarEmpresa")
 	public void cadastrarEmpresa(@RequestBody EmpresaDTO empresaDTO) {
-		empresaService.CadastrarEmpresa(empresaDTO);
+		empresaService.Cadastrar(empresaDTO);
 	}
 
 }

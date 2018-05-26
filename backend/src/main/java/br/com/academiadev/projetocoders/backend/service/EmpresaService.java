@@ -17,7 +17,7 @@ public class EmpresaService {
 	@Autowired
 	private EmpresaConverter empresaConverter;
 	
-	public void CadastrarEmpresa(EmpresaDTO empresaDTO) {
+	public void Cadastrar(EmpresaDTO empresaDTO) {
 		Empresa empresa = empresaConverter.toEntity(empresaDTO);		
 		empresaRepository.save(empresa);
 	}
