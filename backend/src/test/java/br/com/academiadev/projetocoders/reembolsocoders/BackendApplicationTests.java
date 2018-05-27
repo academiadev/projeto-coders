@@ -9,7 +9,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.EmpresaDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.FuncionarioDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.ReembolsoDTO;
-import br.com.academiadev.projetocoders.reembolsocoders.dto.StatusDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.EmpresaNaoEncontradaException;
 import br.com.academiadev.projetocoders.reembolsocoders.repository.EmpresaRepository;
 import br.com.academiadev.projetocoders.reembolsocoders.repository.FuncionarioRepository;
@@ -42,10 +41,10 @@ public class BackendApplicationTests {
 		empresaService.Cadastrar(empresaDTO);
 
 		FuncionarioDTO funcionarioDTO = CriarFuncionarioDTO(empresaDTO);
-		funcionarioService.Cadastrar(funcionarioDTO, empresaDTO.getCodigo());
+		funcionarioService.Cadastrar(funcionarioDTO);
 
 		ReembolsoDTO reembolsoDTO = CriarReembolsoDTO(funcionarioDTO);
-		reembolsoService.Cadastrar(reembolsoDTO, funcionarioDTO.getNome());
+		reembolsoService.Cadastrar(reembolsoDTO);
 	}
 
 	public FuncionarioDTO CriarFuncionarioDTO(EmpresaDTO empresaDTO) {
@@ -66,10 +65,7 @@ public class BackendApplicationTests {
 		reembolsoDTO.setDescricao("Almoço");
 		reembolsoDTO.setIdFuncionario(funcionarioRepository.findByNome(funcionarioDTO.getNome()).getId());
 		reembolsoDTO.setValor("500.65");
-
-		StatusDTO statusDTO = new StatusDTO();
-		statusDTO.setStatus("AGUARDANDO");
-		reembolsoDTO.setStatus(statusDTO);
+		reembolsoDTO.setStatus("AGUARDANDO");
 
 		return reembolsoDTO;
 	}

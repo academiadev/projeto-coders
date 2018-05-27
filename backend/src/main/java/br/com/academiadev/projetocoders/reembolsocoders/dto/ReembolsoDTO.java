@@ -2,15 +2,13 @@ package br.com.academiadev.projetocoders.reembolsocoders.dto;
 
 public class ReembolsoDTO {
 
-	private Long id;
-
 	private String descricao;
 
 	private String categoria;
 
 	private String data;
 
-	private StatusDTO status;
+	private String status;
 
 	private Long idFuncionario;
 
@@ -32,14 +30,6 @@ public class ReembolsoDTO {
 
 	public void setValor(String valor) {
 		this.valor = valor;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getDescricao() {
@@ -66,11 +56,11 @@ public class ReembolsoDTO {
 		this.data = data;
 	}
 
-	public StatusDTO getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(StatusDTO status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

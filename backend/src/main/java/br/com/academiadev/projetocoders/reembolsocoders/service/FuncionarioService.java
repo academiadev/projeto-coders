@@ -23,10 +23,11 @@ public class FuncionarioService {
 	@Autowired
 	private EmpresaRepository empresaRepository;
 	
-	public void Cadastrar(FuncionarioDTO funcionarioDTO, Long codigoEmpresa) throws EmpresaNaoEncontradaException {
+	public void Cadastrar(FuncionarioDTO funcionarioDTO) throws EmpresaNaoEncontradaException {
 		Funcionario funcionario = funcionarioConverter.toEntity(funcionarioDTO);
 		
-		Empresa empresa = empresaRepository.findByCodigo(codigoEmpresa);
+//		Empresa empresa = empresaRepository.findByCodigo(codigoEmpresa);
+		Empresa empresa = empresaRepository.findOne(funcionarioDTO.getIdEmpresa());
 		if(empresa == null) {
 			throw new EmpresaNaoEncontradaException();
 		}
