@@ -22,10 +22,10 @@ public class ReembolsoService {
 	@Autowired
 	private ReembolsoRepository reembolsoRepository;
 
-	public void Cadastrar(ReembolsoDTO reembolsoDTO, String nomeFuncionario) {
+	public void Cadastrar(ReembolsoDTO reembolsoDTO) {
 		Reembolso reembolso = reembolsoConverter.toEntity(reembolsoDTO);
 		
-		Funcionario funcionario = funcionarioRepository.findByNome(nomeFuncionario);
+		Funcionario funcionario = funcionarioRepository.findOne(reembolsoDTO.getIdFuncionario());
 		reembolso.setFuncionario(funcionario);
 		
 		reembolsoRepository.save(reembolso);
