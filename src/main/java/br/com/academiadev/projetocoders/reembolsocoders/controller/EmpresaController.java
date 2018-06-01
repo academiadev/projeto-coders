@@ -3,6 +3,7 @@ package br.com.academiadev.projetocoders.reembolsocoders.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.academiadev.projetocoders.reembolsocoders.dto.EmpresaDTO;
@@ -17,6 +18,11 @@ public class EmpresaController {
 	@PostMapping("/cadastrarEmpresa")
 	public void cadastrarEmpresa(@RequestBody EmpresaDTO empresaDTO) {
 		empresaService.Cadastrar(empresaDTO);
+	}
+	
+	@PostMapping("/editarEmpresa")
+	public void editarEmpresa(@RequestBody EmpresaDTO empresaDTO, @RequestParam Long empresaId) {
+		empresaService.Editar(empresaDTO, empresaId);
 	}
 
 }

@@ -31,6 +31,6 @@ public class FuncionarioController {
 	
 	@PostMapping("/editarFuncionario")
 	public void editarFuncionario(@RequestBody FuncionarioDTO funcionarioDTO, @RequestParam Long funcionarioId) {
-		funcionarioService.EditarFuncionario(funcionarioDTO, funcionarioId);
+		funcionarioService.Editar(funcionarioDTO, funcionarioId);
 	}
 }

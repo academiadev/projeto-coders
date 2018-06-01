@@ -21,5 +21,12 @@ public class EmpresaService {
 		Empresa empresa = empresaConverter.toEntity(empresaDTO);		
 		empresaRepository.save(empresa);
 	}
+	
+	public void Editar(EmpresaDTO empresaDTO, Long empresaId) {
+		Empresa empresa = empresaRepository.findOne(empresaId);
+		empresa.setEmail(empresaDTO.getEmail());
+		empresa.setNome(empresaDTO.getNome());
+		empresaRepository.save(empresa);
+	}
 
 }

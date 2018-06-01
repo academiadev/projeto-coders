@@ -49,7 +49,7 @@ public class FuncionarioService {
 		return listFuncionarioDTO;
 	}
 	
-	public void EditarFuncionario(FuncionarioDTO funcionarioDTO, Long funcionarioId) {
+	public void Editar(FuncionarioDTO funcionarioDTO, Long funcionarioId) {
 		Funcionario funcionario = funcionarioRepository.findOne(funcionarioId);
 		funcionario.setEmail(funcionarioDTO.getEmail());
 		funcionario.setNome(funcionarioDTO.getNome());
