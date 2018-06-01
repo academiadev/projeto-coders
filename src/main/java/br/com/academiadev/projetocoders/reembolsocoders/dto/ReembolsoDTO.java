@@ -15,7 +15,7 @@ public class ReembolsoDTO {
 	private String arquivoPath;
 
 	private String valor;
-	
+
 	public Long getIdFuncionario() {
 		return idFuncionario;
 	}

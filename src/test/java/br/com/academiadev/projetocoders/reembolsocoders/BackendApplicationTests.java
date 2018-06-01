@@ -46,6 +46,21 @@ public class BackendApplicationTests {
 		ReembolsoDTO reembolsoDTO = CriarReembolsoDTO(funcionarioDTO);
 		reembolsoService.Cadastrar(reembolsoDTO);
 	}
+	
+	@Test
+	public void AlteraStatusReembolso() {
+		reembolsoService.AlterarStatus(3l, "RECUSADO");
+	}
+	
+	@Test
+	public void ListarReembolsosFuncionario() {
+		reembolsoService.ListaReembolsosFuncionario(2l);
+	}
+	
+	@Test
+	public void ListarFuncionariosEmpresa() {
+		funcionarioService.ListaFuncionariosEmpresa(1l);
+	}
 
 	public FuncionarioDTO CriarFuncionarioDTO(EmpresaDTO empresaDTO) {
 		FuncionarioDTO funcionarioDTO = new FuncionarioDTO();
