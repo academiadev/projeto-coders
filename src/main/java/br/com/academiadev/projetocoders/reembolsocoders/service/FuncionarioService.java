@@ -1,5 +1,8 @@
 package br.com.academiadev.projetocoders.reembolsocoders.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,14 +28,31 @@ public class FuncionarioService {
 	
 	public void Cadastrar(FuncionarioDTO funcionarioDTO) throws EmpresaNaoEncontradaException {
 		Funcionario funcionario = funcionarioConverter.toEntity(funcionarioDTO);
-		
-//		Empresa empresa = empresaRepository.findByCodigo(codigoEmpresa);
+
 		Empresa empresa = empresaRepository.findOne(funcionarioDTO.getIdEmpresa());
 		if(empresa == null) {
 			throw new EmpresaNaoEncontradaException();
 		}
 		funcionario.setEmpresa(empresa);
 		
+		funcionarioRepository.save(funcionario);
+	}
+	
+	public List<FuncionarioDTO> ListaFuncionariosEmpresa(Long empresaId) {
+		List<Funcionario> listFuncionario = funcionarioRepository.findByEmpresaId(empresaId);
+		List<FuncionarioDTO> listFuncionarioDTO = new ArrayList<>();
+		
+		for (Funcionario funcionario : listFuncionario) {
+			listFuncionarioDTO.add(funcionarioConverter.toDTO(funcionario));
+		}
+		
+		return listFuncionarioDTO;
+	}
+	
+	public void Editar(FuncionarioDTO funcionarioDTO, Long funcionarioId) {
+		Funcionario funcionario = funcionarioRepository.findOne(funcionarioId);
+		funcionario.setEmail(funcionarioDTO.getEmail());
+		funcionario.setNome(funcionarioDTO.getNome());
 		funcionarioRepository.save(funcionario);
 	}
 
