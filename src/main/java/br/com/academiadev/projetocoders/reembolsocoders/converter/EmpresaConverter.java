@@ -12,9 +12,7 @@ public class EmpresaConverter implements Converter<Empresa, EmpresaDTO> {
 	public EmpresaDTO toDTO(Empresa entity) {
 		EmpresaDTO dto = new EmpresaDTO();
 		dto.setCodigo(entity.getCodigo());
-		dto.setEmail(entity.getEmail());
 		dto.setNome(entity.getNome());
-		dto.setSenha(entity.getSenha());
 
 		return dto;
 	}
@@ -23,9 +21,7 @@ public class EmpresaConverter implements Converter<Empresa, EmpresaDTO> {
 	public Empresa toEntity(EmpresaDTO dto) {
 		Empresa empresa = new Empresa();
 		empresa.setCodigo(dto.getCodigo());
-		empresa.setEmail(dto.getEmail());
 		empresa.setNome(dto.getNome());
-		empresa.setSenha(dto.getSenha());
 
 		return empresa;
 	}

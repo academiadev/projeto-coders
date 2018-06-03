@@ -26,15 +26,7 @@ public class Empresa {
 
 	@Column
 	@NotNull
-	private String email;
-
-	@Column
-	@NotNull
-	private Long codigo;
-
-	@Column
-	@NotNull
-	private String senha;
+	private Integer codigo;
 
 	@OneToMany(mappedBy = "empresa")
 	private List<Funcionario> funcionarios;
@@ -47,28 +39,12 @@ public class Empresa {
 		this.id = id;
 	}
 
-	public Long getCodigo() {
+	public Integer getCodigo() {
 		return codigo;
 	}
 
-	public void setCodigo(Long codigo) {
+	public void setCodigo(Integer codigo) {
 		this.codigo = codigo;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
 	}
 
 	public List<Funcionario> getFuncionarios() {
