@@ -7,9 +7,8 @@ import java.time.format.DateTimeFormatter;
 import org.springframework.stereotype.Component;
 
 import br.com.academiadev.projetocoders.reembolsocoders.dto.ReembolsoDTO;
-import br.com.academiadev.projetocoders.reembolsocoders.model.Funcionario;
+import br.com.academiadev.projetocoders.reembolsocoders.model.Usuario;
 import br.com.academiadev.projetocoders.reembolsocoders.model.Reembolso;
-import br.com.academiadev.projetocoders.reembolsocoders.model.StatusReembolso;
 
 @Component
 public class ReembolsoConverter implements Converter<Reembolso, ReembolsoDTO> {
@@ -37,14 +36,13 @@ public class ReembolsoConverter implements Converter<Reembolso, ReembolsoDTO> {
 		LocalDate data = LocalDate.parse(dto.getData(), formatter);		
 		reembolso.setData(data);
 		
-		Funcionario funcionario = new Funcionario();
+		Usuario funcionario = new Usuario();
 		funcionario.setId(dto.getIdFuncionario());
 		reembolso.setFuncionario(funcionario);
 		
 		reembolso.setDataEnviado(LocalDate.now());
 		reembolso.setValor(new BigDecimal(dto.getValor()));		
 		reembolso.setDescricao(dto.getDescricao());
-		reembolso.setStatus(StatusReembolso.valueOf(dto.getStatus()));
 		
 		return reembolso;
 	}

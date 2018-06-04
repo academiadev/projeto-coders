@@ -13,9 +13,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-@Table(name = "funcionario")
+@Table(name = "usuario")
 @Entity
-public class Funcionario {
+public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,6 +27,7 @@ public class Funcionario {
 	private String nome;
 
 	@Column
+	@NotNull
 	private String email;
 
 	@ManyToOne
@@ -36,11 +37,23 @@ public class Funcionario {
 	@NotNull
 	private String senha;
 
-	@OneToMany(mappedBy = "funcionario")
+	@OneToMany(mappedBy = "usuario")
 	private List<Reembolso> reembolsos;
 
 	@Column
 	private LocalDate dataCadastro;
+
+	@Column
+	@NotNull
+	private Boolean isAdmin;
+
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
 
 	public Empresa getEmpresa() {
 		return empresa;

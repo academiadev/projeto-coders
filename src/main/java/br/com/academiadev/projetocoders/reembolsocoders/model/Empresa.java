@@ -29,7 +29,7 @@ public class Empresa {
 	private Integer codigo;
 
 	@OneToMany(mappedBy = "empresa")
-	private List<Funcionario> funcionarios;
+	private List<Usuario> funcionarios;
 	
 	public Long getId() {
 		return id;
@@ -47,11 +47,11 @@ public class Empresa {
 		this.codigo = codigo;
 	}
 
-	public List<Funcionario> getFuncionarios() {
+	public List<Usuario> getFuncionarios() {
 		return funcionarios;
 	}
 
-	public void setFuncionarios(List<Funcionario> funcionarios) {
+	public void setFuncionarios(List<Usuario> funcionarios) {
 		this.funcionarios = funcionarios;
 	}
 

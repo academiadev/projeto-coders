@@ -51,7 +51,7 @@ public class Reembolso {
 	private StatusReembolso status;
 
 	@ManyToOne
-	private Funcionario funcionario;
+	private Usuario usuario;
 
 	@Column
 	private String arquivoPath;
@@ -80,12 +80,12 @@ public class Reembolso {
 		this.arquivoPath = arquivoPath;
 	}
 
-	public Funcionario getFuncionario() {
-		return funcionario;
+	public Usuario getFuncionario() {
+		return usuario;
 	}
 
-	public void setFuncionario(Funcionario funcionario) {
-		this.funcionario = funcionario;
+	public void setFuncionario(Usuario funcionario) {
+		this.usuario = funcionario;
 	}
 
 	public Long getId() {
