@@ -52,14 +52,14 @@ public class BackendApplicationTests {
 	}
 	
 	@Test
-	public void ListarFuncionariosEmpresa() {
+	public void ListarUsuariosEmpresa() {
 		funcionarioService.ListaUsuariosEmpresa(1l);
 	}
 
 	public UsuarioDTO CriarFuncionarioDTO(EmpresaDTO empresaDTO) {
 		UsuarioDTO usuarioDTO = new UsuarioDTO();
 		usuarioDTO.setEmail("funcionario@gmail.com");
-		usuarioDTO.setNome("Fer");
+		usuarioDTO.setNome("Willian");
 		usuarioDTO.setSenha("123");
 
 		return usuarioDTO;
@@ -79,6 +79,7 @@ public class BackendApplicationTests {
 
 	public EmpresaDTO CriarEmpresaDTO() {
 		EmpresaDTO empresaDTO = new EmpresaDTO();
+		empresaDTO.setNome("");
 		empresaDTO.setCodigo(5);
 
 		return empresaDTO;
