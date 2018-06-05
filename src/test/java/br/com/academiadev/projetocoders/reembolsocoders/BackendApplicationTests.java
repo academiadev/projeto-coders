@@ -59,7 +59,7 @@ public class BackendApplicationTests {
 	public UsuarioDTO CriarFuncionarioDTO(EmpresaDTO empresaDTO) {
 		UsuarioDTO usuarioDTO = new UsuarioDTO();
 		usuarioDTO.setEmail("funcionario@gmail.com");
-		usuarioDTO.setNome("Willian");
+		usuarioDTO.setNome("Felipe CF");
 		usuarioDTO.setSenha("123");
 
 		return usuarioDTO;
@@ -68,7 +68,7 @@ public class BackendApplicationTests {
 	public ReembolsoDTO CriarReembolsoDTO(UsuarioDTO usuarioDTO) {
 		ReembolsoDTO reembolsoDTO = new ReembolsoDTO();
 		reembolsoDTO.setArquivoPath("C:\\path");
-		reembolsoDTO.setCategoria("Alimentação");
+		reembolsoDTO.setCategoria("HOSPEDAGEM");
 		reembolsoDTO.setData("23/04/2018");
 		reembolsoDTO.setDescricao("Almoço");
 		reembolsoDTO.setIdFuncionario(usuarioRepository.findByNome(usuarioDTO.getNome()).getId());
