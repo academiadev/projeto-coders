@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.academiadev.projetocoders.reembolsocoders.dto.EmpresaDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.ReembolsoDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.service.ReembolsoService;
 
@@ -22,18 +23,24 @@ public class ReembolsoController {
 	public void cadastrarReembolso(@RequestBody ReembolsoDTO reembolsoDTO) {
 		reembolsoService.Cadastrar(reembolsoDTO);
 	}
-	
+
 	@PostMapping("/alterarStatusReembolso")
 	public void alterarStatusReembolso(@RequestParam Long reembolsoId, @RequestParam String status) {
 		reembolsoService.AlterarStatus(reembolsoId, status);
 	}
-	
-	@PostMapping("/listaReembolsosFuncionario")
-	public List<ReembolsoDTO> listaReembolsosFuncionario(@RequestParam Long funconarioId) {
-		List<ReembolsoDTO> listReembolsoDTO = reembolsoService.ListaReembolsosFuncionario(funconarioId);
+
+	@PostMapping("/listaReembolsosUsuario")
+	public List<ReembolsoDTO> listaReembolsosUsuario(@RequestParam Long usuarioId) {
+		List<ReembolsoDTO> listReembolsoDTO = reembolsoService.ListaReembolsosUsuario(usuarioId);
 		return listReembolsoDTO;
 	}
-	
+
+	@PostMapping("/listaReembolsosEmpresa")
+	public List<ReembolsoDTO> listaReembolsoEmpresa(@RequestBody EmpresaDTO empresaDTO) {
+		List<ReembolsoDTO> listReembolso = reembolsoService.ListaReembolsosEmpresa(empresaDTO);
+		return listReembolso;
+	}
+
 	@PostMapping("/listaReembolsosCategoria")
 	public List<ReembolsoDTO> listaReembolsosCategoria(@RequestParam String categoria) {
 		List<ReembolsoDTO> listReembolsoDTO = new ArrayList<>();

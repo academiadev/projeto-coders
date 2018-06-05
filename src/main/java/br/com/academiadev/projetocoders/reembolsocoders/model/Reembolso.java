@@ -27,9 +27,10 @@ public class Reembolso {
 	@NotNull
 	private String descricao;
 
+	@Enumerated(EnumType.ORDINAL)
 	@Column
 	@NotNull
-	private String categoria;
+	private Categoria categoria;
 
 	@Column
 	@NotNull
@@ -51,7 +52,7 @@ public class Reembolso {
 	private StatusReembolso status;
 
 	@ManyToOne
-	private Funcionario funcionario;
+	private Usuario usuario;
 
 	@Column
 	private String arquivoPath;
@@ -80,12 +81,12 @@ public class Reembolso {
 		this.arquivoPath = arquivoPath;
 	}
 
-	public Funcionario getFuncionario() {
-		return funcionario;
+	public Usuario getFuncionario() {
+		return usuario;
 	}
 
-	public void setFuncionario(Funcionario funcionario) {
-		this.funcionario = funcionario;
+	public void setFuncionario(Usuario funcionario) {
+		this.usuario = funcionario;
 	}
 
 	public Long getId() {
@@ -104,11 +105,11 @@ public class Reembolso {
 		this.descricao = descricao;
 	}
 
-	public String getCategoria() {
+	public Categoria getCategoria() {
 		return categoria;
 	}
 
-	public void setCategoria(String categoria) {
+	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
 

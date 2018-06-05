@@ -7,19 +7,21 @@ import java.time.format.DateTimeFormatter;
 import org.springframework.stereotype.Component;
 
 import br.com.academiadev.projetocoders.reembolsocoders.dto.ReembolsoDTO;
-import br.com.academiadev.projetocoders.reembolsocoders.model.Funcionario;
+import br.com.academiadev.projetocoders.reembolsocoders.model.Usuario;
+import br.com.academiadev.projetocoders.reembolsocoders.model.Categoria;
 import br.com.academiadev.projetocoders.reembolsocoders.model.Reembolso;
-import br.com.academiadev.projetocoders.reembolsocoders.model.StatusReembolso;
 
 @Component
 public class ReembolsoConverter implements Converter<Reembolso, ReembolsoDTO> {
+	
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 	@Override
 	public ReembolsoDTO toDTO(Reembolso entity) {
 		ReembolsoDTO dto = new ReembolsoDTO();
 		dto.setArquivoPath(entity.getArquivoPath());
-		dto.setCategoria(entity.getCategoria());
-		dto.setData(entity.getData().toString());
+		dto.setCategoria(entity.getCategoria().getId());
+		dto.setData(entity.getData().format(formatter));
 		dto.setDescricao(entity.getDescricao());
 		dto.setIdFuncionario(entity.getFuncionario().getId());
 		dto.setStatus(entity.getStatus().getId());
@@ -31,20 +33,18 @@ public class ReembolsoConverter implements Converter<Reembolso, ReembolsoDTO> {
 	public Reembolso toEntity(ReembolsoDTO dto) {
 		Reembolso reembolso = new Reembolso();
 		reembolso.setArquivoPath(dto.getArquivoPath());
-		reembolso.setCategoria(dto.getCategoria());
+		reembolso.setCategoria(Categoria.valueOf(dto.getCategoria()));
 		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDate data = LocalDate.parse(dto.getData(), formatter);		
 		reembolso.setData(data);
 		
-		Funcionario funcionario = new Funcionario();
+		Usuario funcionario = new Usuario();
 		funcionario.setId(dto.getIdFuncionario());
 		reembolso.setFuncionario(funcionario);
 		
 		reembolso.setDataEnviado(LocalDate.now());
 		reembolso.setValor(new BigDecimal(dto.getValor()));		
 		reembolso.setDescricao(dto.getDescricao());
-		reembolso.setStatus(StatusReembolso.valueOf(dto.getStatus()));
 		
 		return reembolso;
 	}

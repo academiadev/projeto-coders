@@ -1,6 +1,6 @@
 package br.com.academiadev.projetocoders.reembolsocoders.dto;
 
-public class FuncionarioDTO {
+public class UsuarioDTO {
 
 	private String nome;
 
@@ -10,6 +10,16 @@ public class FuncionarioDTO {
 
 	private String senha;
 	
+	private Boolean isAdmin;
+	
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
 	public Long getIdEmpresa() {
 		return idEmpresa;
 	}
