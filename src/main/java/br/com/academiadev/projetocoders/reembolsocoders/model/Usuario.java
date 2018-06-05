@@ -1,5 +1,6 @@
 package br.com.academiadev.projetocoders.reembolsocoders.model;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -46,6 +47,17 @@ public class Usuario {
 	@Column
 	@NotNull
 	private Boolean isAdmin;
+
+	@Column(name = "ultima_troca_de_senha")
+	private Timestamp ultimaTrocaDeSenha;
+
+	public Timestamp getUltimaTrocaDeSenha() {
+		return ultimaTrocaDeSenha;
+	}
+
+	public void setUltimaTrocaDeSenha(Timestamp ultimaTrocaDeSenha) {
+		this.ultimaTrocaDeSenha = ultimaTrocaDeSenha;
+	}
 
 	public Boolean getIsAdmin() {
 		return isAdmin;

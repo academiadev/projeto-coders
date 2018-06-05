@@ -1,0 +1,21 @@
+app:
+  name: reembolsocoders
+spring:
+  application:
+    name: reembolsocoders
+  datasource:
+    url: jdbc:postgresql://localhost/reembolso
+    username: postgres
+    password: postgres
+  jpa:
+    generate-ddl: true
+server:
+  port: ${PORT:8080}
+jwt:
+  header: ${HEADER:Authentication}
+  expires_in: ${EXPIRES_IN:60}
+  mobile_expires_in: ${EXPIRES_IN_MOBILE:601}
+  secret: ${SECRET:sredoc}
+management:
+  security:
+    enable: false
