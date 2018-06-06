@@ -11,7 +11,7 @@ import br.com.academiadev.projetocoders.reembolsocoders.model.Usuario;
 public interface UsuarioRepository extends CrudRepository<Usuario, Long>{
 	
 	public Usuario findByNome(String nome);
-	
+
 	public List<Usuario> findByEmpresaId(Long empresa_id);
 	
 }

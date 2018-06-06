@@ -42,4 +42,5 @@ dependencies {
 	compile('joda-time:joda-time')
 	compile ('com.jayway.jsonpath:json-path:2.3.0')
 	compile('org.springframework.boot:spring-boot-starter-mobile')
+	compile('org.springframework.boot:spring-boot-starter-security')
 }

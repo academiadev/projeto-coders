@@ -34,7 +34,7 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/editarUsuario")
-	public void editarUsuario(@RequestBody UsuarioDTO UsuarioDTO, @RequestParam Long usuarioId) {
-		usuarioService.Editar(UsuarioDTO, usuarioId);
+	public void editarUsuario(@RequestBody UsuarioDTO UsuarioDTO) {
+		usuarioService.Editar(UsuarioDTO);
 	}
 }

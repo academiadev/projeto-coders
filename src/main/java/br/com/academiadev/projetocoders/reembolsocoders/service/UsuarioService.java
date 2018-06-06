@@ -67,8 +67,8 @@ public class UsuarioService {
 		return listUsuarioDTO;
 	}
 
-	public void Editar(UsuarioDTO usuarioDTO, Long usuarioId) {
-		Usuario usuario = usuarioRepository.findOne(usuarioId);
+	public void Editar(UsuarioDTO usuarioDTO) {
+		Usuario usuario = usuarioRepository.findOne(usuarioDTO.getId());
 		usuario.setEmail(usuarioDTO.getEmail());
 		usuario.setNome(usuarioDTO.getNome());
 		usuarioRepository.save(usuario);
