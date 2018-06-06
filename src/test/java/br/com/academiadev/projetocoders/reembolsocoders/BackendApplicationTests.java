@@ -79,8 +79,8 @@ public class BackendApplicationTests {
 
 	public EmpresaDTO CriarEmpresaDTO() {
 		EmpresaDTO empresaDTO = new EmpresaDTO();
-		empresaDTO.setNome("");
-		empresaDTO.setCodigo(5);
+		empresaDTO.setNome("Company");
+		empresaDTO.setCodigo(null);
 
 		return empresaDTO;
 	}

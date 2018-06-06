@@ -46,5 +46,15 @@ public class ReembolsoController {
 		List<ReembolsoDTO> listReembolsoDTO = new ArrayList<>();
 		return listReembolsoDTO;
 	}
+	
+	@PostMapping("/editarReembolso")
+	public void editarReembolso(@RequestBody ReembolsoDTO reembolsoDTO) {
+		reembolsoService.EditarReembolso(reembolsoDTO);
+	}
+	
+	@PostMapping("/excluirReembolso")
+	public void excluirReembolso(@RequestParam Long reembolsoId) {
+		
+	}
 
 }

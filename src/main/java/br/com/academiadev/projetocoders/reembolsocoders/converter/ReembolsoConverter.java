@@ -26,6 +26,7 @@ public class ReembolsoConverter implements Converter<Reembolso, ReembolsoDTO> {
 		dto.setIdFuncionario(entity.getFuncionario().getId());
 		dto.setStatus(entity.getStatus().getId());
 		dto.setValor(entity.getValor().toString());
+		dto.setId(entity.getId());
 		return dto;
 	}
 

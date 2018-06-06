@@ -1,5 +1,6 @@
 package br.com.academiadev.projetocoders.reembolsocoders.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class ReembolsoService {
 	public Reembolso Cadastrar(ReembolsoDTO reembolsoDTO) {
 		Reembolso reembolso = reembolsoConverter.toEntity(reembolsoDTO);
 		reembolso.setStatus(StatusReembolso.AGUARDANDO);
+		reembolso.setExcluido(false);
 
 		Usuario funcionario = funcionarioRepository.findOne(reembolsoDTO.getIdFuncionario());
 		reembolso.setFuncionario(funcionario);
@@ -40,14 +42,15 @@ public class ReembolsoService {
 
 	public void AlterarStatus(Long reembolsoId, String status) {
 		Reembolso reembolso = reembolsoRepository.findOne(reembolsoId);
-		if (reembolso.getStatus() == StatusReembolso.AGUARDANDO) {
+		if (reembolso != null && reembolso.getStatus() == StatusReembolso.AGUARDANDO) {
 			reembolso.setStatus(StatusReembolso.valueOf(status));
+			reembolso.setDataRespondido(LocalDate.now());
 			reembolsoRepository.save(reembolso);
 		}
 	}
 
 	public List<ReembolsoDTO> ListaReembolsosUsuario(Long usuarioId) {
-		List<Reembolso> listReembolso = reembolsoRepository.findByUsuarioId(usuarioId);
+		List<Reembolso> listReembolso = reembolsoRepository.findByUsuarioIdAndExcluido(usuarioId, true);
 		List<ReembolsoDTO> listReembolsoDTO = new ArrayList<>();
 
 		for (Reembolso reembolso : listReembolso) {
@@ -70,7 +73,7 @@ public class ReembolsoService {
 	}
 
 	public List<ReembolsoDTO> ListaReembolsosCategoria(String categoria) {
-		List<Reembolso> listReembolso = reembolsoRepository.findByCategoria(categoria);
+		List<Reembolso> listReembolso = reembolsoRepository.findByCategoriaAndExcluido(categoria, true);
 		List<ReembolsoDTO> listReembolsoDTO = new ArrayList<>();
 
 		for (Reembolso reembolso : listReembolso) {
@@ -78,6 +81,22 @@ public class ReembolsoService {
 		}
 
 		return listReembolsoDTO;
+	}
+	
+	public void EditarReembolso(ReembolsoDTO reembolsoDTO) {
+		Reembolso reembolso = reembolsoRepository.findOne(reembolsoDTO.getId());
+		if(reembolso != null) {
+			reembolso = reembolsoConverter.toEntity(reembolsoDTO);
+			reembolsoRepository.save(reembolso);
+		}
+	}
+	
+	public void ExcluirReembolso(Long reembolsoId) {
+		Reembolso reembolso = reembolsoRepository.findOne(reembolsoId);
+		if (reembolso != null && reembolso.getExcluido() == false) {
+			reembolso.setExcluido(true);
+			reembolsoRepository.save(reembolso);
+		}
 	}
 
 }

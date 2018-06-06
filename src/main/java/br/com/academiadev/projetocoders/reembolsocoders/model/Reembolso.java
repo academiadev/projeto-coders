@@ -44,6 +44,7 @@ public class Reembolso {
 	private LocalDate dataRespondido;
 
 	@Column
+	@NotNull
 	private BigDecimal valor;
 
 	@Enumerated(EnumType.ORDINAL)
@@ -55,7 +56,20 @@ public class Reembolso {
 	private Usuario usuario;
 
 	@Column
+	@NotNull
 	private String arquivoPath;
+	
+	@Column
+	@NotNull
+	private Boolean excluido;
+
+	public Boolean getExcluido() {
+		return excluido;
+	}
+
+	public void setExcluido(Boolean excluido) {
+		this.excluido = excluido;
+	}
 
 	public BigDecimal getValor() {
 		return valor;
