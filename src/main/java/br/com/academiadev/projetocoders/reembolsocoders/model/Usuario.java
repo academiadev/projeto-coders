@@ -4,6 +4,8 @@ import org.joda.time.DateTime;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Collection;
@@ -41,13 +43,16 @@ public class Usuario implements UserDetails {
 	@NotNull
 	private String email;
 
+	@JsonIgnore
 	@ManyToOne
 	private Empresa empresa;
 
+	@JsonIgnore
 	@Column
 	@NotNull
 	private String senha;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "usuario")
 	private List<Reembolso> reembolsos;
 

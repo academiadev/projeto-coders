@@ -1,8 +1,10 @@
 package br.com.academiadev.projetocoders.reembolsocoders.service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +34,7 @@ public class UsuarioService {
 	@Autowired
 	private EmpresaService empresaService;
 
-	public void Cadastrar(UsuarioDTO usuarioDTO, EmpresaDTO empresaDTO)
+	public UsuarioDTO Cadastrar(UsuarioDTO usuarioDTO, String empresaNome, Integer empresaCodigo)
 			throws EmpresaNaoEncontradaException, EmpresaExistenteException, UsuarioExistenteException {
 		if (usuarioRepository.findByNome(usuarioDTO.getNome()) != null) {
 			throw new UsuarioExistenteException();
@@ -40,20 +42,25 @@ public class UsuarioService {
 
 		Usuario usuario = usuarioConverter.toEntity(usuarioDTO);
 
-		if (empresaDTO.getNome() == null || empresaDTO.getNome() == "") {
+		if (empresaNome == null || empresaNome == "") {
 			usuario.setIsAdmin(false);
-			Empresa empresa = empresaRepository.findByCodigo(empresaDTO.getCodigo());
+			Empresa empresa = empresaRepository.findByCodigo(empresaCodigo);
 			if (empresa == null) {
 				throw new EmpresaNaoEncontradaException();
 			}
 			usuario.setEmpresa(empresa);
 		} else {
 			usuario.setIsAdmin(true);
+			EmpresaDTO empresaDTO = new EmpresaDTO();
+			empresaDTO.setNome(empresaNome);
 			Empresa empresa = empresaService.Cadastrar(empresaDTO);
 			usuario.setEmpresa(empresa);
 		}
+		
+		usuario.setUltimaTrocaDeSenha(new Timestamp(DateTime.now().getMillis()));
 
 		usuarioRepository.save(usuario);
+		return usuarioConverter.toDTO(usuario);
 	}
 
 	public List<UsuarioDTO> ListaUsuariosEmpresa(Long empresaId) {

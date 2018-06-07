@@ -33,9 +33,8 @@ public class BackendApplicationTests {
 	public void CadastroInicial()
 			throws EmpresaNaoEncontradaException, EmpresaExistenteException, UsuarioExistenteException {
 		
-		EmpresaDTO empresaDTO = CriarEmpresaDTO();
-		UsuarioDTO usuarioDTO = CriarFuncionarioDTO(empresaDTO);
-		funcionarioService.Cadastrar(usuarioDTO, empresaDTO);
+		UsuarioDTO usuarioDTO = CriarFuncionarioDTO();
+		funcionarioService.Cadastrar(usuarioDTO, "Company", 0);
 
 		ReembolsoDTO reembolsoDTO = CriarReembolsoDTO(usuarioDTO);
 		reembolsoService.Cadastrar(reembolsoDTO);
@@ -56,7 +55,7 @@ public class BackendApplicationTests {
 		funcionarioService.ListaUsuariosEmpresa(1l);
 	}
 
-	public UsuarioDTO CriarFuncionarioDTO(EmpresaDTO empresaDTO) {
+	public UsuarioDTO CriarFuncionarioDTO() {
 		UsuarioDTO usuarioDTO = new UsuarioDTO();
 		usuarioDTO.setEmail("funcionario@gmail.com");
 		usuarioDTO.setNome("Felipe CF");
