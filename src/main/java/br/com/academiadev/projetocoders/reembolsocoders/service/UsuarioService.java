@@ -39,6 +39,9 @@ public class UsuarioService {
 		if (usuarioRepository.findByNome(usuarioDTO.getNome()) != null) {
 			throw new UsuarioExistenteException();
 		}
+		if(usuarioRepository.findByEmail(usuarioDTO.getEmail()) != null) {
+			throw new EmpresaExistenteException();
+		}
 
 		Usuario usuario = usuarioConverter.toEntity(usuarioDTO);
 
