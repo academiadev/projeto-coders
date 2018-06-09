@@ -29,7 +29,7 @@ public class Empresa {
 	private Integer codigo;
 
 	@OneToMany(mappedBy = "empresa")
-	private List<Usuario> funcionarios;
+	private List<Usuario> usuarios;
 	
 	public Long getId() {
 		return id;
@@ -48,11 +48,11 @@ public class Empresa {
 	}
 
 	public List<Usuario> getFuncionarios() {
-		return funcionarios;
+		return usuarios;
 	}
 
 	public void setFuncionarios(List<Usuario> funcionarios) {
-		this.funcionarios = funcionarios;
+		this.usuarios = funcionarios;
 	}
 
 	public String getNome() {

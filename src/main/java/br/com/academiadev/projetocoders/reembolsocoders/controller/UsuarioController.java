@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.academiadev.projetocoders.reembolsocoders.dto.EmpresaDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.UsuarioDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.EmpresaExistenteException;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.EmpresaNaoEncontradaException;
@@ -22,9 +21,10 @@ public class UsuarioController {
 	private UsuarioService usuarioService;
 
 	@PostMapping("/cadastrarUsuario")
-	public void cadastrarUsuario(@RequestBody UsuarioDTO usuarioDTO, @RequestBody EmpresaDTO empresaDTO)
+	public UsuarioDTO cadastrarUsuario(@RequestBody UsuarioDTO usuarioDTO, @RequestParam Integer empresaCodigo, 
+			@RequestParam(value="", required = false) String empresaNome)
 			throws EmpresaNaoEncontradaException, EmpresaExistenteException, UsuarioExistenteException {
-		usuarioService.Cadastrar(usuarioDTO, empresaDTO);
+		return usuarioService.Cadastrar(usuarioDTO, empresaNome, empresaCodigo);
 	}
 
 	@PostMapping("/listaUsuariosEmpresa")

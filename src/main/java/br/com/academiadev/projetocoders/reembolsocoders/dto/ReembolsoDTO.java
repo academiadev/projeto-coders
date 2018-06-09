@@ -1,6 +1,8 @@
 package br.com.academiadev.projetocoders.reembolsocoders.dto;
 
 public class ReembolsoDTO {
+	
+	private Long id;
 
 	private String descricao;
 
@@ -15,6 +17,14 @@ public class ReembolsoDTO {
 	private String arquivoPath;
 
 	private String valor;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public Long getIdFuncionario() {
 		return idFuncionario;
