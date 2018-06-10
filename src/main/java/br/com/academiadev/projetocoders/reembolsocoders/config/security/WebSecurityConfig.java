@@ -30,16 +30,17 @@ import br.com.academiadev.projetocoders.reembolsocoders.service.impl.CustomUserD
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new ApiPasswordEncoder(new BCryptPasswordEncoder());
+	}
+
 	@Autowired
 	private CustomUserDetailsService jwtUserDetailsService;
 
 	@Autowired
 	private AutenticacaoRestListener restAuthenticationEntryPoint;
-	
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new ApiPasswordEncoder(new BCryptPasswordEncoder());
-	}
+
 	@Bean
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
