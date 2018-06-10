@@ -24,7 +24,7 @@ public class SwaggerConfig {
 	}
 	
 	private ApiInfo apiInfo() {
-        return new ApiInfo("titulo", "descricao", "vers„o", "termos", null, "Licence", "licenseUrl", new ArrayList<>());
+        return new ApiInfo("titulo", "descricao", "vers√£o", "termos", null, "Licence", "licenseUrl", new ArrayList<>());
     }
 
 }
