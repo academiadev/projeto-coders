@@ -13,12 +13,7 @@ public class ApiPasswordEncoder implements PasswordEncoder {
     @Value("${jwt.pass_secret}")
     private String PASS_SECRET;
 
-    public ApiPasswordEncoder() {
-        super();
-    }
-
     public ApiPasswordEncoder(BCryptPasswordEncoder passwordEncoder) {
-        super();
         this.passwordEncoder = passwordEncoder;
     }
 
