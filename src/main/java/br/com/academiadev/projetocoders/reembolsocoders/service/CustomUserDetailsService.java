@@ -1,4 +1,4 @@
-package br.com.academiadev.projetocoders.reembolsocoders.service.impl;
+package br.com.academiadev.projetocoders.reembolsocoders.service;
 
 import br.com.academiadev.projetocoders.reembolsocoders.model.Usuario;
 import br.com.academiadev.projetocoders.reembolsocoders.repository.UsuarioRepository;
@@ -28,10 +28,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     private AuthenticationManager authenticationManager;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario user = userRepository.findByNome(username);
+    public UserDetails loadUserByUsername(String useremail) throws UsernameNotFoundException {
+        Usuario user = userRepository.findByEmail(useremail);
         if (user == null) {
-            throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
+            throw new UsernameNotFoundException(String.format("No user found with useremail '%s'.", useremail));
         } else {
             return user;
         }

@@ -23,7 +23,7 @@ import br.com.academiadev.projetocoders.reembolsocoders.config.jwt.ApiPasswordEn
 import br.com.academiadev.projetocoders.reembolsocoders.config.jwt.AutenticacaoRestListener;
 import br.com.academiadev.projetocoders.reembolsocoders.config.jwt.TokenFilter;
 import br.com.academiadev.projetocoders.reembolsocoders.config.jwt.TokenHelper;
-import br.com.academiadev.projetocoders.reembolsocoders.service.impl.CustomUserDetailsService;
+import br.com.academiadev.projetocoders.reembolsocoders.service.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
