@@ -11,6 +11,16 @@ public class UsuarioDTO {
 	private Long idEmpresa;
 
 	private String senha;
+	
+	private Boolean isAdmin;
+
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
 
 	public Long getId() {
 		return id;

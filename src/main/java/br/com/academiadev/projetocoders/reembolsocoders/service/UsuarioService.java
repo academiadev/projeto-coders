@@ -100,5 +100,9 @@ public class UsuarioService {
 		}
 		return list;
 	}
+	
+	public UsuarioDTO findByEmail(String email) {
+		return usuarioConverter.toDTO(usuarioRepository.findByEmail(email));
+	}
 
 }

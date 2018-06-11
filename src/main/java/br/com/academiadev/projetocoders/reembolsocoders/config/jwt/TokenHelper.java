@@ -71,9 +71,13 @@ public class TokenHelper extends AbstractTokenHelper {
 		return tokenAtualizado;
 	}
 
-	public String gerarToken(String username, Device device) {
+	public String gerarToken(Usuario user, Device device) {
 		String audience = generateAudience(device);
-		return Jwts.builder().setIssuer(APP_NAME).setSubject(username).setHeaderParam("email", "reembolsocoders@gmail.com").setAudience(audience).setIssuedAt(timeProvider.toDate(timeProvider.getDataHoraAtual())).setExpiration(timeProvider.toDate(generateExpirationDate(device)))
+		return Jwts.builder().setIssuer(APP_NAME).setSubject(user.getUsername())
+				.setHeaderParam("email", "reembolsocoders@gmail.com")
+				.setAudience(audience)
+				.setIssuedAt(timeProvider.toDate(timeProvider.getDataHoraAtual()))
+				.setExpiration(timeProvider.toDate(generateExpirationDate(device)))
 				.signWith(SIGNATURE_ALGORITHM, SECRET).compact();
 	}
 
