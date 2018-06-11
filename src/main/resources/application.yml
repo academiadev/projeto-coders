@@ -6,7 +6,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost/reembolso
     username: postgres
-    password: 123
+    password: postgres
   jpa:
     generate-ddl: true
 server:

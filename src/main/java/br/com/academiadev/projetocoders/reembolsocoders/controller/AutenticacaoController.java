@@ -29,7 +29,7 @@ import br.com.academiadev.projetocoders.reembolsocoders.dto.LoginDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.TokenDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.TrocaSenhaDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.model.Usuario;
-import br.com.academiadev.projetocoders.reembolsocoders.service.CustomUserDetailsService;
+import br.com.academiadev.projetocoders.reembolsocoders.service.impl.CustomUserDetailsService;
 
 @RestController
 public class AutenticacaoController {
@@ -53,7 +53,7 @@ public class AutenticacaoController {
         Usuario usuario = (Usuario) autenticacao.getPrincipal();
         String token = tokenHelper.gerarToken(usuario.getUsername(), dispositivo);
         int expiresIn = tokenHelper.getExpiredIn(dispositivo);
-        return ResponseEntity.ok(new TokenDTO(token, Long.valueOf(expiresIn), usuario.getAutorizacoes().get(0).getNome()));
+        return ResponseEntity.ok(new TokenDTO(token, Long.valueOf(expiresIn)));
     }
 
     @RequestMapping(value = "/refresh", method = RequestMethod.POST)
@@ -63,7 +63,7 @@ public class AutenticacaoController {
         if (token != null && principal != null) {
             String tokenAtualizado = tokenHelper.atualizarToken(token, dispositivo);
             int expiracao = tokenHelper.getExpiredIn(dispositivo);
-            return ResponseEntity.ok(new TokenDTO(tokenAtualizado, Long.valueOf(expiracao), ""));
+            return ResponseEntity.ok(new TokenDTO(tokenAtualizado, Long.valueOf(expiracao)));
         } else {
             TokenDTO tokenDTO = new TokenDTO();
             return ResponseEntity.accepted().body(tokenDTO);

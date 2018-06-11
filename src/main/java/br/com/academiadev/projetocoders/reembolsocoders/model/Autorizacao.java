@@ -17,16 +17,6 @@ public class Autorizacao implements GrantedAuthority {
 	
 	private static final long serialVersionUID = 1L;
 
-	public Autorizacao() {
-		super();
-	}
-
-	public Autorizacao(Long id, String nome) {
-		super();
-		this.id = id;
-		this.nome = nome;
-	}
-
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
