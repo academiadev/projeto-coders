@@ -1,5 +1,7 @@
 package br.com.academiadev.projetocoders.reembolsocoders;
 
+import br.com.academiadev.projetocoders.reembolsocoders.model.Mail;
+import br.com.academiadev.projetocoders.reembolsocoders.service.EmailService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ import br.com.academiadev.projetocoders.reembolsocoders.service.ReembolsoService
 public class BackendApplicationTests {
 
 	@Autowired
+	private EmailService emailService;
+
+	@Autowired
 	private UsuarioRepository usuarioRepository;
 
 	@Autowired
@@ -28,6 +33,20 @@ public class BackendApplicationTests {
 
 	@Autowired
 	private UsuarioService funcionarioService;
+
+
+	@Test
+	public void EnviaEmail()
+		throws Exception{
+
+		Mail mail = new Mail();
+		mail.setFrom("reembolsocoders@gmail.com");
+		mail.setTo("kauan.amarante@gmail.com");
+		mail.setSubject("Sending Simple Email with JavaMailSender Example");
+		mail.setContent("This tutorial demonstrates how to send a simple email using Spring Framework.");
+
+		emailService.sendSimpleMessage(mail);
+	}
 
 	@Test
 	public void CadastroInicial()
