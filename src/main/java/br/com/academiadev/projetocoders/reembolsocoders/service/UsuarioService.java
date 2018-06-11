@@ -1,10 +1,9 @@
 package br.com.academiadev.projetocoders.reembolsocoders.service;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +13,7 @@ import br.com.academiadev.projetocoders.reembolsocoders.dto.UsuarioDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.EmpresaExistenteException;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.EmpresaNaoEncontradaException;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.UsuarioExistenteException;
+import br.com.academiadev.projetocoders.reembolsocoders.model.Autorizacao;
 import br.com.academiadev.projetocoders.reembolsocoders.model.Empresa;
 import br.com.academiadev.projetocoders.reembolsocoders.model.Usuario;
 import br.com.academiadev.projetocoders.reembolsocoders.repository.EmpresaRepository;
@@ -33,6 +33,9 @@ public class UsuarioService {
 
 	@Autowired
 	private EmpresaService empresaService;
+	
+	@Autowired
+	private AutorizacaoService autorizacaoService;
 
 	public UsuarioDTO Cadastrar(UsuarioDTO usuarioDTO, String empresaNome, Integer empresaCodigo)
 			throws EmpresaNaoEncontradaException, EmpresaExistenteException, UsuarioExistenteException {
@@ -46,21 +49,21 @@ public class UsuarioService {
 		Usuario usuario = usuarioConverter.toEntity(usuarioDTO);
 
 		if (empresaNome == null || empresaNome == "") {
-			usuario.setIsAdmin(false);
 			Empresa empresa = empresaRepository.findByCodigo(empresaCodigo);
 			if (empresa == null) {
 				throw new EmpresaNaoEncontradaException();
 			}
 			usuario.setEmpresa(empresa);
+			usuario.setAutorizacoes(getAutorizacoes("ROLE_USER"));
 		} else {
-			usuario.setIsAdmin(true);
 			EmpresaDTO empresaDTO = new EmpresaDTO();
 			empresaDTO.setNome(empresaNome);
 			Empresa empresa = empresaService.Cadastrar(empresaDTO);
 			usuario.setEmpresa(empresa);
+			usuario.setAutorizacoes(getAutorizacoes("ROLE_ADMIN"));
 		}
 		
-		usuario.setUltimaTrocaDeSenha(new Timestamp(DateTime.now().getMillis()));
+		usuario.setUltimaTrocaDeSenha(LocalDateTime.now());
 
 		usuarioRepository.save(usuario);
 		return usuarioConverter.toDTO(usuario);
@@ -82,6 +85,20 @@ public class UsuarioService {
 		usuario.setEmail(usuarioDTO.getEmail());
 		usuario.setNome(usuarioDTO.getNome());
 		usuarioRepository.save(usuario);
+	}
+	
+	private List<Autorizacao> getAutorizacoes(String autorizacao) {
+		List<Autorizacao> list = new ArrayList<>();
+
+		if(autorizacao.equals("ROLE_ADMIN")) {
+			Autorizacao adminRole = autorizacaoService.findByNome("ROLE_ADMIN");
+			list.add(adminRole != null ? adminRole : autorizacaoService.salvaNovaAutorizacao(new Autorizacao("ROLE_ADMIN")));	
+		}
+		else {
+			Autorizacao adminRole = autorizacaoService.findByNome("ROLE_USER");
+			list.add(adminRole != null ? adminRole : autorizacaoService.salvaNovaAutorizacao(new Autorizacao("ROLE_USER")));
+		}
+		return list;
 	}
 
 }

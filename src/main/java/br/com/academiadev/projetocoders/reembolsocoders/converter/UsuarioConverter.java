@@ -23,7 +23,6 @@ public class UsuarioConverter implements Converter<Usuario, UsuarioDTO>{
 		dto.setNome(entity.getNome());
 		dto.setSenha(entity.getSenha());
 		dto.setIdEmpresa(entity.getEmpresa().getId());
-		dto.setIsAdmin(entity.getIsAdmin());
 		dto.setId(entity.getId());
 		return dto;
 	}

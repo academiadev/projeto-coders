@@ -1,9 +1,5 @@
 package br.com.academiadev.projetocoders.reembolsocoders.config.security;
 
-import br.com.academiadev.projetocoders.reembolsocoders.config.jwt.AutenticacaoRestListener;
-import br.com.academiadev.projetocoders.reembolsocoders.config.jwt.TokenFilter;
-import br.com.academiadev.projetocoders.reembolsocoders.config.jwt.TokenUtils;
-import br.com.academiadev.projetocoders.reembolsocoders.service.impl.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,87 +19,92 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import br.com.academiadev.projetocoders.reembolsocoders.config.jwt.ApiPasswordEncoder;
+import br.com.academiadev.projetocoders.reembolsocoders.config.jwt.AutenticacaoRestListener;
+import br.com.academiadev.projetocoders.reembolsocoders.config.jwt.TokenFilter;
+import br.com.academiadev.projetocoders.reembolsocoders.config.jwt.TokenHelper;
+import br.com.academiadev.projetocoders.reembolsocoders.service.CustomUserDetailsService;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new ApiPasswordEncoder(new BCryptPasswordEncoder());
+	}
 
-    @Autowired
-    private CustomUserDetailsService jwtUserDetailsService;
+	@Autowired
+	private CustomUserDetailsService jwtUserDetailsService;
 
-    @Autowired
-    private AutenticacaoRestListener restAuthenticationEntryPoint;
+	@Autowired
+	private AutenticacaoRestListener restAuthenticationEntryPoint;
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
-    }
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
+	}
 
-    @Autowired
-    TokenUtils tokenHelper;
+	@Autowired
+	TokenHelper tokenHelper;
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
 
-        http.csrf().disable();
+		http.csrf().disable();
 
-        http.cors().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()//
-                .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()//
-                .authorizeRequests()//
-                .antMatchers("/login/**").permitAll()//
-                .antMatchers("/cadastrarUsuario/**").permitAll()//
-                .antMatchers("/esqueciSenha/**").permitAll()//
-                .anyRequest().authenticated().and()//
-                .addFilterBefore(new TokenFilter(tokenHelper, jwtUserDetailsService), BasicAuthenticationFilter.class);
-    }
+		http.cors().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()//
+				.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()//
+				.authorizeRequests()//
+				.antMatchers("/login/**").permitAll()//
+				.antMatchers("/cadastrarUsuario/**").permitAll()//
+				.antMatchers("/esqueciSenha/**").permitAll()//
+				.anyRequest().authenticated().and()//
+				.addFilterBefore(new TokenFilter(tokenHelper, jwtUserDetailsService), BasicAuthenticationFilter.class);
+	}
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addExposedHeader("Authorization");
-        config.addAllowedMethod(HttpMethod.OPTIONS);
-        config.addAllowedMethod(HttpMethod.GET);
-        config.addAllowedMethod(HttpMethod.POST);
-        config.addAllowedMethod(HttpMethod.PUT);
-        config.addAllowedMethod(HttpMethod.DELETE);
-        source.registerCorsConfiguration("/**", config);
-        return source;
-    }
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		CorsConfiguration config = new CorsConfiguration();
+		config.setAllowCredentials(true);
+		config.addAllowedOrigin("*");
+		config.addAllowedHeader("*");
+		config.addExposedHeader("Authorization");
+		config.addAllowedMethod(HttpMethod.OPTIONS);
+		config.addAllowedMethod(HttpMethod.GET);
+		config.addAllowedMethod(HttpMethod.POST);
+		config.addAllowedMethod(HttpMethod.PUT);
+		config.addAllowedMethod(HttpMethod.DELETE);
+		source.registerCorsConfiguration("/**", config);
+		return source;
+	}
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
+	@Override
+	public void configure(WebSecurity web) throws Exception {
 
+		web.ignoring().antMatchers(HttpMethod.GET, //
+				"/", //
+				"/webjars/**", //
+				"/*.html", //
+				"/favicon.ico", //
+				"/**/*.html", //
+				"/v2/api-docs", //
+				"/configuration/ui", //
+				"/swagger-resources/**", //
+				"/configuration/**", //
+				"/swagger-ui.html", //
+				"/webjars/**", //
+				"/**/*.css", //
+				"/**/*.js"//
+		);
 
-        web.ignoring().antMatchers(HttpMethod.GET, //
-                "/", //
-                "/webjars/**", //
-                "/*.html", //
-                "/favicon.ico", //
-                "/**/*.html", //
-                "/v2/api-docs", //
-                "/configuration/ui", //
-                "/swagger-resources/**", //
-                "/configuration/**", //
-                "/swagger-ui.html", //
-                "/webjars/**", //
-                "/**/*.css", //
-                "/**/*.js"//
-        );
-
-    }
+	}
 }

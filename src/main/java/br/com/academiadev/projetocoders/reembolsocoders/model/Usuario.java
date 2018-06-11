@@ -1,25 +1,29 @@
 package br.com.academiadev.projetocoders.reembolsocoders.model;
 
-import org.joda.time.DateTime;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Table(name = "usuario")
 @Entity
@@ -59,27 +63,67 @@ public class Usuario implements UserDetails {
 	@Column
 	private LocalDate dataCadastro;
 
-	@Column
-	@NotNull
-	private Boolean isAdmin;
-
 	@Column(name = "ultima_troca_de_senha")
-	private Timestamp ultimaTrocaDeSenha;
+	private LocalDateTime ultimaTrocaDeSenha;
+	
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "usuario_autorizacao", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "autorizacao_id", referencedColumnName = "id"))
+	private List<Autorizacao> autorizacoes;
+	
+	public List<Autorizacao> getAutorizacoes() {
+		return autorizacoes;
+	}
 
-	public Timestamp getUltimaTrocaDeSenha() {
+	public void setAutorizacoes(List<Autorizacao> autorizacoes) {
+		this.autorizacoes = autorizacoes;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return this.autorizacoes;
+	}
+	
+	public void setPassword(String password) {
+		this.setUltimaTrocaDeSenha(LocalDateTime.now());
+		this.senha = password;
+	}
+
+	@Override
+	public String getPassword() {
+		return this.senha;
+	}
+
+	@Override
+	public String getUsername() {
+		return this.email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
+
+	public LocalDateTime getUltimaTrocaDeSenha() {
 		return ultimaTrocaDeSenha;
 	}
 
-	public void setUltimaTrocaDeSenha(Timestamp ultimaTrocaDeSenha) {
+	public void setUltimaTrocaDeSenha(LocalDateTime ultimaTrocaDeSenha) {
 		this.ultimaTrocaDeSenha = ultimaTrocaDeSenha;
-	}
-
-	public Boolean getIsAdmin() {
-		return isAdmin;
-	}
-
-	public void setIsAdmin(Boolean isAdmin) {
-		this.isAdmin = isAdmin;
 	}
 
 	public Empresa getEmpresa() {
@@ -136,46 +180,5 @@ public class Usuario implements UserDetails {
 
 	public void setDataCadastro(LocalDate dataCadastro) {
 		this.dataCadastro = dataCadastro;
-	}
-
-	public void setPassword(String password) {
-		Timestamp now = new Timestamp(DateTime.now().getMillis());
-		this.setUltimaTrocaDeSenha(now);
-		this.senha = password;
-	}
-
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
-	}
-
-	@Override
-	public String getPassword() {
-		return null;
-	}
-
-	@Override
-	public String getUsername() {
-		return null;
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		return false;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		return false;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return false;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return false;
 	}
 }

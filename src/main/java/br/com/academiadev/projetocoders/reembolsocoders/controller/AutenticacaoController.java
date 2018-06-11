@@ -1,14 +1,14 @@
 package br.com.academiadev.projetocoders.reembolsocoders.controller;
 
-import br.com.academiadev.projetocoders.reembolsocoders.common.DeviceProvider;
-import br.com.academiadev.projetocoders.reembolsocoders.config.jwt.TokenUtils;
-import br.com.academiadev.projetocoders.reembolsocoders.dto.LoginDTO;
-import br.com.academiadev.projetocoders.reembolsocoders.dto.TokenDTO;
-import br.com.academiadev.projetocoders.reembolsocoders.dto.TrocaSenhaDTO;
-import br.com.academiadev.projetocoders.reembolsocoders.model.Usuario;
-import br.com.academiadev.projetocoders.reembolsocoders.service.impl.CustomUserDetailsService;
+import java.io.IOException;
+import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.Device;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,19 +23,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
+import br.com.academiadev.projetocoders.reembolsocoders.common.DeviceProvider;
+import br.com.academiadev.projetocoders.reembolsocoders.config.jwt.TokenHelper;
+import br.com.academiadev.projetocoders.reembolsocoders.dto.LoginDTO;
+import br.com.academiadev.projetocoders.reembolsocoders.dto.TokenDTO;
+import br.com.academiadev.projetocoders.reembolsocoders.dto.TrocaSenhaDTO;
+import br.com.academiadev.projetocoders.reembolsocoders.model.Usuario;
+import br.com.academiadev.projetocoders.reembolsocoders.service.CustomUserDetailsService;
 
 @RestController
-@RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AutenticacaoController {
 
     @Autowired
-    private TokenUtils tokenHelper;
+    private TokenHelper tokenHelper;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -53,7 +53,7 @@ public class AutenticacaoController {
         Usuario usuario = (Usuario) autenticacao.getPrincipal();
         String token = tokenHelper.gerarToken(usuario.getUsername(), dispositivo);
         int expiresIn = tokenHelper.getExpiredIn(dispositivo);
-        return ResponseEntity.ok(new TokenDTO(token, Long.valueOf(expiresIn)));
+        return ResponseEntity.ok(new TokenDTO(token, Long.valueOf(expiresIn), usuario.getAutorizacoes().get(0).getNome()));
     }
 
     @RequestMapping(value = "/refresh", method = RequestMethod.POST)
@@ -63,7 +63,7 @@ public class AutenticacaoController {
         if (token != null && principal != null) {
             String tokenAtualizado = tokenHelper.atualizarToken(token, dispositivo);
             int expiracao = tokenHelper.getExpiredIn(dispositivo);
-            return ResponseEntity.ok(new TokenDTO(tokenAtualizado, Long.valueOf(expiracao)));
+            return ResponseEntity.ok(new TokenDTO(tokenAtualizado, Long.valueOf(expiracao), ""));
         } else {
             TokenDTO tokenDTO = new TokenDTO();
             return ResponseEntity.accepted().body(tokenDTO);

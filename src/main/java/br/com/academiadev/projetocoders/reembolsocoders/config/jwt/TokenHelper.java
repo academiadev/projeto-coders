@@ -1,20 +1,20 @@
 package br.com.academiadev.projetocoders.reembolsocoders.config.jwt;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.servlet.http.HttpServletRequest;
 
-import br.com.academiadev.projetocoders.reembolsocoders.model.Usuario;
 import org.springframework.mobile.device.Device;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import br.com.academiadev.projetocoders.reembolsocoders.model.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
 @Component
-public class TokenUtils extends AbstractTokenUtils {
-
+public class TokenHelper extends AbstractTokenHelper {
+	
 	public String getUsuario(String token) {
 		String username;
 		try {
@@ -26,22 +26,22 @@ public class TokenUtils extends AbstractTokenUtils {
 		return username;
 	}
 
-	public Date getDataCriacao(String token) {
-		Date issueAt;
+	public LocalDateTime getDataCriacao(String token) {
+		LocalDateTime issueAt;
 		try {
 			final Claims claims = this.getAllClaimsFromToken(token);
-			issueAt = claims.getIssuedAt();
+			issueAt = timeProvider.toLocalDateTime(claims.getIssuedAt());
 		} catch (Exception e) {
 			issueAt = null;
 		}
 		return issueAt;
 	}
 
-	public Date getDataExpiracao(String token) {
-		Date issueAt;
+	public LocalDateTime getDataExpiracao(String token) {
+		LocalDateTime issueAt;
 		try {
 			final Claims claims = this.getAllClaimsFromToken(token);
-			issueAt = claims.getExpiration();
+			issueAt = timeProvider.toLocalDateTime(claims.getExpiration());
 		} catch (Exception e) {
 			issueAt = null;
 		}
@@ -61,11 +61,10 @@ public class TokenUtils extends AbstractTokenUtils {
 
 	public String atualizarToken(String token, Device device) {
 		String tokenAtualizado;
-		Date a = timeProvider.getDataAtual();
 		try {
 			Claims claims = this.getAllClaimsFromToken(token);
-			claims.setIssuedAt(a);
-			tokenAtualizado = Jwts.builder().setClaims(claims).setExpiration(generateExpirationDate(device)).signWith(SIGNATURE_ALGORITHM, SECRET).compact();
+			claims.setIssuedAt(timeProvider.toDate(timeProvider.getDataHoraAtual()));
+			tokenAtualizado = Jwts.builder().setClaims(claims).setExpiration(timeProvider.toDate(generateExpirationDate(device))).signWith(SIGNATURE_ALGORITHM, SECRET).compact();
 		} catch (Exception e) {
 			tokenAtualizado = null;
 		}
@@ -74,7 +73,8 @@ public class TokenUtils extends AbstractTokenUtils {
 
 	public String gerarToken(String username, Device device) {
 		String audience = generateAudience(device);
-		return Jwts.builder().setIssuer(APP_NAME).setSubject(username).setAudience(audience).setIssuedAt(timeProvider.getDataAtual()).setExpiration(generateExpirationDate(device)).signWith(SIGNATURE_ALGORITHM, SECRET).compact();
+		return Jwts.builder().setIssuer(APP_NAME).setSubject(username).setHeaderParam("email", "reembolsocoders@gmail.com").setAudience(audience).setIssuedAt(timeProvider.toDate(timeProvider.getDataHoraAtual())).setExpiration(timeProvider.toDate(generateExpirationDate(device)))
+				.signWith(SIGNATURE_ALGORITHM, SECRET).compact();
 	}
 
 	public int getExpiredIn(Device dispositivo) {
@@ -84,11 +84,11 @@ public class TokenUtils extends AbstractTokenUtils {
 	public Boolean validarToken(String token, UserDetails userDetails) {
 		Usuario user = (Usuario) userDetails;
 		final String usuario = getUsuario(token);
-		final Date dataDeCriacao = getDataCriacao(token);
+		final LocalDateTime dataDeCriacao = getDataCriacao(token);
 		Boolean foiCriadoAntesDaUltimaTrocaDeSenha = isCreatedBeforeLastPasswordReset(dataDeCriacao, user.getUltimaTrocaDeSenha());
 		boolean ehMesmoUsuario = usuario != null && usuario.equals(userDetails.getUsername());
-		boolean estaEspirado = getDataExpiracao(token).compareTo(timeProvider.getDataAtual()) <= 0;
-		return (ehMesmoUsuario && !foiCriadoAntesDaUltimaTrocaDeSenha && !estaEspirado);
+		boolean estaExpirado = getDataExpiracao(token).compareTo(timeProvider.getDataHoraAtual()) <= 0;
+		return (ehMesmoUsuario && !foiCriadoAntesDaUltimaTrocaDeSenha && !estaExpirado);
 	}
 
 	public String getToken(HttpServletRequest request) {

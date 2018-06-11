@@ -14,10 +14,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 public class TokenFilter extends OncePerRequestFilter {
 
-	private TokenUtils tokenHelper;
+	private TokenHelper tokenHelper;
 	private UserDetailsService userDetailsService;
 
-	public TokenFilter(TokenUtils tokenHelper, UserDetailsService userDetailsService) {
+	public TokenFilter(TokenHelper tokenHelper, UserDetailsService userDetailsService) {
 		this.tokenHelper = tokenHelper;
 		this.userDetailsService = userDetailsService;
 	}
