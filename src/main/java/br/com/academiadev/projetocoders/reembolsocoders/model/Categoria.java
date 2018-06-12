@@ -2,7 +2,7 @@ package br.com.academiadev.projetocoders.reembolsocoders.model;
 
 public enum Categoria {
 	
-	HOSPEDAGEM("HOSPEDAGEM", "Hospedagem"), ALIMENTACAO("ALIMENTACAO", "AlimentaÃ§Ã£o"), TRANSPORTE("TRANSPORTE", "Transporte"),
+	HOSPEDAGEM("HOSPEDAGEM", "Hospedagem"), ALIMENTACAO("ALIMENTACAO", "Alimentação"), TRANSPORTE("TRANSPORTE", "Transporte"),
 	OUTROS("OUTROS", "Outros");
 
 	private String id;

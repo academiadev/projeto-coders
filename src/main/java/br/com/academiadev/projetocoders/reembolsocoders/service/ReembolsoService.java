@@ -50,7 +50,7 @@ public class ReembolsoService {
 	}
 
 	public List<ReembolsoDTO> ListaReembolsosUsuario(Long usuarioId) {
-		List<Reembolso> listReembolso = reembolsoRepository.findByUsuarioIdAndExcluido(usuarioId, true);
+		List<Reembolso> listReembolso = reembolsoRepository.findByUsuarioIdAndExcluido(usuarioId, false);
 		List<ReembolsoDTO> listReembolsoDTO = new ArrayList<>();
 
 		for (Reembolso reembolso : listReembolso) {
