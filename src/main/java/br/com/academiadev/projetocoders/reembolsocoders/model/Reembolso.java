@@ -95,11 +95,11 @@ public class Reembolso {
 		this.arquivoPath = arquivoPath;
 	}
 
-	public Usuario getFuncionario() {
+	public Usuario getUsuario() {
 		return usuario;
 	}
 
-	public void setFuncionario(Usuario funcionario) {
+	public void setUsuario(Usuario funcionario) {
 		this.usuario = funcionario;
 	}
 

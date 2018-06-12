@@ -33,8 +33,8 @@ public class ReembolsoService {
 		reembolso.setStatus(StatusReembolso.AGUARDANDO);
 		reembolso.setExcluido(false);
 
-		Usuario funcionario = funcionarioRepository.findOne(reembolsoDTO.getIdFuncionario());
-		reembolso.setFuncionario(funcionario);
+		Usuario usuario = funcionarioRepository.findOne(reembolsoDTO.getIdUsuario());
+		reembolso.setUsuario(usuario);
 
 		reembolso = reembolsoRepository.save(reembolso);
 		return reembolso;

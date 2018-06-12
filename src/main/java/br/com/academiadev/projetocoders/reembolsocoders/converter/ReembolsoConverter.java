@@ -23,7 +23,7 @@ public class ReembolsoConverter implements Converter<Reembolso, ReembolsoDTO> {
 		dto.setCategoria(entity.getCategoria().getId());
 		dto.setData(entity.getData().format(formatter));
 		dto.setDescricao(entity.getDescricao());
-		dto.setIdFuncionario(entity.getFuncionario().getId());
+		dto.setIdUsuario(entity.getUsuario().getId());
 		dto.setStatus(entity.getStatus().getId());
 		dto.setValor(entity.getValor().toString());
 		dto.setId(entity.getId());
@@ -39,9 +39,9 @@ public class ReembolsoConverter implements Converter<Reembolso, ReembolsoDTO> {
 		LocalDate data = LocalDate.parse(dto.getData(), formatter);		
 		reembolso.setData(data);
 		
-		Usuario funcionario = new Usuario();
-		funcionario.setId(dto.getIdFuncionario());
-		reembolso.setFuncionario(funcionario);
+		Usuario usuario = new Usuario();
+		usuario.setId(dto.getIdUsuario());
+		reembolso.setUsuario(usuario);
 		
 		reembolso.setDataEnviado(LocalDate.now());
 		reembolso.setValor(new BigDecimal(dto.getValor()));		

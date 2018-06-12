@@ -12,7 +12,7 @@ public class ReembolsoDTO {
 
 	private String status;
 
-	private Long idFuncionario;
+	private Long idUsuario;
 
 	private String arquivoPath;
 
@@ -26,12 +26,12 @@ public class ReembolsoDTO {
 		this.id = id;
 	}
 
-	public Long getIdFuncionario() {
-		return idFuncionario;
+	public Long getIdUsuario() {
+		return idUsuario;
 	}
 
-	public void setIdFuncionario(Long id_funcionario) {
-		this.idFuncionario = id_funcionario;
+	public void setIdUsuario(Long id_usuario) {
+		this.idUsuario = id_usuario;
 	}
 
 	public String getValor() {

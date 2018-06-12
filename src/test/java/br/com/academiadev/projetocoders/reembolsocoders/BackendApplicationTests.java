@@ -89,7 +89,7 @@ public class BackendApplicationTests {
 		reembolsoDTO.setCategoria("HOSPEDAGEM");
 		reembolsoDTO.setData("23/04/2018");
 		reembolsoDTO.setDescricao("Almoço");
-		reembolsoDTO.setIdFuncionario(usuarioRepository.findByNome(usuarioDTO.getNome()).getId());
+		reembolsoDTO.setIdUsuario(usuarioRepository.findByNome(usuarioDTO.getNome()).getId());
 		reembolsoDTO.setValor("500.65");
 
 		return reembolsoDTO;
