@@ -7,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import br.com.academiadev.projetocoders.reembolsocoders.dto.UsuarioDTO;
-import br.com.academiadev.projetocoders.reembolsocoders.model.Empresa;
 import br.com.academiadev.projetocoders.reembolsocoders.model.Usuario;
 
 @Component
