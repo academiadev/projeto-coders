@@ -1,8 +1,10 @@
 package br.com.academiadev.projetocoders.reembolsocoders.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,5 +38,10 @@ public class UsuarioController {
 	@PostMapping("/editarUsuario")
 	public void editarUsuario(@RequestBody UsuarioDTO UsuarioDTO) {
 		usuarioService.Editar(UsuarioDTO);
+	}
+	
+	@GetMapping("/whoami")
+	public UsuarioDTO user(Principal usuario) {
+		return usuarioService.findByEmail(usuario.getName());
 	}
 }

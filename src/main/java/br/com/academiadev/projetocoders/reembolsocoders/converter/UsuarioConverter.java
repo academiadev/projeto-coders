@@ -7,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import br.com.academiadev.projetocoders.reembolsocoders.dto.UsuarioDTO;
-import br.com.academiadev.projetocoders.reembolsocoders.model.Empresa;
 import br.com.academiadev.projetocoders.reembolsocoders.model.Usuario;
 
 @Component
@@ -15,6 +14,9 @@ public class UsuarioConverter implements Converter<Usuario, UsuarioDTO>{
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired 
+	private EmpresaConverter empresaConverter;
 
 	@Override
 	public UsuarioDTO toDTO(Usuario entity) {
@@ -22,8 +24,9 @@ public class UsuarioConverter implements Converter<Usuario, UsuarioDTO>{
 		dto.setEmail(entity.getEmail());
 		dto.setNome(entity.getNome());
 		dto.setSenha(entity.getSenha());
-		dto.setIdEmpresa(entity.getEmpresa().getId());
+		dto.setEmpresa(empresaConverter.toDTO(entity.getEmpresa()));
 		dto.setId(entity.getId());
+		dto.setIsAdmin(entity.getAutorizacoes().get(0).getNome().equals("ROLE_ADMIN"));
 		return dto;
 	}
 
@@ -33,9 +36,6 @@ public class UsuarioConverter implements Converter<Usuario, UsuarioDTO>{
 		usuario.setEmail(dto.getEmail());
 		usuario.setNome(dto.getNome());
 		usuario.setSenha(passwordEncoder.encode(dto.getSenha()));
-		Empresa empresa = new Empresa();
-		empresa.setId(dto.getIdEmpresa());
-		usuario.setEmpresa(empresa);
 		usuario.setDataCadastro(LocalDate.now());
 		return usuario;
 	}

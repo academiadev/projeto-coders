@@ -8,9 +8,27 @@ public class UsuarioDTO {
 
 	private String email;
 
-	private Long idEmpresa;
-
 	private String senha;
+	
+	private Boolean isAdmin;
+	
+	private EmpresaDTO empresa;
+
+	public EmpresaDTO getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(EmpresaDTO empresa) {
+		this.empresa = empresa;
+	}
+
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
 
 	public Long getId() {
 		return id;
@@ -18,14 +36,6 @@ public class UsuarioDTO {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Long getIdEmpresa() {
-		return idEmpresa;
-	}
-
-	public void setIdEmpresa(Long id_empresa) {
-		this.idEmpresa = id_empresa;
 	}
 
 	public String getNome() {

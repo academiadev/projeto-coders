@@ -1,7 +1,7 @@
 package br.com.academiadev.projetocoders.reembolsocoders.model;
 
 public enum StatusReembolso {
-	AGUARDANDO("AGUARDANDO", "aguardando"), APROVADO("APROVADO", "aprovado"), RECUSADO("RECUSADO", "recusado");
+	AGUARDANDO("AGUARDANDO", "waiting"), APROVADO("APROVADO", "approved"), RECUSADO("RECUSADO", "canceled");
 
 	private String id;
 	private String descricao;

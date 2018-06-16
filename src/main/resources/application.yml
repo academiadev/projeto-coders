@@ -6,15 +6,15 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost/reembolso
     username: postgres
-    password: 123
+    password: postgres
   jpa:
     generate-ddl: true
 server:
   port: ${PORT:8080}
 jwt:
   header: Authorization
-  expires_in: 3000
-  mobile_expires_in: 3000
+  expires_in: 86400
+  mobile_expires_in: 86400
   secret: SREDOC
   pass_secret: DOC
 management:

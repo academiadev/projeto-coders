@@ -13,7 +13,7 @@ public class EmpresaConverter implements Converter<Empresa, EmpresaDTO> {
 		EmpresaDTO dto = new EmpresaDTO();
 		dto.setCodigo(entity.getCodigo());
 		dto.setNome(entity.getNome());
-
+		dto.setId(entity.getId());
 		return dto;
 	}
 

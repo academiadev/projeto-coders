@@ -51,9 +51,9 @@ public class AutenticacaoController {
         final Authentication autenticacao = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getSenha()));
         SecurityContextHolder.getContext().setAuthentication(autenticacao);
         Usuario usuario = (Usuario) autenticacao.getPrincipal();
-        String token = tokenHelper.gerarToken(usuario.getUsername(), dispositivo);
+        String token = tokenHelper.gerarToken(usuario, dispositivo);
         int expiresIn = tokenHelper.getExpiredIn(dispositivo);
-        return ResponseEntity.ok(new TokenDTO(token, Long.valueOf(expiresIn), usuario.getAutorizacoes().get(0).getNome()));
+        return ResponseEntity.ok(new TokenDTO(token, Long.valueOf(expiresIn)));
     }
 
     @RequestMapping(value = "/refresh", method = RequestMethod.POST)
@@ -63,7 +63,7 @@ public class AutenticacaoController {
         if (token != null && principal != null) {
             String tokenAtualizado = tokenHelper.atualizarToken(token, dispositivo);
             int expiracao = tokenHelper.getExpiredIn(dispositivo);
-            return ResponseEntity.ok(new TokenDTO(tokenAtualizado, Long.valueOf(expiracao), ""));
+            return ResponseEntity.ok(new TokenDTO(tokenAtualizado, Long.valueOf(expiracao)));
         } else {
             TokenDTO tokenDTO = new TokenDTO();
             return ResponseEntity.accepted().body(tokenDTO);

@@ -33,8 +33,8 @@ public class ReembolsoService {
 		reembolso.setStatus(StatusReembolso.AGUARDANDO);
 		reembolso.setExcluido(false);
 
-		Usuario funcionario = funcionarioRepository.findOne(reembolsoDTO.getIdFuncionario());
-		reembolso.setFuncionario(funcionario);
+		Usuario usuario = funcionarioRepository.findOne(reembolsoDTO.getIdUsuario());
+		reembolso.setUsuario(usuario);
 
 		reembolso = reembolsoRepository.save(reembolso);
 		return reembolso;
@@ -50,7 +50,7 @@ public class ReembolsoService {
 	}
 
 	public List<ReembolsoDTO> ListaReembolsosUsuario(Long usuarioId) {
-		List<Reembolso> listReembolso = reembolsoRepository.findByUsuarioIdAndExcluido(usuarioId, true);
+		List<Reembolso> listReembolso = reembolsoRepository.findByUsuarioIdAndExcluido(usuarioId, false);
 		List<ReembolsoDTO> listReembolsoDTO = new ArrayList<>();
 
 		for (Reembolso reembolso : listReembolso) {
