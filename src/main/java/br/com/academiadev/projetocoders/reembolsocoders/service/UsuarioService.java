@@ -1,6 +1,6 @@
 package br.com.academiadev.projetocoders.reembolsocoders.service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +63,7 @@ public class UsuarioService {
 			usuario.setAutorizacoes(getAutorizacoes("ROLE_ADMIN"));
 		}
 		
-		usuario.setUltimaTrocaDeSenha(LocalDateTime.now());
+		usuario.setUltimaTrocaDeSenha(LocalDate.now());
 
 		usuarioRepository.save(usuario);
 		return usuarioConverter.toDTO(usuario);

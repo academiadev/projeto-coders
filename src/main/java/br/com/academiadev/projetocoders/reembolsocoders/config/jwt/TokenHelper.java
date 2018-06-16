@@ -89,7 +89,7 @@ public class TokenHelper extends AbstractTokenHelper {
 		Usuario user = (Usuario) userDetails;
 		final String usuario = getUsuario(token);
 		final LocalDateTime dataDeCriacao = getDataCriacao(token);
-		Boolean foiCriadoAntesDaUltimaTrocaDeSenha = isCreatedBeforeLastPasswordReset(dataDeCriacao, user.getUltimaTrocaDeSenha());
+		Boolean foiCriadoAntesDaUltimaTrocaDeSenha = isCreatedBeforeLastPasswordReset(dataDeCriacao, user.getUltimaTrocaDeSenha().atStartOfDay());
 		boolean ehMesmoUsuario = usuario != null && usuario.equals(userDetails.getUsername());
 		boolean estaExpirado = getDataExpiracao(token).compareTo(timeProvider.getDataHoraAtual()) <= 0;
 		return (ehMesmoUsuario && !foiCriadoAntesDaUltimaTrocaDeSenha && !estaExpirado);

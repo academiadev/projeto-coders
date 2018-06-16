@@ -1,7 +1,6 @@
 package br.com.academiadev.projetocoders.reembolsocoders.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -64,7 +63,7 @@ public class Usuario implements UserDetails {
 	private LocalDate dataCadastro;
 
 	@Column(name = "ultima_troca_de_senha")
-	private LocalDateTime ultimaTrocaDeSenha;
+	private LocalDate ultimaTrocaDeSenha;
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "usuario_autorizacao", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "autorizacao_id", referencedColumnName = "id"))
@@ -84,7 +83,7 @@ public class Usuario implements UserDetails {
 	}
 	
 	public void setPassword(String password) {
-		this.setUltimaTrocaDeSenha(LocalDateTime.now());
+		this.setUltimaTrocaDeSenha(LocalDate.now());
 		this.senha = password;
 	}
 
@@ -118,11 +117,11 @@ public class Usuario implements UserDetails {
 		return true;
 	}
 
-	public LocalDateTime getUltimaTrocaDeSenha() {
+	public LocalDate getUltimaTrocaDeSenha() {
 		return ultimaTrocaDeSenha;
 	}
 
-	public void setUltimaTrocaDeSenha(LocalDateTime ultimaTrocaDeSenha) {
+	public void setUltimaTrocaDeSenha(LocalDate ultimaTrocaDeSenha) {
 		this.ultimaTrocaDeSenha = ultimaTrocaDeSenha;
 	}
 
