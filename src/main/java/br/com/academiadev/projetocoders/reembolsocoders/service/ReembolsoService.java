@@ -1,9 +1,11 @@
 package br.com.academiadev.projetocoders.reembolsocoders.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -84,7 +86,12 @@ public class ReembolsoService {
 	public void EditarReembolso(ReembolsoDTO reembolsoDTO) {
 		Reembolso reembolso = reembolsoRepository.findOne(reembolsoDTO.getId());
 		if(reembolso != null) {
-			reembolso = reembolsoConverter.toEntity(reembolsoDTO);
+			reembolso.setDescricao(reembolsoDTO.getDescricao());
+			LocalDate data = LocalDate.parse(reembolsoDTO.getData(), reembolsoConverter.formatter);
+			reembolso.setData(data);
+			reembolso.setCategoria(reembolsoConverter.categoriaId(reembolsoDTO.getCategoria()));
+			reembolso.setArquivoPath(reembolsoDTO.getArquivoPath());
+			reembolso.setValor(new BigDecimal(reembolsoDTO.getValor().replace(",",".")));
 			reembolsoRepository.save(reembolso);
 		}
 	}
