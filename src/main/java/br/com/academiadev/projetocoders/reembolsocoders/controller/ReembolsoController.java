@@ -54,7 +54,7 @@ public class ReembolsoController {
 	
 	@PostMapping("/excluirReembolso")
 	public void excluirReembolso(@RequestParam Long reembolsoId) {
-		
+		reembolsoService.ExcluirReembolso(reembolsoId);
 	}
 
 }
