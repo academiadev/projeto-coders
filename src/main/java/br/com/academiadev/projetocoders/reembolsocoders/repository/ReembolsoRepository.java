@@ -14,6 +14,6 @@ public interface ReembolsoRepository extends CrudRepository<Reembolso, Long> {
 	
 	public List<Reembolso> findByCategoriaAndExcluido(String categoria, Boolean excluido);
 	
-	public List<Reembolso> findByUsuario_Empresa_id(Long id);
+	public List<Reembolso> findByUsuario_Empresa_idAndExcluido(Long id, Boolean excluido);
 
 }

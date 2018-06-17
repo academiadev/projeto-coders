@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,7 +61,7 @@ public class ReembolsoService {
 	}
 
 	public List<ReembolsoDTO> ListaReembolsosEmpresa(Long empresaId) {
-		List<Reembolso> listReembolso = reembolsoRepository.findByUsuario_Empresa_id(empresaId);
+		List<Reembolso> listReembolso = reembolsoRepository.findByUsuario_Empresa_idAndExcluido(empresaId, false);
 		List<ReembolsoDTO> listReembolsoDTO = new ArrayList<>();
 
 		for (Reembolso reembolso : listReembolso) {
