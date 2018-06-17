@@ -26,6 +26,7 @@ public class ReembolsoConverter implements Converter<Reembolso, ReembolsoDTO> {
 		dto.setStatus(entity.getStatus().getDescricao());
 		dto.setValor(entity.getValor().toString());
 		dto.setId(entity.getId());
+		dto.setNomeUsuario(entity.getUsuario().getNome());
 		return dto;
 	}
 
@@ -47,7 +48,7 @@ public class ReembolsoConverter implements Converter<Reembolso, ReembolsoDTO> {
 	
 	private Categoria categoriaId(String categoria) {
 		switch(categoria) {
-			case "Alimentação" :
+			case "AlimentaÃ§Ã£o" :
 				return Categoria.ALIMENTACAO;
 			case "Hospedagem" :
 				return Categoria.HOSPEDAGEM;

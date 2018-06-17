@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.academiadev.projetocoders.reembolsocoders.dto.EmpresaDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.ReembolsoDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.service.ReembolsoService;
 
@@ -36,9 +35,9 @@ public class ReembolsoController {
 		return listReembolsoDTO;
 	}
 
-	@PostMapping("/listaReembolsosEmpresa")
-	public List<ReembolsoDTO> listaReembolsoEmpresa(@RequestBody EmpresaDTO empresaDTO) {
-		List<ReembolsoDTO> listReembolso = reembolsoService.ListaReembolsosEmpresa(empresaDTO);
+	@GetMapping("/listaReembolsosEmpresa")
+	public List<ReembolsoDTO> listaReembolsoEmpresa(@RequestParam Long empresaId) {
+		List<ReembolsoDTO> listReembolso = reembolsoService.ListaReembolsosEmpresa(empresaId);
 		return listReembolso;
 	}
 

@@ -13,10 +13,20 @@ public class ReembolsoDTO {
 	private String status;
 
 	private Long idUsuario;
+	
+	private String nomeUsuario;
 
 	private String arquivoPath;
 
 	private String valor;
+	
+	public String getNomeUsuario() {
+		return nomeUsuario;
+	}
+
+	public void setNomeUsuario(String nomeUsuario) {
+		this.nomeUsuario = nomeUsuario;
+	}
 
 	public Long getId() {
 		return id;

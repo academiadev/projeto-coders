@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.academiadev.projetocoders.reembolsocoders.converter.ReembolsoConverter;
-import br.com.academiadev.projetocoders.reembolsocoders.dto.EmpresaDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.ReembolsoDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.model.Reembolso;
 import br.com.academiadev.projetocoders.reembolsocoders.model.StatusReembolso;
@@ -60,9 +59,8 @@ public class ReembolsoService {
 		return listReembolsoDTO;
 	}
 
-	public List<ReembolsoDTO> ListaReembolsosEmpresa(EmpresaDTO empresaDTO) {
-//		List<Reembolso> listReembolso = reembolsoRepository.findAllPorEmpresa(empresaDTO.getCodigo());
-		List<Reembolso> listReembolso = new ArrayList<>();
+	public List<ReembolsoDTO> ListaReembolsosEmpresa(Long empresaId) {
+		List<Reembolso> listReembolso = reembolsoRepository.findByUsuario_Empresa_id(empresaId);
 		List<ReembolsoDTO> listReembolsoDTO = new ArrayList<>();
 
 		for (Reembolso reembolso : listReembolso) {
