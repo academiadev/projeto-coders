@@ -13,7 +13,7 @@ import br.com.academiadev.projetocoders.reembolsocoders.model.Reembolso;
 @Component
 public class ReembolsoConverter implements Converter<Reembolso, ReembolsoDTO> {
 	
-	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	public DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 	@Override
 	public ReembolsoDTO toDTO(Reembolso entity) {
@@ -35,7 +35,7 @@ public class ReembolsoConverter implements Converter<Reembolso, ReembolsoDTO> {
 		Reembolso reembolso = new Reembolso();
 		reembolso.setArquivoPath(dto.getArquivoPath());
 		reembolso.setCategoria(categoriaId(dto.getCategoria()));
-		
+
 		LocalDate data = LocalDate.parse(dto.getData(), formatter);		
 		reembolso.setData(data);
 		
@@ -46,7 +46,7 @@ public class ReembolsoConverter implements Converter<Reembolso, ReembolsoDTO> {
 		return reembolso;
 	}
 	
-	private Categoria categoriaId(String categoria) {
+	public Categoria categoriaId(String categoria) {
 		switch(categoria) {
 			case "Alimentação" :
 				return Categoria.ALIMENTACAO;
