@@ -1,6 +1,7 @@
 package br.com.academiadev.projetocoders.reembolsocoders.config.jwt;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -8,6 +9,7 @@ import org.springframework.mobile.device.Device;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import br.com.academiadev.projetocoders.reembolsocoders.dto.UsuarioDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.model.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -71,10 +73,13 @@ public class TokenHelper extends AbstractTokenHelper {
 		return tokenAtualizado;
 	}
 
-	public String gerarToken(Usuario user, Device device) {
+	public String gerarToken(UsuarioDTO user, Device device) {
 		String audience = generateAudience(device);
-		return Jwts.builder().setIssuer(APP_NAME).setSubject(user.getUsername())
-				.setHeaderParam("email", "reembolsocoders@gmail.com")
+		user.setSenha(null);
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("usuario", user);
+		
+		return Jwts.builder().setClaims(map).setIssuer(APP_NAME).setSubject(user.getEmail())
 				.setAudience(audience)
 				.setIssuedAt(timeProvider.toDate(timeProvider.getDataHoraAtual()))
 				.setExpiration(timeProvider.toDate(generateExpirationDate(device)))
