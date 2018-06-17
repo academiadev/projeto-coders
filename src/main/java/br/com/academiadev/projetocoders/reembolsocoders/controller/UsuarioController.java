@@ -3,6 +3,7 @@ package br.com.academiadev.projetocoders.reembolsocoders.controller;
 import java.security.Principal;
 import java.util.List;
 
+import br.com.academiadev.projetocoders.reembolsocoders.exception.ApiAlertException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +31,7 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/listaUsuariosEmpresa")
-	public List<UsuarioDTO> listaUsuariosEmpresa(@RequestParam Long empresaId) {
+	public List<UsuarioDTO> listaUsuariosEmpresa(@RequestParam Long empresaId) throws ApiAlertException {
 		List<UsuarioDTO> listUsuario = usuarioService.ListaUsuariosEmpresa(empresaId);
 		return listUsuario;
 	}
