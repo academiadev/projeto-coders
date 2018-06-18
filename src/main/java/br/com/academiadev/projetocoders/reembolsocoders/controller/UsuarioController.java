@@ -44,4 +44,9 @@ public class UsuarioController {
 	public UsuarioDTO user(Principal usuario) {
 		return usuarioService.findByEmail(usuario.getName());
 	}
+	
+	@GetMapping("/pesquisaUsuario")
+	public UsuarioDTO pesquisaUsuario(@RequestParam Long usuarioId) {
+		return usuarioService.pesquisaUsuario(usuarioId);
+	}
 }
