@@ -48,7 +48,7 @@ public class ReembolsoConverter implements Converter<Reembolso, ReembolsoDTO> {
 	
 	public Categoria categoriaId(String categoria) {
 		switch(categoria) {
-			case "AlimentaÃ§Ã£o" :
+			case "Alimentação" :
 				return Categoria.ALIMENTACAO;
 			case "Hospedagem" :
 				return Categoria.HOSPEDAGEM;

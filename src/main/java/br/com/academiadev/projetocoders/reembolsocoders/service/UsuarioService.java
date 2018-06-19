@@ -101,6 +101,10 @@ public class UsuarioService {
 		return list;
 	}
 	
+	public UsuarioDTO pesquisaUsuario(Long usuarioId) {
+		return usuarioConverter.toDTO(usuarioRepository.findOne(usuarioId));
+	}
+	
 	public UsuarioDTO findByEmail(String email) {
 		return usuarioConverter.toDTO(usuarioRepository.findByEmail(email));
 	}
