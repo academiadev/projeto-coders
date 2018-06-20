@@ -3,15 +3,18 @@ package br.com.academiadev.projetocoders.reembolsocoders.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.academiadev.projetocoders.reembolsocoders.exception.ApiAlertException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.com.academiadev.projetocoders.reembolsocoders.dto.ReembolsoDTO;
+import br.com.academiadev.projetocoders.reembolsocoders.exception.ApiAlertException;
 import br.com.academiadev.projetocoders.reembolsocoders.service.ReembolsoService;
 
 @RestController
@@ -19,6 +22,12 @@ public class ReembolsoController {
 
 	@Autowired
 	private ReembolsoService reembolsoService;
+	
+	@PostMapping("/post")
+	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
+		String message = "";
+		return ResponseEntity.status(HttpStatus.OK).body(message);
+	}
 
 	@PostMapping("/cadastrarReembolso")
 	public void cadastrarReembolso(@RequestBody ReembolsoDTO reembolsoDTO) {
