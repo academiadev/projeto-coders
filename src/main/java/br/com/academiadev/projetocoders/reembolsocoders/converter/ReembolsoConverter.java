@@ -40,7 +40,7 @@ public class ReembolsoConverter implements Converter<Reembolso, ReembolsoDTO> {
 		reembolso.setData(data);
 		
 		reembolso.setDataEnviado(LocalDate.now());
-		reembolso.setValor(new BigDecimal(dto.getValor().replace(',', '.')));		
+		reembolso.setValor(new BigDecimal(dto.getValor().replace(".", "").replace(',', '.')));
 		reembolso.setDescricao(dto.getDescricao());
 		
 		return reembolso;
