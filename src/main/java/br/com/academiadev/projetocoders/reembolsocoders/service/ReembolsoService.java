@@ -1,12 +1,16 @@
 package br.com.academiadev.projetocoders.reembolsocoders.service;
 
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.com.academiadev.projetocoders.reembolsocoders.converter.ReembolsoConverter;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.ReembolsoDTO;
@@ -27,6 +31,8 @@ public class ReembolsoService {
 
 	@Autowired
 	private ReembolsoRepository reembolsoRepository;
+	
+	private final Path rootLocation = Paths.get("C:\\Users\\1749\\Documents\\teste");
 
 	public Reembolso Cadastrar(ReembolsoDTO reembolsoDTO) {
 		Reembolso reembolso = reembolsoConverter.toEntity(reembolsoDTO);
@@ -100,6 +106,14 @@ public class ReembolsoService {
 		if (reembolso != null && reembolso.getExcluido() == false) {
 			reembolso.setExcluido(true);
 			reembolsoRepository.save(reembolso);
+		}
+	}
+	
+	public void salvarArquivo(MultipartFile file) {
+		try {
+			Files.copy(file.getInputStream(), this.rootLocation.resolve(file.getOriginalFilename()));
+		} catch (Exception e) {
+			throw new RuntimeException("FAIL!");
 		}
 	}
 

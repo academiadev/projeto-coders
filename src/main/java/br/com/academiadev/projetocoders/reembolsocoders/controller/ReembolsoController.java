@@ -23,9 +23,10 @@ public class ReembolsoController {
 	@Autowired
 	private ReembolsoService reembolsoService;
 	
-	@PostMapping("/post")
+	@PostMapping("/salvarArquivo")
 	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
 		String message = "";
+		reembolsoService.salvarArquivo(file);
 		return ResponseEntity.status(HttpStatus.OK).body(message);
 	}
 
