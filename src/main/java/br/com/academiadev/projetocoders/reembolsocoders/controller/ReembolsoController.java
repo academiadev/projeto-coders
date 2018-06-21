@@ -1,7 +1,9 @@
 package br.com.academiadev.projetocoders.reembolsocoders.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,10 +26,11 @@ public class ReembolsoController {
 	private ReembolsoService reembolsoService;
 	
 	@PostMapping("/salvarArquivo")
-	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
-		String message = "";
-		reembolsoService.salvarArquivo(file);
-		return ResponseEntity.status(HttpStatus.OK).body(message);
+	public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
+		String message = reembolsoService.salvarArquivo(file);
+		Map<String, String> result = new HashMap<>();
+        result.put("path", message);
+		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
 
 	@PostMapping("/cadastrarReembolso")
