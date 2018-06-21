@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import static java.nio.file.StandardCopyOption.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class ReembolsoService {
 	@Autowired
 	private ReembolsoRepository reembolsoRepository;
 	
-	private final Path rootLocation = Paths.get("C:\\Users\\1749\\Documents\\teste");
+	private final Path rootLocation = Paths.get("C:\\Users\\felip\\Documents\\arquivos_reembolso");
 
 	public Reembolso Cadastrar(ReembolsoDTO reembolsoDTO) {
 		Reembolso reembolso = reembolsoConverter.toEntity(reembolsoDTO);
@@ -109,12 +110,14 @@ public class ReembolsoService {
 		}
 	}
 	
-	public void salvarArquivo(MultipartFile file) {
+	public String salvarArquivo(MultipartFile file) {
 		try {
-			Files.copy(file.getInputStream(), this.rootLocation.resolve(file.getOriginalFilename()));
+			Files.copy(file.getInputStream(), this.rootLocation.resolve(file.getOriginalFilename()), REPLACE_EXISTING);
 		} catch (Exception e) {
 			throw new RuntimeException("FAIL!");
 		}
+		
+		return this.rootLocation + "\\" + file.getOriginalFilename();
 	}
 
 }
