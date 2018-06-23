@@ -1,12 +1,21 @@
 package br.com.academiadev.projetocoders.reembolsocoders.service;
 
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
 import java.math.BigDecimal;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.com.academiadev.projetocoders.reembolsocoders.converter.ReembolsoConverter;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.ReembolsoDTO;
@@ -27,6 +36,8 @@ public class ReembolsoService {
 
 	@Autowired
 	private ReembolsoRepository reembolsoRepository;
+	
+	private final Path rootLocation = Paths.get("C:\\Users\\1749\\Documents\\teste");
 
 	public Reembolso Cadastrar(ReembolsoDTO reembolsoDTO) {
 		Reembolso reembolso = reembolsoConverter.toEntity(reembolsoDTO);
@@ -100,6 +111,30 @@ public class ReembolsoService {
 		if (reembolso != null && reembolso.getExcluido() == false) {
 			reembolso.setExcluido(true);
 			reembolsoRepository.save(reembolso);
+		}
+	}
+	
+	public String salvarArquivo(MultipartFile file) {
+		try {
+			Files.copy(file.getInputStream(), this.rootLocation.resolve(file.getOriginalFilename()), REPLACE_EXISTING);
+		} catch (Exception e) {
+			throw new RuntimeException("FAIL!");
+		}
+		
+		return this.rootLocation + "\\" + file.getOriginalFilename();
+	}
+	
+	public Resource downloadArquivo(String fileName) {
+		try {
+			Path file = rootLocation.resolve(fileName);
+			Resource resource = new UrlResource(file.toUri());
+			if (resource.exists() || resource.isReadable()) {
+				return resource;
+			} else {
+				throw new RuntimeException("FAIL!");
+			}
+		} catch (MalformedURLException e) {
+			throw new RuntimeException("FAIL!");
 		}
 	}
 

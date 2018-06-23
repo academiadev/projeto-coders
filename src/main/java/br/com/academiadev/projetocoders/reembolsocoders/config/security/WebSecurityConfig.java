@@ -66,6 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/login/**").permitAll()//
 				.antMatchers("/cadastrarUsuario/**").permitAll()//
 				.antMatchers("/esqueciSenha/**").permitAll()//
+				.antMatchers("/downloadArquivo/**").permitAll()//
 				.anyRequest().authenticated().and()//
 				.addFilterBefore(new TokenFilter(tokenHelper, jwtUserDetailsService), BasicAuthenticationFilter.class);
 	}
@@ -94,6 +95,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				"/", //
 				"/webjars/**", //
 				"/*.html", //
+				"/*.jpg", //
 				"/favicon.ico", //
 				"/**/*.html", //
 				"/v2/api-docs", //
