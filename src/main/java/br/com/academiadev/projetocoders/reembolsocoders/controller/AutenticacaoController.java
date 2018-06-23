@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.Device;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.academiadev.projetocoders.reembolsocoders.common.DeviceProvider;
@@ -28,7 +28,6 @@ import br.com.academiadev.projetocoders.reembolsocoders.config.jwt.TokenHelper;
 import br.com.academiadev.projetocoders.reembolsocoders.converter.UsuarioConverter;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.LoginDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.TokenDTO;
-import br.com.academiadev.projetocoders.reembolsocoders.dto.TrocaSenhaDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.model.Usuario;
 import br.com.academiadev.projetocoders.reembolsocoders.service.CustomUserDetailsService;
 
@@ -94,14 +93,11 @@ public class AutenticacaoController {
         result.put("isAuth", "false");
         return ResponseEntity.ok().body(result);
     }
-
-    @RequestMapping(value = "/change-password", method = RequestMethod.POST)
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> trocarSenha(@RequestBody TrocaSenhaDTO trocaSenhaDTO) {
-        userDetailsService.trocarSenha(trocaSenhaDTO.getOldPassword(), trocaSenhaDTO.getNewPassword());
-        Map<String, String> result = new HashMap<>();
-        result.put("result", "success");
-        return ResponseEntity.accepted().body(result);
+    
+    @RequestMapping(value = "/trocar-senha", method = RequestMethod.POST)
+    public ResponseEntity<?> trocarSenha(@RequestParam String newPassword, Device dispositivo) {
+    	TokenDTO tokenDTO = userDetailsService.trocarSenha(newPassword, dispositivo);
+        return ResponseEntity.ok(tokenDTO);
     }
 
 }
