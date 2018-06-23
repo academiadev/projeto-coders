@@ -36,7 +36,8 @@ public class ReembolsoService {
 
 	@Autowired
 	private ReembolsoRepository reembolsoRepository;
-	
+
+	// Alterar de acordo com seu path	
 	private final Path rootLocation = Paths.get("C:\\Users\\felip\\Documents\\arquivos_reembolso");
 
 	public Reembolso Cadastrar(ReembolsoDTO reembolsoDTO) {
