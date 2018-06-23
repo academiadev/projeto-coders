@@ -20,6 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import br.com.academiadev.projetocoders.reembolsocoders.dto.ReembolsoDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.ApiAlertException;
+import br.com.academiadev.projetocoders.reembolsocoders.exception.ListaReembolsosCategoriaException;
+import br.com.academiadev.projetocoders.reembolsocoders.exception.ListaReembolsosEmpresaException;
+import br.com.academiadev.projetocoders.reembolsocoders.exception.ListaReembolsosUsuarioException;
 import br.com.academiadev.projetocoders.reembolsocoders.service.ReembolsoService;
 
 @RestController
@@ -55,19 +58,19 @@ public class ReembolsoController {
 	}
 
 	@GetMapping("/listaReembolsosUsuario")
-	public List<ReembolsoDTO> listaReembolsosUsuario(@RequestParam Long usuarioId) throws ApiAlertException {
+	public List<ReembolsoDTO> listaReembolsosUsuario(@RequestParam Long usuarioId) throws ListaReembolsosUsuarioException{
 		List<ReembolsoDTO> listReembolsoDTO = reembolsoService.ListaReembolsosUsuario(usuarioId);
 		return listReembolsoDTO;
 	}
 
 	@GetMapping("/listaReembolsosEmpresa")
-	public List<ReembolsoDTO> listaReembolsoEmpresa(@RequestParam Long empresaId) throws ApiAlertException {
+	public List<ReembolsoDTO> listaReembolsoEmpresa(@RequestParam Long empresaId) throws ListaReembolsosEmpresaException {
 		List<ReembolsoDTO> listReembolso = reembolsoService.ListaReembolsosEmpresa(empresaId);
 		return listReembolso;
 	}
 
 	@PostMapping("/listaReembolsosCategoria")
-	public List<ReembolsoDTO> listaReembolsosCategoria(@RequestParam String categoria) throws ApiAlertException {
+	public List<ReembolsoDTO> listaReembolsosCategoria(@RequestParam String categoria) throws ListaReembolsosCategoriaException {
 		List<ReembolsoDTO> listReembolsoDTO = new ArrayList<>();
 		return listReembolsoDTO;
 	}

@@ -14,14 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.academiadev.projetocoders.reembolsocoders.exception.*;
 import br.com.academiadev.projetocoders.reembolsocoders.config.jwt.TokenHelper;
 import br.com.academiadev.projetocoders.reembolsocoders.converter.UsuarioConverter;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.TokenDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.UsuarioDTO;
-import br.com.academiadev.projetocoders.reembolsocoders.exception.ApiAlertException;
-import br.com.academiadev.projetocoders.reembolsocoders.exception.EmpresaExistenteException;
-import br.com.academiadev.projetocoders.reembolsocoders.exception.EmpresaNaoEncontradaException;
-import br.com.academiadev.projetocoders.reembolsocoders.exception.UsuarioExistenteException;
 import br.com.academiadev.projetocoders.reembolsocoders.model.Usuario;
 import br.com.academiadev.projetocoders.reembolsocoders.service.UsuarioService;
 
@@ -45,7 +42,7 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/listaUsuariosEmpresa")
-	public List<UsuarioDTO> listaUsuariosEmpresa(@RequestParam Long empresaId) throws ApiAlertException {
+	public List<UsuarioDTO> listaUsuariosEmpresa(@RequestParam Long empresaId) throws ListaUsuariosEmpresaException {
 		List<UsuarioDTO> listUsuario = usuarioService.ListaUsuariosEmpresa(empresaId);
 		return listUsuario;
 	}
