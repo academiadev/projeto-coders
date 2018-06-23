@@ -36,8 +36,9 @@ public class ReembolsoService {
 
 	@Autowired
 	private ReembolsoRepository reembolsoRepository;
-	
-	private final Path rootLocation = Paths.get("C:\\Users\\1749\\Documents\\teste");
+
+	// Alterar de acordo com seu path	
+	private final Path rootLocation = Paths.get("C:\\Users\\felip\\Documents\\arquivos_reembolso");
 
 	public Reembolso Cadastrar(ReembolsoDTO reembolsoDTO) {
 		Reembolso reembolso = reembolsoConverter.toEntity(reembolsoDTO);
