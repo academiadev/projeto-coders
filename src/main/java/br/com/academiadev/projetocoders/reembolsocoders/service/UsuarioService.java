@@ -19,6 +19,8 @@ import br.com.academiadev.projetocoders.reembolsocoders.model.Usuario;
 import br.com.academiadev.projetocoders.reembolsocoders.repository.EmpresaRepository;
 import br.com.academiadev.projetocoders.reembolsocoders.repository.UsuarioRepository;
 
+import javax.transaction.Transactional;
+
 @Service
 public class UsuarioService {
 
@@ -37,6 +39,7 @@ public class UsuarioService {
 	@Autowired
 	private AutorizacaoService autorizacaoService;
 
+	@Transactional
 	public UsuarioDTO Cadastrar(UsuarioDTO usuarioDTO, String empresaNome, Integer empresaCodigo)
 			throws EmpresaNaoEncontradaException, EmpresaExistenteException, UsuarioExistenteException {
 		if (usuarioRepository.findByNome(usuarioDTO.getNome()) != null) {
