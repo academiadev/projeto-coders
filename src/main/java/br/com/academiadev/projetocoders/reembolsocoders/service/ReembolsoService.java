@@ -11,6 +11,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.academiadev.projetocoders.reembolsocoders.exception.ReembolsoNaoAguardandoException;
+import br.com.academiadev.projetocoders.reembolsocoders.exception.ReembolsoNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -51,13 +53,17 @@ public class ReembolsoService {
 		return reembolso;
 	}
 
-	public void AlterarStatus(Long reembolsoId, String status) {
+	public void AlterarStatus(Long reembolsoId, String status) throws ReembolsoNaoAguardandoException, ReembolsoNaoEncontradoException{
 		Reembolso reembolso = reembolsoRepository.findOne(reembolsoId);
-		if (reembolso != null && reembolso.getStatus() == StatusReembolso.AGUARDANDO) {
-			reembolso.setStatus(StatusReembolso.valueOf(status));
-			reembolso.setDataRespondido(LocalDate.now());
-			reembolsoRepository.save(reembolso);
+		if (reembolso == null) {
+			throw new ReembolsoNaoEncontradoException();
 		}
+		if (reembolso.getStatus() != StatusReembolso.AGUARDANDO){
+			throw new ReembolsoNaoAguardandoException();
+		}
+		reembolso.setStatus(StatusReembolso.valueOf(status));
+		reembolso.setDataRespondido(LocalDate.now());
+		reembolsoRepository.save(reembolso);
 	}
 
 	public List<ReembolsoDTO> ListaReembolsosUsuario(Long usuarioId) {

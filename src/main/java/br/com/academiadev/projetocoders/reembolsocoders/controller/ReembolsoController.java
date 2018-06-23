@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.academiadev.projetocoders.reembolsocoders.exception.ReembolsoNaoAguardandoException;
+import br.com.academiadev.projetocoders.reembolsocoders.exception.ReembolsoNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -50,7 +52,7 @@ public class ReembolsoController {
 	}
 
 	@PostMapping("/alterarStatusReembolso")
-	public void alterarStatusReembolso(@RequestParam Long reembolsoId, @RequestParam String status) {
+	public void alterarStatusReembolso(@RequestParam Long reembolsoId, @RequestParam String status) throws ReembolsoNaoEncontradoException, ReembolsoNaoAguardandoException {
 		reembolsoService.AlterarStatus(reembolsoId, status);
 	}
 
