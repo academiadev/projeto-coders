@@ -18,6 +18,7 @@ import br.com.academiadev.projetocoders.reembolsocoders.config.jwt.TokenHelper;
 import br.com.academiadev.projetocoders.reembolsocoders.converter.UsuarioConverter;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.TokenDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.UsuarioDTO;
+import br.com.academiadev.projetocoders.reembolsocoders.exception.EmailJaCadastradoException;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.EmpresaExistenteException;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.EmpresaNaoEncontradaException;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.ListaUsuariosEmpresaException;
@@ -43,7 +44,7 @@ public class UsuarioController {
 			@RequestParam Integer empresaCodigo, 
 			@RequestParam(value="", required = false) String empresaNome,
 			Device dispositivo)
-			throws EmpresaNaoEncontradaException, EmpresaExistenteException, UsuarioExistenteException {
+			throws EmpresaNaoEncontradaException, EmpresaExistenteException, UsuarioExistenteException, EmailJaCadastradoException {
 		Usuario usuario = usuarioService.Cadastrar(usuarioDTO, empresaNome, empresaCodigo);
 		String token = tokenHelper.gerarToken(usuarioConverter.toDTO(usuario), dispositivo);
         int expiresIn = tokenHelper.getExpiredIn(dispositivo);
