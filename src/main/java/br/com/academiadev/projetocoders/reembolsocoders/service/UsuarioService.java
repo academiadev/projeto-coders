@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.academiadev.projetocoders.reembolsocoders.exception.UsuarioNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -83,8 +84,11 @@ public class UsuarioService {
 		return listUsuarioDTO;
 	}
 
-	public void Editar(UsuarioDTO usuarioDTO) {
+	public void Editar(UsuarioDTO usuarioDTO) throws UsuarioNaoEncontradoException{
 		Usuario usuario = usuarioRepository.findOne(usuarioDTO.getId());
+		if (usuario == null){
+			throw new UsuarioNaoEncontradoException();
+		}
 		usuario.setEmail(usuarioDTO.getEmail());
 		usuario.setNome(usuarioDTO.getNome());
 		usuarioRepository.save(usuario);

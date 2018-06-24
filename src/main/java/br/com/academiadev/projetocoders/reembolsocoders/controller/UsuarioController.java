@@ -3,6 +3,7 @@ package br.com.academiadev.projetocoders.reembolsocoders.controller;
 import java.security.Principal;
 import java.util.List;
 
+import br.com.academiadev.projetocoders.reembolsocoders.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.Device;
@@ -18,10 +19,6 @@ import br.com.academiadev.projetocoders.reembolsocoders.config.jwt.TokenHelper;
 import br.com.academiadev.projetocoders.reembolsocoders.converter.UsuarioConverter;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.TokenDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.UsuarioDTO;
-import br.com.academiadev.projetocoders.reembolsocoders.exception.ApiAlertException;
-import br.com.academiadev.projetocoders.reembolsocoders.exception.EmpresaExistenteException;
-import br.com.academiadev.projetocoders.reembolsocoders.exception.EmpresaNaoEncontradaException;
-import br.com.academiadev.projetocoders.reembolsocoders.exception.UsuarioExistenteException;
 import br.com.academiadev.projetocoders.reembolsocoders.model.Usuario;
 import br.com.academiadev.projetocoders.reembolsocoders.service.UsuarioService;
 
@@ -51,8 +48,8 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/editarUsuario")
-	public ResponseEntity<?> editarUsuario(@RequestBody UsuarioDTO UsuarioDTO, Device dispositivo) {
-		usuarioService.Editar(UsuarioDTO);		
+	public ResponseEntity<?> editarUsuario(@RequestBody UsuarioDTO UsuarioDTO, Device dispositivo) throws UsuarioNaoEncontradoException {
+		usuarioService.Editar(UsuarioDTO);
 		SecurityContext securityContext = SecurityContextHolder.getContext();
 		Usuario user = (Usuario) securityContext.getAuthentication().getPrincipal();
 		user.setEmail(UsuarioDTO.getEmail());
