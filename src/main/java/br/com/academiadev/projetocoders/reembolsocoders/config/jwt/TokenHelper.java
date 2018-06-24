@@ -9,7 +9,6 @@ import org.springframework.mobile.device.Device;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import br.com.academiadev.projetocoders.reembolsocoders.dto.UsuarioDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.model.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -73,7 +72,7 @@ public class TokenHelper extends AbstractTokenHelper {
 		return tokenAtualizado;
 	}
 
-	public String gerarToken(UsuarioDTO user, Device device) {
+	public String gerarToken(Usuario user, Device device) {
 		String audience = generateAudience(device);
 		user.setSenha(null);
 		HashMap<String, Object> map = new HashMap<>();

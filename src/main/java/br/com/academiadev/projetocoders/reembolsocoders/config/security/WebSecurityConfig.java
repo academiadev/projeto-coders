@@ -65,7 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()//
 				.antMatchers("/login/**").permitAll()//
 				.antMatchers("/cadastrarUsuario/**").permitAll()//
-				.antMatchers("/esqueciSenha/**").permitAll()//
+				.antMatchers("/recuperarSenha/**").permitAll()//
 				.antMatchers("/downloadArquivo/**").permitAll()//
 				.anyRequest().authenticated().and()//
 				.addFilterBefore(new TokenFilter(tokenHelper, jwtUserDetailsService), BasicAuthenticationFilter.class);

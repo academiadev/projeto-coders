@@ -48,7 +48,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		Usuario user = (Usuario) securityContext.getAuthentication().getPrincipal();
 		user.setSenha(passwordEncoder.encode(newPassword));
         userRepository.save(user);
-		String token = tokenHelper.gerarToken(usuarioConverter.toDTO(user), dispositivo);
+		String token = tokenHelper.gerarToken(user, dispositivo);
         int expiresIn = tokenHelper.getExpiredIn(dispositivo);
         
         return new TokenDTO(token, Long.valueOf(expiresIn));

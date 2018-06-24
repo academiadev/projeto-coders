@@ -3,7 +3,6 @@ package br.com.academiadev.projetocoders.reembolsocoders.controller;
 import java.security.Principal;
 import java.util.List;
 
-import br.com.academiadev.projetocoders.reembolsocoders.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.Device;
@@ -15,11 +14,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.academiadev.projetocoders.reembolsocoders.exception.*;
 import br.com.academiadev.projetocoders.reembolsocoders.config.jwt.TokenHelper;
-import br.com.academiadev.projetocoders.reembolsocoders.converter.UsuarioConverter;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.TokenDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.UsuarioDTO;
+import br.com.academiadev.projetocoders.reembolsocoders.exception.EmpresaExistenteException;
+import br.com.academiadev.projetocoders.reembolsocoders.exception.EmpresaNaoEncontradaException;
+import br.com.academiadev.projetocoders.reembolsocoders.exception.ListaUsuariosEmpresaException;
+import br.com.academiadev.projetocoders.reembolsocoders.exception.UsuarioExistenteException;
+import br.com.academiadev.projetocoders.reembolsocoders.exception.UsuarioNaoEncontradoException;
 import br.com.academiadev.projetocoders.reembolsocoders.model.Usuario;
 import br.com.academiadev.projetocoders.reembolsocoders.service.UsuarioService;
 
@@ -31,15 +33,17 @@ public class UsuarioController {
 	
 	@Autowired
     private TokenHelper tokenHelper;
-	
-	@Autowired
-    private UsuarioConverter usuarioConverter;
 
 	@PostMapping("/cadastrarUsuario")
-	public UsuarioDTO cadastrarUsuario(@RequestBody UsuarioDTO usuarioDTO, @RequestParam Integer empresaCodigo, 
-			@RequestParam(value="", required = false) String empresaNome)
+	public ResponseEntity<?> cadastrarUsuario(@RequestBody UsuarioDTO usuarioDTO,
+			@RequestParam Integer empresaCodigo, 
+			@RequestParam(value="", required = false) String empresaNome,
+			Device dispositivo)
 			throws EmpresaNaoEncontradaException, EmpresaExistenteException, UsuarioExistenteException {
-		return usuarioService.Cadastrar(usuarioDTO, empresaNome, empresaCodigo);
+		Usuario usuario = usuarioService.Cadastrar(usuarioDTO, empresaNome, empresaCodigo);
+		String token = tokenHelper.gerarToken(usuario, dispositivo);
+        int expiresIn = tokenHelper.getExpiredIn(dispositivo);
+		return ResponseEntity.ok(new TokenDTO(token, Long.valueOf(expiresIn)));
 	}
 
 	@PostMapping("/listaUsuariosEmpresa")
@@ -54,7 +58,7 @@ public class UsuarioController {
 		SecurityContext securityContext = SecurityContextHolder.getContext();
 		Usuario user = (Usuario) securityContext.getAuthentication().getPrincipal();
 		user.setEmail(UsuarioDTO.getEmail());
-		String token = tokenHelper.gerarToken(usuarioConverter.toDTO(user), dispositivo);
+		String token = tokenHelper.gerarToken(user, dispositivo);
         int expiresIn = tokenHelper.getExpiredIn(dispositivo);
         return ResponseEntity.ok(new TokenDTO(token, Long.valueOf(expiresIn)));
 	}

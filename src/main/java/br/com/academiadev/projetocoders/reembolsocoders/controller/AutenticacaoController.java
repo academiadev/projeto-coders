@@ -25,11 +25,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.academiadev.projetocoders.reembolsocoders.common.DeviceProvider;
 import br.com.academiadev.projetocoders.reembolsocoders.config.jwt.TokenHelper;
-import br.com.academiadev.projetocoders.reembolsocoders.converter.UsuarioConverter;
+import br.com.academiadev.projetocoders.reembolsocoders.dto.EsqueceuSenhaDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.LoginDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.TokenDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.model.Usuario;
 import br.com.academiadev.projetocoders.reembolsocoders.service.CustomUserDetailsService;
+import br.com.academiadev.projetocoders.reembolsocoders.service.EmailService;
 
 @RestController
 public class AutenticacaoController {
@@ -47,14 +48,14 @@ public class AutenticacaoController {
     private DeviceProvider deviceProvider;
     
     @Autowired
-    private UsuarioConverter usuarioConverter;
+	private EmailService emailService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> criarAutenticacaoAutorizada(@RequestBody LoginDTO authenticationRequest, HttpServletResponse response, Device dispositivo) throws AuthenticationException, IOException {
         final Authentication autenticacao = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getSenha()));
         SecurityContextHolder.getContext().setAuthentication(autenticacao);
         Usuario usuario = (Usuario) autenticacao.getPrincipal();
-        String token = tokenHelper.gerarToken(usuarioConverter.toDTO(usuario), dispositivo);
+        String token = tokenHelper.gerarToken(usuario, dispositivo);
         int expiresIn = tokenHelper.getExpiredIn(dispositivo);
         return ResponseEntity.ok(new TokenDTO(token, Long.valueOf(expiresIn)));
     }
@@ -94,10 +95,18 @@ public class AutenticacaoController {
         return ResponseEntity.ok().body(result);
     }
     
-    @RequestMapping(value = "/trocar-senha", method = RequestMethod.POST)
+    @RequestMapping(value = "/trocarSenha", method = RequestMethod.POST)
     public ResponseEntity<?> trocarSenha(@RequestParam String newPassword, Device dispositivo) {
     	TokenDTO tokenDTO = userDetailsService.trocarSenha(newPassword, dispositivo);
         return ResponseEntity.ok(tokenDTO);
     }
+    
+    @RequestMapping(value = "/recuperarSenha", method = RequestMethod.POST)
+    public void recuperarSenha(@RequestBody EsqueceuSenhaDTO esqueceuSenhaDTO, 
+    		HttpServletRequest request, Device dispositivo) {
+		if (emailService.emailValido(esqueceuSenhaDTO.getEmail())) {
+			emailService.sendSimpleMessage(esqueceuSenhaDTO.getEmail(), request, dispositivo);
+		}
+    }   
 
 }
