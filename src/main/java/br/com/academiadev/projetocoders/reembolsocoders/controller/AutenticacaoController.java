@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.academiadev.projetocoders.reembolsocoders.common.DeviceProvider;
 import br.com.academiadev.projetocoders.reembolsocoders.config.jwt.TokenHelper;
+import br.com.academiadev.projetocoders.reembolsocoders.converter.UsuarioConverter;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.EsqueceuSenhaDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.LoginDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.TokenDTO;
@@ -49,13 +50,16 @@ public class AutenticacaoController {
     
     @Autowired
 	private EmailService emailService;
+    
+    @Autowired
+	private UsuarioConverter usuarioConverter;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> criarAutenticacaoAutorizada(@RequestBody LoginDTO authenticationRequest, HttpServletResponse response, Device dispositivo) throws AuthenticationException, IOException {
         final Authentication autenticacao = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getSenha()));
         SecurityContextHolder.getContext().setAuthentication(autenticacao);
         Usuario usuario = (Usuario) autenticacao.getPrincipal();
-        String token = tokenHelper.gerarToken(usuario, dispositivo);
+        String token = tokenHelper.gerarToken(usuarioConverter.toDTO(usuario), dispositivo);
         int expiresIn = tokenHelper.getExpiredIn(dispositivo);
         return ResponseEntity.ok(new TokenDTO(token, Long.valueOf(expiresIn)));
     }

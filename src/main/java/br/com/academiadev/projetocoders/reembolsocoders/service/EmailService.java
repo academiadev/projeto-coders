@@ -9,6 +9,7 @@ import org.springframework.mobile.device.Device;
 import org.springframework.stereotype.Service;
 
 import br.com.academiadev.projetocoders.reembolsocoders.config.jwt.TokenHelper;
+import br.com.academiadev.projetocoders.reembolsocoders.converter.UsuarioConverter;
 import br.com.academiadev.projetocoders.reembolsocoders.model.Mail;
 import br.com.academiadev.projetocoders.reembolsocoders.model.Usuario;
 import br.com.academiadev.projetocoders.reembolsocoders.repository.UsuarioRepository;
@@ -25,6 +26,9 @@ public class EmailService {
     @Autowired
     private TokenHelper tokenHelper;
     
+    @Autowired
+    private UsuarioConverter usuarioConverter;
+    
     public Boolean emailValido(String email) {
     	Usuario usuario = usuarioRepository.findByEmail(email);
     	if (usuario != null) {
@@ -37,7 +41,7 @@ public class EmailService {
     	Mail mail = new Mail();
     	
     	Usuario usuario = usuarioRepository.findByEmail(email);
-    	String token = tokenHelper.gerarToken(usuario, dispositivo);
+    	String token = tokenHelper.gerarToken(usuarioConverter.toDTO(usuario), dispositivo);
     	
     	String url = request.getScheme() + "://localhost:4200";
     	url += "/redefinirNovaSenha?token=" + token;

@@ -8,7 +8,6 @@ import br.com.academiadev.projetocoders.reembolsocoders.repository.UsuarioReposi
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.Device;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -48,7 +47,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		Usuario user = (Usuario) securityContext.getAuthentication().getPrincipal();
 		user.setSenha(passwordEncoder.encode(newPassword));
         userRepository.save(user);
-		String token = tokenHelper.gerarToken(user, dispositivo);
+		String token = tokenHelper.gerarToken(usuarioConverter.toDTO(user), dispositivo);
         int expiresIn = tokenHelper.getExpiredIn(dispositivo);
         
         return new TokenDTO(token, Long.valueOf(expiresIn));

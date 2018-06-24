@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.academiadev.projetocoders.reembolsocoders.config.jwt.TokenHelper;
+import br.com.academiadev.projetocoders.reembolsocoders.converter.UsuarioConverter;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.TokenDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.UsuarioDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.EmpresaExistenteException;
@@ -33,6 +34,9 @@ public class UsuarioController {
 	
 	@Autowired
     private TokenHelper tokenHelper;
+	
+	@Autowired
+	private UsuarioConverter usuarioConverter;
 
 	@PostMapping("/cadastrarUsuario")
 	public ResponseEntity<?> cadastrarUsuario(@RequestBody UsuarioDTO usuarioDTO,
@@ -41,7 +45,7 @@ public class UsuarioController {
 			Device dispositivo)
 			throws EmpresaNaoEncontradaException, EmpresaExistenteException, UsuarioExistenteException {
 		Usuario usuario = usuarioService.Cadastrar(usuarioDTO, empresaNome, empresaCodigo);
-		String token = tokenHelper.gerarToken(usuario, dispositivo);
+		String token = tokenHelper.gerarToken(usuarioConverter.toDTO(usuario), dispositivo);
         int expiresIn = tokenHelper.getExpiredIn(dispositivo);
 		return ResponseEntity.ok(new TokenDTO(token, Long.valueOf(expiresIn)));
 	}
@@ -58,7 +62,7 @@ public class UsuarioController {
 		SecurityContext securityContext = SecurityContextHolder.getContext();
 		Usuario user = (Usuario) securityContext.getAuthentication().getPrincipal();
 		user.setEmail(UsuarioDTO.getEmail());
-		String token = tokenHelper.gerarToken(user, dispositivo);
+		String token = tokenHelper.gerarToken(usuarioConverter.toDTO(user), dispositivo);
         int expiresIn = tokenHelper.getExpiredIn(dispositivo);
         return ResponseEntity.ok(new TokenDTO(token, Long.valueOf(expiresIn)));
 	}
