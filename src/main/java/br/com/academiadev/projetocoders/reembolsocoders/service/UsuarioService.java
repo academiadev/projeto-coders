@@ -41,7 +41,7 @@ public class UsuarioService {
 	private AutorizacaoService autorizacaoService;
 
 	@Transactional
-	public UsuarioDTO Cadastrar(UsuarioDTO usuarioDTO, String empresaNome, Integer empresaCodigo)
+	public Usuario Cadastrar(UsuarioDTO usuarioDTO, String empresaNome, Integer empresaCodigo)
 			throws EmpresaNaoEncontradaException, EmpresaExistenteException, UsuarioExistenteException {
 		if (usuarioRepository.findByNome(usuarioDTO.getNome()) != null) {
 			throw new UsuarioExistenteException();
@@ -70,7 +70,7 @@ public class UsuarioService {
 		usuario.setUltimaTrocaDeSenha(LocalDate.now());
 
 		usuarioRepository.save(usuario);
-		return usuarioConverter.toDTO(usuario);
+		return usuario;
 	}
 
 	public List<UsuarioDTO> ListaUsuariosEmpresa(Long empresaId) {

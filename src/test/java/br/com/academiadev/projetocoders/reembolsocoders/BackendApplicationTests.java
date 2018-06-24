@@ -1,25 +1,18 @@
 package br.com.academiadev.projetocoders.reembolsocoders;
 
-import br.com.academiadev.projetocoders.reembolsocoders.exception.ApiAlertException;
-import br.com.academiadev.projetocoders.reembolsocoders.model.Mail;
-import br.com.academiadev.projetocoders.reembolsocoders.model.Reembolso;
-import br.com.academiadev.projetocoders.reembolsocoders.model.StatusReembolso;
 import br.com.academiadev.projetocoders.reembolsocoders.service.EmailService;
 import br.com.academiadev.projetocoders.reembolsocoders.service.EmpresaService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import br.com.academiadev.projetocoders.reembolsocoders.dto.EmpresaDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.UsuarioDTO;
-import br.com.academiadev.projetocoders.reembolsocoders.dto.ReembolsoDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.EmpresaExistenteException;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.EmpresaNaoEncontradaException;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.UsuarioExistenteException;
-import br.com.academiadev.projetocoders.reembolsocoders.repository.UsuarioRepository;
 import br.com.academiadev.projetocoders.reembolsocoders.service.UsuarioService;
 import br.com.academiadev.projetocoders.reembolsocoders.service.ReembolsoService;
 
@@ -29,9 +22,6 @@ public class BackendApplicationTests {
 
 	@Autowired
 	private EmailService emailService;
-
-	@Autowired
-	private UsuarioRepository usuarioRepository;
 
 	@Autowired
 	private ReembolsoService reembolsoService;
@@ -44,15 +34,10 @@ public class BackendApplicationTests {
 
 
 	@Test
-	public void EnviaEmail() {
-
-		Mail mail = new Mail();
-		mail.setFrom("reembolsocoders@gmail.com");
-		mail.setTo("kauan.amarante@gmail.com");
-		mail.setSubject("Sending Simple Email with JavaMailSender Example");
-		mail.setContent("This tutorial demonstrates how to send a simple email using Spring Framework.");
-
-		emailService.sendSimpleMessage(mail);
+	public void enviaEmail() {
+		if (emailService.emailValido("kauan.amarante@gmail.com")){
+			// emailService.sendSimpleMessage("kauan.amarante@gmail.com");
+		}
 	}
 
 	@Test
