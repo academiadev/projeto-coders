@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import br.com.academiadev.projetocoders.reembolsocoders.dto.EmpresaDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.UsuarioDTO;
+import br.com.academiadev.projetocoders.reembolsocoders.exception.EmailJaCadastradoException;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.EmpresaExistenteException;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.EmpresaNaoEncontradaException;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.UsuarioExistenteException;
@@ -42,7 +43,7 @@ public class BackendApplicationTests {
 
 	@Test
 	public void cadastroInicial()
-			throws EmpresaNaoEncontradaException, EmpresaExistenteException,UsuarioExistenteException {
+			throws EmpresaNaoEncontradaException, EmpresaExistenteException,UsuarioExistenteException, EmailJaCadastradoException {
 		
 		UsuarioDTO usuarioDTO = CriarUsuarioDTO("admin");
 		usuarioService.Cadastrar(usuarioDTO, "PLACEHOLDER", null);

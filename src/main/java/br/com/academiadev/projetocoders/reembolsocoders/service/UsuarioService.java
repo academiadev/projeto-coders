@@ -4,23 +4,24 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.academiadev.projetocoders.reembolsocoders.exception.UsuarioNaoEncontradoException;
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.academiadev.projetocoders.reembolsocoders.converter.UsuarioConverter;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.EmpresaDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.UsuarioDTO;
+import br.com.academiadev.projetocoders.reembolsocoders.exception.EmailJaCadastradoException;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.EmpresaExistenteException;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.EmpresaNaoEncontradaException;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.UsuarioExistenteException;
+import br.com.academiadev.projetocoders.reembolsocoders.exception.UsuarioNaoEncontradoException;
 import br.com.academiadev.projetocoders.reembolsocoders.model.Autorizacao;
 import br.com.academiadev.projetocoders.reembolsocoders.model.Empresa;
 import br.com.academiadev.projetocoders.reembolsocoders.model.Usuario;
 import br.com.academiadev.projetocoders.reembolsocoders.repository.EmpresaRepository;
 import br.com.academiadev.projetocoders.reembolsocoders.repository.UsuarioRepository;
-
-import javax.transaction.Transactional;
 
 @Service
 public class UsuarioService {
@@ -42,12 +43,12 @@ public class UsuarioService {
 
 	@Transactional
 	public Usuario Cadastrar(UsuarioDTO usuarioDTO, String empresaNome, Integer empresaCodigo)
-			throws EmpresaNaoEncontradaException, EmpresaExistenteException, UsuarioExistenteException {
+			throws EmpresaNaoEncontradaException, EmpresaExistenteException, UsuarioExistenteException, EmailJaCadastradoException {
 		if (usuarioRepository.findByNome(usuarioDTO.getNome()) != null) {
 			throw new UsuarioExistenteException();
 		}
 		if(usuarioRepository.findByEmail(usuarioDTO.getEmail()) != null) {
-			throw new EmpresaExistenteException();
+			throw new EmailJaCadastradoException();
 		}
 
 		Usuario usuario = usuarioConverter.toEntity(usuarioDTO);
