@@ -11,8 +11,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.academiadev.projetocoders.reembolsocoders.exception.ReembolsoNaoAguardandoException;
-import br.com.academiadev.projetocoders.reembolsocoders.exception.ReembolsoNaoEncontradoException;
+import br.com.academiadev.projetocoders.reembolsocoders.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -100,48 +99,53 @@ public class ReembolsoService {
 		return listReembolsoDTO;
 	}
 	
-	public void EditarReembolso(ReembolsoDTO reembolsoDTO) {
+	public void EditarReembolso(ReembolsoDTO reembolsoDTO) throws ReembolsoNaoEncontradoException {
 		Reembolso reembolso = reembolsoRepository.findOne(reembolsoDTO.getId());
-		if(reembolso != null) {
-			reembolso.setDescricao(reembolsoDTO.getDescricao());
-			LocalDate data = LocalDate.parse(reembolsoDTO.getData(), reembolsoConverter.formatter);
-			reembolso.setData(data);
-			reembolso.setCategoria(reembolsoConverter.categoriaId(reembolsoDTO.getCategoria()));
-			reembolso.setArquivoPath(reembolsoDTO.getArquivoPath());
-			reembolso.setValor(new BigDecimal(reembolsoDTO.getValor().replace(",",".")));
-			reembolsoRepository.save(reembolso);
+		if(reembolso == null) {
+			throw new ReembolsoNaoEncontradoException();
 		}
+		reembolso.setDescricao(reembolsoDTO.getDescricao());
+		LocalDate data = LocalDate.parse(reembolsoDTO.getData(), reembolsoConverter.formatter);
+		reembolso.setData(data);
+		reembolso.setCategoria(reembolsoConverter.categoriaId(reembolsoDTO.getCategoria()));
+		reembolso.setArquivoPath(reembolsoDTO.getArquivoPath());
+		reembolso.setValor(new BigDecimal(reembolsoDTO.getValor().replace(",",".")));
+		reembolsoRepository.save(reembolso);
 	}
 	
-	public void ExcluirReembolso(Long reembolsoId) {
+	public void ExcluirReembolso(Long reembolsoId) throws ReembolsoNaoEncontradoException, ReembolsoJaExcluidoException{
 		Reembolso reembolso = reembolsoRepository.findOne(reembolsoId);
-		if (reembolso != null && reembolso.getExcluido() == false) {
-			reembolso.setExcluido(true);
-			reembolsoRepository.save(reembolso);
+		if (reembolso == null) {
+			throw new ReembolsoNaoEncontradoException();
 		}
+		if (reembolso.getExcluido() == true){
+			throw new ReembolsoJaExcluidoException();
+		}
+		reembolso.setExcluido(true);
+		reembolsoRepository.save(reembolso);
+
 	}
 	
-	public String salvarArquivo(MultipartFile file) {
+	public String salvarArquivo(MultipartFile file) throws ReembolsoSalvarArquivoException{
 		try {
 			Files.copy(file.getInputStream(), this.rootLocation.resolve(file.getOriginalFilename()), REPLACE_EXISTING);
 		} catch (Exception e) {
-			throw new RuntimeException("FAIL!");
+			throw new ReembolsoSalvarArquivoException();
 		}
 		
 		return this.rootLocation + "\\" + file.getOriginalFilename();
 	}
 	
-	public Resource downloadArquivo(String fileName) {
+	public Resource downloadArquivo(String fileName) throws ReembolsoDowloadArquivoRecursoInexistenteException, ReembolsoDownloadArquivoUrlException{
 		try {
 			Path file = rootLocation.resolve(fileName);
 			Resource resource = new UrlResource(file.toUri());
-			if (resource.exists() || resource.isReadable()) {
-				return resource;
-			} else {
-				throw new RuntimeException("FAIL!");
+			if (!(resource.exists() || resource.isReadable())) {
+				throw new ReembolsoDowloadArquivoRecursoInexistenteException();
 			}
+			return resource;
 		} catch (MalformedURLException e) {
-			throw new RuntimeException("FAIL!");
+			throw new ReembolsoDownloadArquivoUrlException();
 		}
 	}
 
