@@ -33,23 +33,6 @@ public class BackendApplicationTests {
 	@Autowired
 	private EmpresaService empresaService;
 
-
-	@Test
-	public void enviaEmail() {
-		if (emailService.emailValido("kauan.amarante@gmail.com")){
-			// emailService.sendSimpleMessage("kauan.amarante@gmail.com");
-		}
-	}
-
-	@Test
-	public void cadastroInicial()
-			throws EmpresaNaoEncontradaException, EmpresaExistenteException,UsuarioExistenteException, EmailJaCadastradoException {
-		
-		UsuarioDTO usuarioDTO = CriarUsuarioDTO("admin");
-		usuarioService.Cadastrar(usuarioDTO, "PLACEHOLDER", null);
-
-	}
-
 	@Test
 	public void ListarReembolsosFuncionario() {
 		reembolsoService.ListaReembolsosUsuario(2l);
@@ -60,11 +43,6 @@ public class BackendApplicationTests {
 		usuarioService.ListaUsuariosEmpresa(1l);
 	}
 
-	@Test
-	public void CadastrarEmpresa() throws EmpresaExistenteException{
-
-		empresaService.Cadastrar(CriarEmpresaDTO());
-	}
 
 	public UsuarioDTO CriarUsuarioDTO(String opt) {
 		UsuarioDTO usuarioDTO = new UsuarioDTO();
