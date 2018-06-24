@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.academiadev.projetocoders.reembolsocoders.exception.ReembolsoJaExcluidoException;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.ReembolsoNaoAguardandoException;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.ReembolsoNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,25 +101,31 @@ public class ReembolsoService {
 		return listReembolsoDTO;
 	}
 	
-	public void EditarReembolso(ReembolsoDTO reembolsoDTO) {
+	public void EditarReembolso(ReembolsoDTO reembolsoDTO) throws ReembolsoNaoEncontradoException {
 		Reembolso reembolso = reembolsoRepository.findOne(reembolsoDTO.getId());
-		if(reembolso != null) {
-			reembolso.setDescricao(reembolsoDTO.getDescricao());
-			LocalDate data = LocalDate.parse(reembolsoDTO.getData(), reembolsoConverter.formatter);
-			reembolso.setData(data);
-			reembolso.setCategoria(reembolsoConverter.categoriaId(reembolsoDTO.getCategoria()));
-			reembolso.setArquivoPath(reembolsoDTO.getArquivoPath());
-			reembolso.setValor(new BigDecimal(reembolsoDTO.getValor().replace(",",".")));
-			reembolsoRepository.save(reembolso);
+		if(reembolso == null) {
+			throw new ReembolsoNaoEncontradoException();
 		}
+		reembolso.setDescricao(reembolsoDTO.getDescricao());
+		LocalDate data = LocalDate.parse(reembolsoDTO.getData(), reembolsoConverter.formatter);
+		reembolso.setData(data);
+		reembolso.setCategoria(reembolsoConverter.categoriaId(reembolsoDTO.getCategoria()));
+		reembolso.setArquivoPath(reembolsoDTO.getArquivoPath());
+		reembolso.setValor(new BigDecimal(reembolsoDTO.getValor().replace(",",".")));
+		reembolsoRepository.save(reembolso);
 	}
 	
-	public void ExcluirReembolso(Long reembolsoId) {
+	public void ExcluirReembolso(Long reembolsoId) throws ReembolsoNaoEncontradoException, ReembolsoJaExcluidoException{
 		Reembolso reembolso = reembolsoRepository.findOne(reembolsoId);
-		if (reembolso != null && reembolso.getExcluido() == false) {
-			reembolso.setExcluido(true);
-			reembolsoRepository.save(reembolso);
+		if (reembolso == null) {
+			throw new ReembolsoNaoEncontradoException();
 		}
+		if (reembolso.getExcluido() == true){
+			throw new ReembolsoJaExcluidoException();
+		}
+		reembolso.setExcluido(true);
+		reembolsoRepository.save(reembolso);
+
 	}
 	
 	public String salvarArquivo(MultipartFile file) {

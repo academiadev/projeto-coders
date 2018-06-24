@@ -75,7 +75,7 @@ public class ReembolsoController {
 	}
 	
 	@PostMapping("/editarReembolso")
-	public void editarReembolso(@RequestBody ReembolsoDTO reembolsoDTO) {
+	public void editarReembolso(@RequestBody ReembolsoDTO reembolsoDTO) throws ReembolsoNaoEncontradoException {
 		reembolsoService.EditarReembolso(reembolsoDTO);
 	}
 	
