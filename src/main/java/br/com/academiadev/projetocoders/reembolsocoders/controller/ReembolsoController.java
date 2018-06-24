@@ -5,8 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.com.academiadev.projetocoders.reembolsocoders.exception.ReembolsoNaoAguardandoException;
-import br.com.academiadev.projetocoders.reembolsocoders.exception.ReembolsoNaoEncontradoException;
+import br.com.academiadev.projetocoders.reembolsocoders.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.com.academiadev.projetocoders.reembolsocoders.dto.ReembolsoDTO;
-import br.com.academiadev.projetocoders.reembolsocoders.exception.ApiAlertException;
 import br.com.academiadev.projetocoders.reembolsocoders.service.ReembolsoService;
 
 @RestController
@@ -31,7 +29,7 @@ public class ReembolsoController {
 	private ReembolsoService reembolsoService;
 	
 	@PostMapping("/salvarArquivo")
-	public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
+	public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) throws ReembolsoSalvarArquivoException {
 		String message = reembolsoService.salvarArquivo(file);
 		Map<String, String> result = new HashMap<>();
         result.put("path", message);
@@ -39,7 +37,7 @@ public class ReembolsoController {
 	}
 	
 	@GetMapping("/downloadArquivo")
-	public ResponseEntity<?> getFile(@RequestParam String fileName) {
+	public ResponseEntity<?> getFile(@RequestParam String fileName) throws ReembolsoDowloadArquivoRecursoInexistenteException, ReembolsoDownloadArquivoUrlException {
 		Resource file = reembolsoService.downloadArquivo(fileName);
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
@@ -80,7 +78,7 @@ public class ReembolsoController {
 	}
 	
 	@PostMapping("/excluirReembolso")
-	public void excluirReembolso(@RequestParam Long reembolsoId) {
+	public void excluirReembolso(@RequestParam Long reembolsoId) throws ReembolsoNaoEncontradoException, ReembolsoJaExcluidoException {
 		reembolsoService.ExcluirReembolso(reembolsoId);
 	}
 

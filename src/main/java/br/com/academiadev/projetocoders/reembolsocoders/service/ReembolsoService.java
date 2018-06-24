@@ -11,9 +11,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.academiadev.projetocoders.reembolsocoders.exception.ReembolsoJaExcluidoException;
-import br.com.academiadev.projetocoders.reembolsocoders.exception.ReembolsoNaoAguardandoException;
-import br.com.academiadev.projetocoders.reembolsocoders.exception.ReembolsoNaoEncontradoException;
+import br.com.academiadev.projetocoders.reembolsocoders.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -128,27 +126,26 @@ public class ReembolsoService {
 
 	}
 	
-	public String salvarArquivo(MultipartFile file) {
+	public String salvarArquivo(MultipartFile file) throws ReembolsoSalvarArquivoException{
 		try {
 			Files.copy(file.getInputStream(), this.rootLocation.resolve(file.getOriginalFilename()), REPLACE_EXISTING);
 		} catch (Exception e) {
-			throw new RuntimeException("FAIL!");
+			throw new ReembolsoSalvarArquivoException();
 		}
 		
 		return this.rootLocation + "\\" + file.getOriginalFilename();
 	}
 	
-	public Resource downloadArquivo(String fileName) {
+	public Resource downloadArquivo(String fileName) throws ReembolsoDowloadArquivoRecursoInexistenteException, ReembolsoDownloadArquivoUrlException{
 		try {
 			Path file = rootLocation.resolve(fileName);
 			Resource resource = new UrlResource(file.toUri());
-			if (resource.exists() || resource.isReadable()) {
-				return resource;
-			} else {
-				throw new RuntimeException("FAIL!");
+			if (!(resource.exists() || resource.isReadable())) {
+				throw new ReembolsoDowloadArquivoRecursoInexistenteException();
 			}
+			return resource;
 		} catch (MalformedURLException e) {
-			throw new RuntimeException("FAIL!");
+			throw new ReembolsoDownloadArquivoUrlException();
 		}
 	}
 
