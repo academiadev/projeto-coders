@@ -61,7 +61,7 @@ public class MockTests {
 		reembolsoService.AlterarStatus(-1l,"RECUSADO");
 	}
 
-	@Test
+	@Test (expected = ReembolsoNaoAguardandoException.class)
 	public void alterandoStatusReembolsoRecusado() throws ReembolsoNaoEncontradoException, ReembolsoNaoAguardandoException {
 		Reembolso reembolso = mockReembolso();
 		reembolso.setStatus(StatusReembolso.RECUSADO);
@@ -70,7 +70,7 @@ public class MockTests {
 		reembolsoService.AlterarStatus(-1l,"RECUSADO");
 	}
 
-	@Test
+	@Test (expected = ReembolsoNaoEncontradoException.class)
 	public void alterandoStatusReembolsoNaoEncontrado() throws ReembolsoNaoEncontradoException, ReembolsoNaoAguardandoException {
 		Reembolso reembolso = mockReembolso();
 		given(reembolsoRepository.findOne(-1l)).willReturn(reembolso);
@@ -86,7 +86,7 @@ public class MockTests {
 		reembolsoService.ExcluirReembolso(-1l);
 	}
 
-	@Test
+	@Test (expected = ReembolsoJaExcluidoException.class)
 	public void excluindoReembolsoJaExcluido() throws ReembolsoNaoEncontradoException, ReembolsoJaExcluidoException {
 		Reembolso reembolso = mockReembolso();
 		reembolso.setExcluido(true);
