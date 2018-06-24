@@ -12,12 +12,12 @@ import br.com.academiadev.projetocoders.reembolsocoders.dto.ReembolsoDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.UsuarioDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.ReembolsoNaoAguardandoException;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.ReembolsoNaoEncontradoException;
-import br.com.academiadev.projetocoders.reembolsocoders.model.Categoria;
-import br.com.academiadev.projetocoders.reembolsocoders.model.Reembolso;
-import br.com.academiadev.projetocoders.reembolsocoders.model.StatusReembolso;
-import br.com.academiadev.projetocoders.reembolsocoders.model.Usuario;
+import br.com.academiadev.projetocoders.reembolsocoders.exception.UsuarioNaoEncontradoException;
+import br.com.academiadev.projetocoders.reembolsocoders.model.*;
 import br.com.academiadev.projetocoders.reembolsocoders.repository.ReembolsoRepository;
+import br.com.academiadev.projetocoders.reembolsocoders.repository.UsuarioRepository;
 import br.com.academiadev.projetocoders.reembolsocoders.service.ReembolsoService;
+import br.com.academiadev.projetocoders.reembolsocoders.service.UsuarioService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,22 +41,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class MockTests {
 
 	@MockBean
+	private UsuarioRepository usuarioRepository;
+
+	@MockBean
 	private ReembolsoRepository reembolsoRepository;
 
 	@Autowired
 	private ReembolsoService reembolsoService;
 
-	public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
-
-	public static byte[] convertObjectToJsonBytes(Object object) throws IOException {
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-		return mapper.writeValueAsBytes(object);
-	}
+	@Autowired
+	private UsuarioService usuarioService;
 
 	@Test
 	public void alterandoStatusReembolso() throws ReembolsoNaoEncontradoException, ReembolsoNaoAguardandoException {
-		Reembolso reembolso = testeReembolso();
+		Reembolso reembolso = mockReembolso();
 		given(reembolsoRepository.findOne(-1l)).willReturn(reembolso);
 
 		reembolsoService.AlterarStatus(-1l,"RECUSADO");
@@ -64,7 +62,7 @@ public class MockTests {
 
 	@Test
 	public void alterandoStatusReembolsoRecusado() throws ReembolsoNaoEncontradoException, ReembolsoNaoAguardandoException {
-		Reembolso reembolso = testeReembolso();
+		Reembolso reembolso = mockReembolso();
 		reembolso.setStatus(StatusReembolso.RECUSADO);
 		given(reembolsoRepository.findOne(-1l)).willReturn(reembolso);
 
@@ -73,15 +71,36 @@ public class MockTests {
 
 	@Test
 	public void alterandoStatusReembolsoNaoEncontrado() throws ReembolsoNaoEncontradoException, ReembolsoNaoAguardandoException {
-		Reembolso reembolso = testeReembolso();
+		Reembolso reembolso = mockReembolso();
 		reembolso.setStatus(StatusReembolso.RECUSADO);
 		given(reembolsoRepository.findOne(-1l)).willReturn(reembolso);
 
 		reembolsoService.AlterarStatus(-2l,"RECUSADO");
 	}
 
+	@Test
+	public void editarUsuario() throws UsuarioNaoEncontradoException{
+		Usuario usuario = mockUsuario();
+		given(usuarioRepository.findOne(-1l)).willReturn(usuario);
+		UsuarioDTO usuarioDTO = new UsuarioDTO();
+		usuarioDTO.setEmail("placeholder@mail.com");
+		usuarioDTO.setNome("name placeholder");
+		usuarioDTO.setId(-1l);
+		usuarioService.Editar(usuarioDTO);
+	}
 
-	public Reembolso testeReembolso(){
+	public Usuario mockUsuario(){
+		Usuario usuario = new Usuario();
+		usuario.setSenha("PLACEHOLDER SENHA");
+		usuario.setDataCadastro(LocalDate.now());
+		usuario.setEmail("PLACEHOLDER@mail.com");
+		usuario.setEmpresa(new Empresa());
+		usuario.setId(-1l);
+		usuario.setNome("PLACEHOLDER NAME");
+		return usuario;
+	}
+
+	public Reembolso mockReembolso(){
 		Reembolso reembolso = new Reembolso();
 		reembolso.setValor(new BigDecimal(369));
 		reembolso.setArquivoPath("PLACEHOLDER PATH");

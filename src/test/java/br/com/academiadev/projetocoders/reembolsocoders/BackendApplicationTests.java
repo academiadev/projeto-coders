@@ -56,11 +56,10 @@ public class BackendApplicationTests {
 	}
 
 	@Test
-	public void CadastroInicial()
+	public void cadastroInicial()
 			throws EmpresaNaoEncontradaException, EmpresaExistenteException,UsuarioExistenteException {
 		
 		UsuarioDTO usuarioDTO = CriarUsuarioDTO("admin");
-//		Empresa (PLACEHOLDER) deve estar cadastrada no banco de dados com codigo 0
 		usuarioService.Cadastrar(usuarioDTO, "PLACEHOLDER", null);
 
 	}
@@ -95,18 +94,6 @@ public class BackendApplicationTests {
 		}
 
 		return usuarioDTO;
-	}
-
-	public ReembolsoDTO CriarReembolsoDTO(UsuarioDTO usuarioDTO) {
-		ReembolsoDTO reembolsoDTO = new ReembolsoDTO();
-		reembolsoDTO.setArquivoPath("C:\\PLACEHOLDER");
-		reembolsoDTO.setCategoria("HOSPEDAGEM");
-		reembolsoDTO.setData("23/04/2018");
-		reembolsoDTO.setDescricao("Almoço");
-		reembolsoDTO.setIdUsuario(usuarioRepository.findByNome(usuarioDTO.getNome()).getId());
-		reembolsoDTO.setValor("500.65");
-
-		return reembolsoDTO;
 	}
 
 	public EmpresaDTO CriarEmpresaDTO() {
