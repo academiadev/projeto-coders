@@ -10,6 +10,7 @@ import java.time.LocalDate;
 
 import br.com.academiadev.projetocoders.reembolsocoders.dto.ReembolsoDTO;
 import br.com.academiadev.projetocoders.reembolsocoders.dto.UsuarioDTO;
+import br.com.academiadev.projetocoders.reembolsocoders.exception.ReembolsoJaExcluidoException;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.ReembolsoNaoAguardandoException;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.ReembolsoNaoEncontradoException;
 import br.com.academiadev.projetocoders.reembolsocoders.exception.UsuarioNaoEncontradoException;
@@ -72,10 +73,26 @@ public class MockTests {
 	@Test
 	public void alterandoStatusReembolsoNaoEncontrado() throws ReembolsoNaoEncontradoException, ReembolsoNaoAguardandoException {
 		Reembolso reembolso = mockReembolso();
-		reembolso.setStatus(StatusReembolso.RECUSADO);
 		given(reembolsoRepository.findOne(-1l)).willReturn(reembolso);
 
 		reembolsoService.AlterarStatus(-2l,"RECUSADO");
+	}
+
+	@Test
+	public void excluindoReembolso() throws ReembolsoNaoEncontradoException, ReembolsoJaExcluidoException {
+		Reembolso reembolso = mockReembolso();
+		given(reembolsoRepository.findOne(-1l)).willReturn(reembolso);
+
+		reembolsoService.ExcluirReembolso(-1l);
+	}
+
+	@Test
+	public void excluindoReembolsoJaExcluido() throws ReembolsoNaoEncontradoException, ReembolsoJaExcluidoException {
+		Reembolso reembolso = mockReembolso();
+		reembolso.setExcluido(true);
+		given(reembolsoRepository.findOne(-1l)).willReturn(reembolso);
+
+		reembolsoService.ExcluirReembolso(-1l);
 	}
 
 	@Test
