@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.academiadev.projetocoders.reembolsocoders.exception.UsuarioNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,8 @@ import br.com.academiadev.projetocoders.reembolsocoders.model.Empresa;
 import br.com.academiadev.projetocoders.reembolsocoders.model.Usuario;
 import br.com.academiadev.projetocoders.reembolsocoders.repository.EmpresaRepository;
 import br.com.academiadev.projetocoders.reembolsocoders.repository.UsuarioRepository;
+
+import javax.transaction.Transactional;
 
 @Service
 public class UsuarioService {
@@ -37,6 +40,7 @@ public class UsuarioService {
 	@Autowired
 	private AutorizacaoService autorizacaoService;
 
+	@Transactional
 	public UsuarioDTO Cadastrar(UsuarioDTO usuarioDTO, String empresaNome, Integer empresaCodigo)
 			throws EmpresaNaoEncontradaException, EmpresaExistenteException, UsuarioExistenteException {
 		if (usuarioRepository.findByNome(usuarioDTO.getNome()) != null) {
@@ -80,8 +84,11 @@ public class UsuarioService {
 		return listUsuarioDTO;
 	}
 
-	public void Editar(UsuarioDTO usuarioDTO) {
+	public void Editar(UsuarioDTO usuarioDTO) throws UsuarioNaoEncontradoException{
 		Usuario usuario = usuarioRepository.findOne(usuarioDTO.getId());
+		if (usuario == null){
+			throw new UsuarioNaoEncontradoException();
+		}
 		usuario.setEmail(usuarioDTO.getEmail());
 		usuario.setNome(usuarioDTO.getNome());
 		usuarioRepository.save(usuario);

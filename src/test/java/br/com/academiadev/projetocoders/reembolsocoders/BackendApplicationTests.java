@@ -1,11 +1,16 @@
 package br.com.academiadev.projetocoders.reembolsocoders;
 
+import br.com.academiadev.projetocoders.reembolsocoders.exception.ApiAlertException;
 import br.com.academiadev.projetocoders.reembolsocoders.model.Mail;
+import br.com.academiadev.projetocoders.reembolsocoders.model.Reembolso;
+import br.com.academiadev.projetocoders.reembolsocoders.model.StatusReembolso;
 import br.com.academiadev.projetocoders.reembolsocoders.service.EmailService;
+import br.com.academiadev.projetocoders.reembolsocoders.service.EmpresaService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import br.com.academiadev.projetocoders.reembolsocoders.dto.EmpresaDTO;
@@ -32,12 +37,14 @@ public class BackendApplicationTests {
 	private ReembolsoService reembolsoService;
 
 	@Autowired
-	private UsuarioService funcionarioService;
+	private UsuarioService usuarioService;
+
+	@Autowired
+	private EmpresaService empresaService;
 
 
 	@Test
-	public void EnviaEmail()
-		throws Exception{
+	public void EnviaEmail() {
 
 		Mail mail = new Mail();
 		mail.setFrom("reembolsocoders@gmail.com");
@@ -49,21 +56,14 @@ public class BackendApplicationTests {
 	}
 
 	@Test
-	public void CadastroInicial()
-			throws EmpresaNaoEncontradaException, EmpresaExistenteException, UsuarioExistenteException {
+	public void cadastroInicial()
+			throws EmpresaNaoEncontradaException, EmpresaExistenteException,UsuarioExistenteException {
 		
-		UsuarioDTO usuarioDTO = CriarFuncionarioDTO();
-		funcionarioService.Cadastrar(usuarioDTO, "Company", 0);
+		UsuarioDTO usuarioDTO = CriarUsuarioDTO("admin");
+		usuarioService.Cadastrar(usuarioDTO, "PLACEHOLDER", null);
 
-		ReembolsoDTO reembolsoDTO = CriarReembolsoDTO(usuarioDTO);
-		reembolsoService.Cadastrar(reembolsoDTO);
 	}
-	
-	@Test
-	public void AlteraStatusReembolso() {
-		reembolsoService.AlterarStatus(3l, "RECUSADO");
-	}
-	
+
 	@Test
 	public void ListarReembolsosFuncionario() {
 		reembolsoService.ListaReembolsosUsuario(2l);
@@ -71,34 +71,35 @@ public class BackendApplicationTests {
 	
 	@Test
 	public void ListarUsuariosEmpresa() {
-		funcionarioService.ListaUsuariosEmpresa(1l);
+		usuarioService.ListaUsuariosEmpresa(1l);
 	}
 
-	public UsuarioDTO CriarFuncionarioDTO() {
+	@Test
+	public void CadastrarEmpresa() throws EmpresaExistenteException{
+
+		empresaService.Cadastrar(CriarEmpresaDTO());
+	}
+
+	public UsuarioDTO CriarUsuarioDTO(String opt) {
 		UsuarioDTO usuarioDTO = new UsuarioDTO();
-		usuarioDTO.setEmail("funcionario@gmail.com");
-		usuarioDTO.setNome("Felipe CF");
-		usuarioDTO.setSenha("123");
+		if (opt == "admin"){
+			usuarioDTO.setEmail("PLACEHOLDERADM@mail.com");
+			usuarioDTO.setNome("PLACEHOLDER ADM TEST");
+			usuarioDTO.setSenha("PLACEHOLDERADM");
+		}
+		if (opt == "user"){
+			usuarioDTO.setEmail("PLACEHOLDER@mail.com");
+			usuarioDTO.setNome("PLACEHOLDER TEST");
+			usuarioDTO.setSenha("PLACEHOLDER");
+		}
 
 		return usuarioDTO;
 	}
 
-	public ReembolsoDTO CriarReembolsoDTO(UsuarioDTO usuarioDTO) {
-		ReembolsoDTO reembolsoDTO = new ReembolsoDTO();
-		reembolsoDTO.setArquivoPath("C:\\path");
-		reembolsoDTO.setCategoria("HOSPEDAGEM");
-		reembolsoDTO.setData("23/04/2018");
-		reembolsoDTO.setDescricao("Almoço");
-		reembolsoDTO.setIdUsuario(usuarioRepository.findByNome(usuarioDTO.getNome()).getId());
-		reembolsoDTO.setValor("500.65");
-
-		return reembolsoDTO;
-	}
-
 	public EmpresaDTO CriarEmpresaDTO() {
 		EmpresaDTO empresaDTO = new EmpresaDTO();
-		empresaDTO.setNome("Company");
-		empresaDTO.setCodigo(null);
+		empresaDTO.setNome("PLACEHOLDER");
+		empresaDTO.setCodigo(0);
 
 		return empresaDTO;
 	}

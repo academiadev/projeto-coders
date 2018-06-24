@@ -3,6 +3,7 @@ package br.com.academiadev.projetocoders.reembolsocoders.controller;
 import java.security.Principal;
 import java.util.List;
 
+import br.com.academiadev.projetocoders.reembolsocoders.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.Device;
@@ -48,8 +49,8 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/editarUsuario")
-	public ResponseEntity<?> editarUsuario(@RequestBody UsuarioDTO UsuarioDTO, Device dispositivo) {
-		usuarioService.Editar(UsuarioDTO);		
+	public ResponseEntity<?> editarUsuario(@RequestBody UsuarioDTO UsuarioDTO, Device dispositivo) throws UsuarioNaoEncontradoException {
+		usuarioService.Editar(UsuarioDTO);
 		SecurityContext securityContext = SecurityContextHolder.getContext();
 		Usuario user = (Usuario) securityContext.getAuthentication().getPrincipal();
 		user.setEmail(UsuarioDTO.getEmail());
